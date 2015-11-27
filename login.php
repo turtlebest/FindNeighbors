@@ -100,63 +100,42 @@
       </div>
       <!-- END MENU -->    
     </header>
+    <section id="imgBanner">
+      <h2>Events Archive</h2>
+    </section>    
     <!--=========== END HEADER SECTION ================--> 
-
-    <!--=========== BEGIN SLIDER SECTION ================-->
-    <section id="slider">
-      <div class="row">
-        <div class="col-lg-12 col-md-12">
-          <div class="slider_area">
-            <!-- Start super slider -->
-            <div id="slides">
-              <ul class="slides-container">                          
-                <li>
-                  <img src="img/slider/2.jpg" alt="img">
-                   <div class="slider_caption">
-                    <h2>Largest & Beautiful University</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                    <a class="slider_btn" href="login.php">Login</a>
-                    <a class="slider_btn" href="#">Create Account</a>
-                  </div>
-                  </li>
-                <!-- Start single slider-->
-                <li>
-                  <img src="img/slider/3.jpg" alt="img">
-                   <div class="slider_caption slider_right_caption">
-                    <h2>Better Education Environment</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search</p>
-                    <a class="slider_btn" href="#">Login</a>
-                    <a class="slider_btn" href="#">Create Account</a>
-                  </div>
-                </li>
-                <!-- Start single slider-->
-                <li>
-                  <img src="img/slider/4.jpg" alt="img">
-                   <!--<form action= <?php echo $action; ?> method="POST">-->
-                   <div class="slider_caption">
-                    <h2>Find out you in better way</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search</p>
-                    <a class="slider_btn" href=<?php echo $action; ?>>Login</a>
-                    <a class="slider_btn" href="#">Create Account</a>
-                  </div>
-                      <!--</form>-->
-                </li>
-              </ul>
-              <nav class="slides-navigation">
-                <a href="#" class="next"></a>
-                <a href="#" class="prev"></a>
-              </nav>
+<section id="courseArchive">
+      <div class="container">
+        <div class="row">
+          <!-- start course content -->
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="courseArchive_content">
+              <!-- start blog archive  -->
+              <div class="row">
+                <!-- start single blog archive -->
+                <div class="col-lg-12 col-12 col-sm-12">
+                  <div class="single_blog_archive wow fadeInUp">
+                      <br></br> 
+                  <input type='text' class='' name='account_input' placeholder='account'>
+                </p>  
+                 <input type='text' class='' name='password_input' placeholder='password'></P>
+                   <input type='submit' class='' value = 'login'>
+                </p>
+                   </div>
+                </div>
+              </div>
+          </div>
+          <!-- start course archive sidebar -->
+        </div>
             </div>
           </div>
+          <!-- start course archive sidebar -->
         </div>
-      </div>
-    </section>
-    <!--=========== END SLIDER SECTION ================-->
 
-
+        </section>    
     <!--=========== BEGIN FOOTER SECTION ================-->
     <footer id="footer">
-     
+
 
       <!-- Start footer bottom area -->
       <div class="footer_bottom">
