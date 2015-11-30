@@ -82,6 +82,7 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
+              <?php if ($_SESSION['Login']) { ?>
                 <li class="active"><a href="index.php">Home</a></li>
                 <li><a href="events-archive.php">Events</a></li>
                 <li class="dropdown">
@@ -93,6 +94,7 @@
                   </ul>
                 </li>               
                 <li><a href="contact.php">Contact</a></li>
+                <?php } ?>
               </ul>           
             </div><!--/.nav-collapse -->
           </div>     

@@ -2,6 +2,7 @@
 session_start();
 // Unset all of the session variables.
 $_SESSION = array();
+$_SESSION['Login'] = FALSE;
 
 $action = 'gallery.html';
 
