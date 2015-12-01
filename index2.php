@@ -118,7 +118,7 @@
                     <h2>Largest & Beautiful University</h2>
                     <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                     <a class="slider_btn" href="login.php">Login</a>
-                    <a class="slider_btn" href="#">Create Account</a>
+                    <a class="slider_btn" href="createaccount.php">Create Account</a>
                   </div>
                   </li>
                 <!-- Start single slider-->
