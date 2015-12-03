@@ -14,14 +14,15 @@
               </button>
               <!-- LOGO -->
               <!-- TEXT BASED LOGO -->
-              <a class="navbar-brand" href="index.html">WpF <span>Degree</span></a>            
+              <a class="navbar-brand" href="index.php">WpF <span>Degree</span></a>            
               <!-- IMG BASED LOGO  -->
                <!-- <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"></a>  -->         
                      
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
-                <li><a href="home.php">Home</a></li>               
+                <?php if ($_SESSION['Login']) { ?>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="block.php">Block</a></li>
                 <li><a href="neighbor.php">Neighbor</a></li>
                 <li class="dropdown">
@@ -33,6 +34,9 @@
                   </ul>
                 </li>               
                 <li><a href="contact.php">Contact</a></li>
+                <?php } else { ?>
+                <li><a href="contact.php">About Us</a></li>
+                <?php } ?>
               </ul>           
             </div><!--/.nav-collapse -->
           </div>     
