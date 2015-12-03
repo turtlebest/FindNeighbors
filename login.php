@@ -103,7 +103,7 @@
       <!-- END MENU -->    
     </header>
     <section id="imgBanner">
-      <h2>Events Archive</h2>
+      <h2>Login</h2>
     </section>    
     <!--=========== END HEADER SECTION ================--> 
 <section id="courseArchive">

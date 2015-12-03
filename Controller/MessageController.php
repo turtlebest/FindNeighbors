@@ -1,106 +1,40 @@
 <?php
 
-require ("Model/TrackOrderModel.php");
+require ("Model/MessageModel.php");
 
 //Contains non-database related function for the Coffee page
-class TrackOrderController {
+class MessageController {
 
-    function CheckCustomer($bunum, $street, $apt) {
-        $TrackOrderModel = new TrackOrderModel();
-        $applianceArray = $TrackOrderModel->UpdateCustomer($bunum, $street, $apt);
-    }
-    
-    function DisplayAppliance($keyword)
+    function DisplayPost()
     {
-        $TrackOrderModel = new TrackOrderModel();
-        $applianceArray = $TrackOrderModel->GetApplianceConfig($keyword);
+        $MessageModel = new MessageModel();
+        $messageArray = $MessageModel->GetPost();
         $result = "";
         
         //Generate a coffeeTable for each coffeeEntity in array
-        foreach ($applianceArray as $key => $appliance) 
+        foreach ($messageArray as $key => $message) 
         {
             $result = $result .
-                    "<table class = 'orderTable'>
-                       
-                        <input type='checkbox' name='order[]' value=$appliance->aname;$appliance->config;$appliance->price>
-                           
-                        <tr>
-                          <th width = '75px' >Name: </th>
-                            <td>$appliance->aname</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Type: </th>
-                            <td>$appliance->description</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Config: </th>
-                            <td>$appliance->config</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Price: </th>
-                            <td>$appliance->price</td>
-                        </tr>    
-                        <tr>
-                            <th>Status: </th>
-                            <td>$appliance->status</td>
-                        </tr> 
-                     </table>";
+                    "
+                     <div class='col-lg-12 col-12 col-sm-12'>
+                      <div class='single_blog_archive wow fadeInUp'>
+                       <div class='blogimg_container'>
+                        <a href='#' class='blog_img'>
+                          <img alt='img' src='img/blog.jpg'>
+                        </a>
+                       </div>
+                       <h2 class='blog_title'><a href='events-single.html'>$message->title</a></h2>
+                       <div class='blog_commentbox'>
+                         <p><i class='fa fa-clock-o'></i>$message->timestamp</p>
+                         <p><i class='fa fa-map-marker'></i>$message->address</p>                      
+                       </div>
+                         <p class='blog_summary'>$message->content</p>
+                         <a class='blog_readmore' href='events-single.html'>Read More</a>
+                       </div>
+                     </div>";
         }        
         return $result;
         
-    }
-    
-    function DisplayOrder()
-    {
-        $TrackOrderModel = new TrackOrderModel();
-        $orderArray = $TrackOrderModel->GetOrder();
-        $result = "";
-        
-        //Generate a coffeeTable for each coffeeEntity in array
-        foreach ($orderArray as $key => $order) 
-        {
-            $result = $result .
-                    "<table class = 'orderTable'>   
-                        <tr>
-                          <th width = '75px' >OrderTime: </th>
-                            <td>$order->ordertime</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Name: </th>
-                            <td>$order->aname</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Config: </th>
-                            <td>$order->config</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Price: </th>
-                            <td>$order->price</td>
-                        </tr>  
-                        <tr>
-                            <th>Quantity: </th>
-                            <td>$order->quantity</td>
-                        </tr>    
-                        <tr>
-                            <th>Status: </th>
-                            <td>$order->status</td>
-                        </tr> 
-                     </table>";
-        }        
-        return $result;
-        
-    }
-    
-    
-    function UpdateOrder($aname, $config, $price) {
-        $TrackOrderModel = new TrackOrderModel();
-        $TrackOrderModel->SetOrder($aname, $config, $price);
     }
 
 }
