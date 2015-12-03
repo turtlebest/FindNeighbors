@@ -18,7 +18,7 @@ $MessageController = new MessageController();
 
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
     <section id="imgBanner">
-      <h2>Home</h2>
+      <h2>Block</h2>
     </section>
     <!--=========== END COURSE BANNER SECTION ================-->
     
@@ -32,7 +32,7 @@ $MessageController = new MessageController();
               <!-- start blog archive  -->
               <div class="row">
                 <!-- start single blog archive -->
-                <?php echo $MessageController->DisplayNewPost();?>
+                <?php echo $MessageController->DisplayBlockPost();?>
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->

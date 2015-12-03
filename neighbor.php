@@ -18,7 +18,7 @@ $MessageController = new MessageController();
 
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
     <section id="imgBanner">
-      <h2>Home</h2>
+      <h2>Neighbor</h2>
     </section>
     <!--=========== END COURSE BANNER SECTION ================-->
     
@@ -32,7 +32,7 @@ $MessageController = new MessageController();
               <!-- start blog archive  -->
               <div class="row">
                 <!-- start single blog archive -->
-                <?php echo $MessageController->DisplayNewPost();?>
+                <?php echo $MessageController->DisplayNeighborPost();?>
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->
@@ -45,27 +45,7 @@ $MessageController = new MessageController();
           </div>
           <!-- End course content -->
 
-          <!-- start course archive sidebar -->
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="courseArchive_sidebar">
-              <!-- start single sidebar -->
-              
-              <!-- start single sidebar -->
-              <div class="single_sidebar">
-                <h2>Category <span class="fa fa-angle-double-right"></span></h2>
-                <ul>
-                  <li><a href="#">Food</a></li>
-                  <li><a href="#">Technology</a></li>
-                  <li><a href="#">Fashion</a></li>
-                  <li><a href="#">Business</a></li>
-                  <li><a href="#">Games</a></li>
-                </ul>
-              </div>
-              <!-- End single sidebar -->
-              
-            </div>
-          </div>
-          <!-- start course archive sidebar -->
+         
         </div>
       </div>
     </section>

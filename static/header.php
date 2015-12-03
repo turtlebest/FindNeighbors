@@ -21,8 +21,9 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
-                <li><a href="index.php">Home</a></li>               
-                <li class="active"><a href="events-archive.php">Events</a></li>
+                <li><a href="home.php">Home</a></li>               
+                <li><a href="block.php">Block</a></li>
+                <li><a href="neighbor.php">Neighbor</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Page<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
