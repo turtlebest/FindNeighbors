@@ -28,8 +28,8 @@
                   <form action= "login_active.php" method="POST">
                   <input type='text' class='' name='account_input' placeholder='account'>
                 </p>  
-                 <input type='text' class='' name='password_input' placeholder='password'></P>
-                   <input type='submit' class='' value = 'login'>
+                  <input type='text' class='' name='password_input' placeholder='password'></P>
+                  <input type='submit' class='' value = 'login'>
                 </p>
                 </form>
                    </div>

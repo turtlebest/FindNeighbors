@@ -14,10 +14,9 @@
               </button>
               <!-- LOGO -->
               <!-- TEXT BASED LOGO -->
-              <a class="navbar-brand" href="index.php">WpF <span>Degree</span></a>            
+              <a class="navbar-brand" href="index.php">Find <span>Neighbors!</span></a>
               <!-- IMG BASED LOGO  -->
-               <!-- <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"></a>  -->         
-                     
+               <!-- <a class="navbar-brand" href="index.html"><img src="img/logo.png" alt="logo"></a>  -->
             </div>
             <div id="navbar" class="navbar-collapse collapse">
               <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
@@ -30,18 +29,18 @@
                   <ul class="dropdown-menu" role="menu">
                     <li><a href="404.html">404 Page</a></li>
                     <li><a href="#">Link Two</a></li>
-                    <li><a href="#">Link Three</a></li>               
+                    <li><a href="#">Link Three</a></li>
                   </ul>
-                </li>               
-                <li><a href="contact.php">Contact</a></li>
+                </li>
+                <li><a href="contact.php">Profile</a></li>
                 <?php } else { ?>
                 <li><a href="contact.php">About Us</a></li>
                 <?php } ?>
-              </ul>           
+              </ul>
             </div><!--/.nav-collapse -->
-          </div>     
-        </nav>  
+          </div>
+        </nav>
       </div>
-      <!-- END MENU -->    
+      <!-- END MENU -->
     </header>
-    <!--=========== END HEADER SECTION ================--> 
+    <!--=========== END HEADER SECTION ================-->

@@ -25,10 +25,10 @@ class MessageEntity
         $this->recipient_friend = $recipient_friend;
         $this->recipient_neighbors = $recipient_neighbors;
         $this->recipient_uid = $recipient_uid;
-        $this->recipient_bid = $recipient_bid;        
+        $this->recipient_bid = $recipient_bid;
         $this->recipient_hid = $recipient_hid;
         $this->tid = $tid;
-       
+
     }
 
 }

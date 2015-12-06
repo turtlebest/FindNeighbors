@@ -9,15 +9,14 @@ class TrackOrderController {
         $TrackOrderModel = new TrackOrderModel();
         $applianceArray = $TrackOrderModel->UpdateCustomer($bunum, $street, $apt);
     }
-    
+
     function DisplayAppliance($keyword)
     {
         $TrackOrderModel = new TrackOrderModel();
         $applianceArray = $TrackOrderModel->GetApplianceConfig($keyword);
         $result = "";
-        
         //Generate a coffeeTable for each coffeeEntity in array
-        foreach ($applianceArray as $key => $appliance) 
+        foreach ($applianceArray as $key => $appliance)
         {
             $result = $result .
                     "<table class = 'orderTable'>
