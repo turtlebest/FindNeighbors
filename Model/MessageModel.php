@@ -181,5 +181,101 @@ class MessageModel {
 
         return $messageArray;
     }
+    
+    
+    function CreateNewPost() {
+        require 'Credentials.php';
+        printf("A");
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        printf("b".$uid."aaa");
+        
+        
+$ifexist=true;
+$mid = mt_rand();
+$title = $_POST['title_input'];    
+$content = $_POST['content_input'];
+$address = $_POST['address_input'];
+//$author = $_SESSION['uid'];
+$author = "u01";
+$recipient_uid = $_POST['recipient_input'];
+//$recipient_bid = $_POST['recipient_bid'];
+//$recipient_hid = $_POST['recipient_hid'];
+$recipient_bid = "b01";
+$recipient_hid = "h01";
+//$recipient_friend = "";
+//$recipient_neighbors = "";
+$tid = null;
+        /*while($ifexist=true){
+        echo"w";
+        $stmt = $mysqli->prepare("SELECT mid from Message where mid = ?");
+        if(mysql_num_rows($check) > 0){ 
+                echo"re";
+                $ifexist=true;
+                $mid = mt_rand();
+                }else{
+                $ifexist=false;
+                
+                }
+                return $ifexist;
+            }*/
+
+
+        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`,`recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
+            $stmt->bind_param('sssssssss', $mid, $title, $content, $address, $author, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
+            $stmt->execute();
+            $stmt -> fetch();
+            $_SESSION['mid'] = $mid;
+ printf("done");
+            $stmt->close();
+            $mysqli->close();
+            printf("done");
+            printf($mid);
+
+    }
+    
+    function ReplyPost() {
+        require 'Credentials.php';
+        printf("A");
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        printf("b".$uid."aaa");
+     
+$mid = mt_rand();
+$title = $_SESSION['title'];    
+$content = $_POST['content_input'];
+$address = $_POST['address_input'];
+$author = $_SESSION['uid'];
+$recipient_uid = $_SESSION['recipient_uid'];
+$recipient_bid = $_SESSION['recipient_bid'];
+$recipient_hid = $_SESSION['recipient_hid'];
+$recipient_friend = $_SESSION['recipient_friend'];
+$recipient_neighbors = $_SESSION['recipient_neighbors'];
+$tid = $_SESSION['tid'];
+
+        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`,`recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
+            $stmt->bind_param('sssssssss', $mid, $title, $content, $address, $author, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
+            $stmt->execute();
+            $stmt -> fetch();
+ printf("done");
+            $stmt->close();
+            $mysqli->close();
+            printf("done");
+
+    }
 }
 ?>

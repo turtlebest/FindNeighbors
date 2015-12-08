@@ -6,7 +6,7 @@ include "include.php";
 <html lang="en">
 <?php include "static/template.php";?>
 
-<body>    
+  <body>    
 
         <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"></a>
@@ -16,7 +16,7 @@ include "include.php";
 
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
     <section id="imgBanner">
-      <h2>New account</h2>
+      <h2>Profile</h2>
     </section>
     <!--=========== END COURSE BANNER SECTION ================-->
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
@@ -30,22 +30,20 @@ include "include.php";
               <div class="row">
                 <!-- start single blog archive -->
 
-                  <form action= "Model/UserModel.php" method="POST">
+                  <form action= "login_active.php" method="POST">
                   <input type='text' class='' name='uname_input' placeholder='user name'></p>
-                  <input type='text' class='' name='uid_input' placeholder='user id'></p>
                   <input type='text' class='' name='password_input' placeholder='password'></p>
                   <input type='text' class='' name='intro_input' placeholder='introduction'></p>
-                  <input type='text' class='' name='address_input' placeholder='address'></p>
                   <input type='text' class='' name='city_input' placeholder='city'></p>
-                  <input type='text' class='' name='state_input' placeholder='state'</p>
+                  <input type='text' class='' name='state' placeholder='state'</p>
                   </p>
-                  <select name='block_input'>
-                    <option value='b01'> 6 Ave between 32nd and 36th Street</option>
-                    <option value='b02'> 12 Street between 1st and 3rd Street</option>
-                    <option value='b03'> Columbus Ave between 59th and 65th Street</option>
-                    <option value='b04'> 50th Ave between Vernon Blvd and Jackson Ave</option>
-                    <option value='b05'> 7th Ave between 3rd and 6th Street</option>
-                    <option value='b06'> Jay Street between Fulton and Johnson Street</option>
+                  <select>
+                    <option>b01 6 Ave between 32nd and 36th Street</option>
+                    <option>b02 12 Street between 1st and 3rd Street</option>
+                    <option>b03 Columbus Ave between 59th and 65th Street</option>
+                    <option>b04 50th Ave between Vernon Blvd and Jackson Ave</option>
+                    <option>b05 7th Ave between 3rd and 6th Street</option>
+                    <option>b06 Jay Street between Fulton and Johnson Street</option>
                     </select></p>
                   <input type='submit' class='' value = 'Create'>
                 </p>
@@ -93,4 +91,3 @@ include "include.php";
 
   </body>
 </html>
-
