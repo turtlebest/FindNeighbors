@@ -31,7 +31,7 @@ $MessageController = new MessageController();
                     <?php echo $MessageController->DisplaySinglePostReply($_GET['thread_id']);?>
                 </div>
               </div>
-              <a class='blog_readmore' href=''><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
+              <a class='blog_readmore' href='reply.php'><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
               <!-- end blog archive  -->
             </div>
           </div>
