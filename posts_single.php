@@ -2,24 +2,18 @@
 include "include.php";
 require 'Controller/MessageController.php';
 $MessageController = new MessageController();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include "static/template.php";?>
-
   <body>
-
     <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"></a>
     <!-- END SCROLL TOP BUTTON -->
-
     <?php include "static/header.php";?>
-
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
     <br></br>
     <!--=========== END COURSE BANNER SECTION ================-->
-
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
     <section id="courseArchive">
       <div class="container">
@@ -49,15 +43,12 @@ $MessageController = new MessageController();
       </div>
     </section>
     <!--=========== END COURSE BANNER SECTION ================-->
-
    <?php include "static/foot.html";?>
    <?php include "static/javascript.html";?>
-
   <!--===============================================
     Template Design By WpFreeware Team.
     Author URI : http://www.wpfreeware.com/
   ====================================================-->
-
   </body>
 </html>
 

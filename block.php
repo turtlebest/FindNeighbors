@@ -2,14 +2,11 @@
 include "include.php";
 require 'Controller/MessageController.php';
 $MessageController = new MessageController();
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php include "static/template.php";?>
-
   <body>
-
     <!-- SCROLL TOP BUTTON -->
     <a class="scrollToTop" href="#"></a>
     <!-- END SCROLL TOP BUTTON -->
@@ -17,11 +14,15 @@ $MessageController = new MessageController();
     <?php include "static/header.php";?>
 
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
-    <section id="imgBanner">
+    <!--<section id="imgBanner">
       <h2>Block</h2>
-    </section>
+    </section>-->
+
+    <?php $result = $MessageController->DisplayBlockPost();?>
+    <br><br><br></br>
+    <?php include "google_map.php";?>
     <!--=========== END COURSE BANNER SECTION ================-->
-    
+
     <!--=========== BEGIN COURSE BANNER SECTION ================-->
     <section id="courseArchive">
       <div class="container">
@@ -32,7 +33,7 @@ $MessageController = new MessageController();
               <!-- start blog archive  -->
               <div class="row">
                 <!-- start single blog archive -->
-                <?php echo $MessageController->DisplayBlockPost();?>
+                <?php echo $result[0];?>
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->
@@ -45,20 +46,17 @@ $MessageController = new MessageController();
           </div>
           <!-- End course content -->
 
-         
+
         </div>
       </div>
     </section>
     <!--=========== END COURSE BANNER SECTION ================-->
-    
    <?php include "static/foot.html";?>
    <?php include "static/javascript.html";?>
-     
-  <!--=============================================== 
+  <!--===============================================
     Template Design By WpFreeware Team.
     Author URI : http://www.wpfreeware.com/
   ====================================================-->
-
   </body>
 </html>
 

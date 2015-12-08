@@ -1,4 +1,4 @@
-<?php 
+<?php
 include "include.php";
 // Unset all of the session variables.
 $_SESSION = array();

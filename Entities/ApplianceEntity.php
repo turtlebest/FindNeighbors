@@ -14,7 +14,6 @@ class ApplianceEntity
         $this->config = $config;
         $this->price = $price;
         $this->status = $status;
-       
     }
 
 }

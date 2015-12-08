@@ -26,7 +26,7 @@ class UserEntity
         $this->city = $city;
         $this->status = $status;
         $this->login_time = $login_time;
-       
+
     }
 
 }
