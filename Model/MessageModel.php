@@ -131,8 +131,10 @@ class MessageModel {
         }
         printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp
-                                  FROM Message as m, Thread t
-                                  WHERE m.mid = t.initial_mid and t.tid = ?");
+                                  FROM Message as m
+                                  WHERE m.tid = ?
+                                  Order by m.timestamp
+                                  Limit 1");
         $stmt->bind_param('s', $tid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp);
