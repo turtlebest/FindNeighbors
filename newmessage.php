@@ -34,10 +34,20 @@ include "include.php";
                   <input type='text' class='' name='title_input' placeholder='title'></p>
                   <input type='text' class='' name='content_input' placeholder='content'></p>
                   <input type='text' class='' name='address_input' placeholder='address'></p>
-                  <input type='text' class='' name='recipient_input' placeholder='to'></p>
+                  <br>
+                  <?php
+                  include "include.php";
+                  require 'Model/MessageModel.php';
+                  require 'Model/BlockModel.php';
+                 
+                  $MessageModel = new MessageModel();
+                  $MessageModel->GetFriendsOrNeighbors();
+                 
+                  //printf($_SESSION['hid']);
+                  ?>
                   <input type='checkbox' class='' name='recipient_friend' value='tofriend'> to all friends<br></p>
                   <input type='checkbox' class='' name='recipient_neighbor' value='toneighbor'> to all neighbors<br></p>
-                  <input type='checkbox' class='' name='recipient_bid' value='bid'> to my block<br></p>
+                  <input type='checkbox' class='' name='recipient_bid' value="$_SESSION['bid']"> to my block<br></p>
                   <input type='checkbox' class='' name='recipient_hid' value='hid'> to my hood<br></p>
                   <input type='submit' class='' value = 'Post'>
                 </p>

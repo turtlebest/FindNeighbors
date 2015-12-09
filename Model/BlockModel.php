@@ -37,6 +37,56 @@ class BlockModel {
         return $applianceArray;
     }
     
+    function GetBid() {
+        require 'Credentials.php';
+        //$uid = $_SESSION["uid"];
+        $uid='u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        
+        $stmt = $mysqli->prepare("SELECT bid FROM User WHERE uid = ?");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($bid);
+        $stmt->fetch();
+        
+        $stmt->close();
+        $mysqli->close();
+        
+        $_SESSION['bid'] = $bid;
+        
+        }
+        
+    function GetHid() {
+        require 'Credentials.php';
+        //$uid = $_SESSION["uid"];
+        $uid='u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        
+        $stmt = $mysqli->prepare("SELECT hid FROM User, block_hood WHERE User.bid = block_hood.bid AND uid = ?");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($hid);
+        $stmt->fetch();
+        
+        $stmt->close();
+        $mysqli->close();
+        
+        $_SESSION['hid'] = $hid;
+        
+        }
+    
     function GetOrder() {
         require 'Credentials.php';
         $phone = $_SESSION["userphone"];
