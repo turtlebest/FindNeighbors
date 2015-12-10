@@ -131,10 +131,8 @@ class MessageModel {
         }
         printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp
-                                  FROM Message as m
-                                  WHERE m.tid = ?
-                                  Order by m.timestamp
-                                  Limit 1");
+                                  FROM Message as m, Thread t
+                                  WHERE m.mid = t.initial_mid and t.tid = ?");
         $stmt->bind_param('s', $tid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp);
@@ -161,14 +159,10 @@ class MessageModel {
         }
         printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp
-                                  FROM Message as m, Thread t,
-                                       (SELECT m.mid
-                                        FROM Message as m
-                                        WHERE m.tid = ?
-                                        Order by m.timestamp
-                                        Limit 1) as f
-                                  WHERE m.tid = t.tid and t.tid = ? and m.mid != f.mid");
-        $stmt->bind_param('ss', $tid, $tid);
+                                  FROM Message as m, Thread t
+                                  WHERE m.tid = t.tid and t.tid = ? and m.mid not in (Select initial_mid From Thread)
+                                  Order by m.timestamp");
+        $stmt->bind_param('s', $tid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp);
 
@@ -211,14 +205,47 @@ $content = $_POST['content_input'];
 $address = $_POST['address_input'];
 //$author = $_SESSION['uid'];
 $author = $uid;
-$recipient_uid = $_POST['recipient_input'];
-//$recipient_bid = $_POST['recipient_bid'];
-//$recipient_hid = $_POST['recipient_hid'];
-$recipient_bid = "b01";
-$recipient_hid = "h01";
-//$recipient_friend = "";
-//$recipient_neighbors = "";
+//$recipient_uid = 'u02';
+$recipient_uid = $_POST['friendsORneighbors'];
+$recipient_bid = null;
+$recipient_hid = null;
+$recipient_friend = 0;
+$recipient_neighbors = 0;
 $tid = null;
+//$friends = $_POST["friends"];
+
+if (isset($_POST['recipient_bid'])){
+        $recipient_bid = $_SESSION['bid'];
+        }
+if (isset($_POST['recipient_hid'])){
+        $recipient_bid = $_SESSION['hid'];
+        }
+if (isset($_POST['recipient_friend'])){
+        $recipient_friend = 1;
+        echo "p";
+        
+        
+        foreach ($_SESSION['friendsArray'] as $key => $friends) {
+            echo "f";
+            //printf($mid);
+            //printf($friends);
+               $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+               $stmt->bind_param('ss', $mid, $friends);
+               $stmt->execute();
+               $stmt -> fetch();
+        }
+        }
+if (isset($_POST['recipient_neighbor'])){
+        $recipient_neighbors = 1;
+        
+        foreach($neighborsArray as $key => $neighbors){
+                $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+        $stmt->bind_param('ss', $mid, $neighbors);
+        $stmt->execute();
+        $stmt -> fetch();
+        }
+        }
+
 
         $stmt = $mysqli->prepare("SELECT mid from Message where mid = ?");
         $stmt->bind_param('s', $mid);
@@ -230,8 +257,10 @@ $tid = null;
         }
 
 
-        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`,`recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
-        $stmt->bind_param('sssssssss', $mid, $title, $content, $address, $author, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
+        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
+        
+        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
+        $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
         $stmt->execute();
         $stmt -> fetch();
         $_SESSION['mid'] = $mid;
@@ -239,8 +268,8 @@ $tid = null;
  
  $tid = mt_rand();
  
-        $stmt = $mysqli->prepare("INSERT INTO thread(`tid`, `initial_mid`) VALUES(?,?);");
-        $stmt->bind_param('ss', $tid, $mid);
+        $stmt = $mysqli->prepare("INSERT INTO thread(`tid`) VALUES(?);");
+        $stmt->bind_param('s', $tid);
         $stmt->execute();
         $stmt -> fetch();
         
@@ -253,11 +282,18 @@ $tid = null;
         $stmt->bind_param('ss', $tid, $author);
         $stmt->execute();
         $stmt -> fetch();
-        
+
+
+        if($author != $recipient_uid){
+        $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+        $stmt->bind_param('ss', $mid, $recipient_uid);
+        $stmt->execute();
+        $stmt -> fetch();
+        //echo "==";
+        }
             $stmt->close();
             $mysqli->close();
-            printf("done");
-            printf($mid);
+            //printf($mid);
 
     }
     
@@ -303,10 +339,11 @@ $tid = $_SESSION['tid'];
 
     }
     
-    function GetFriends() {
+    function GetFriendsOrNeighbors() {
         require 'Credentials.php';
+        $author = $_SESSION['uid'];
+        echo "$author";
         $uid = $_SESSION['uid'];
-        $uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
@@ -315,15 +352,21 @@ $tid = $_SESSION['tid'];
            exit();
         }
         
-        $stmt = $mysqli->prepare("SELECT user2 FROM Relationship WHERE user1 = ?  AND relationship = 'friends' AND accept = 1 ");
+        $stmt = $mysqli->prepare("SELECT distinct user2 FROM Relationship WHERE user1 = ?  AND ((relationship = 'friends' AND accept = 1 ) OR (relationship ='neighbors'))" );
         $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($uid);
-        echo "Friends<br>";
-        while($stmt->fetch()) {       
-        echo  "<input type='checkbox' name='friends[]' value=$uid> $uid<br>";
+        
+        echo "To<br>";
+        echo "<select name='friendsORneighbors'>";
+        echo "<option value=$author>  </option>"; 
+              
+        while($stmt->fetch()) { 
+        echo "<option value=$uid> $uid</option>";      
+        //echo  "<input type='checkbox' name='friends[]' value=$uid> $uid<br>";
 
 		}
+		echo "</select></p>";
 		echo "<br>";
 
         /*$friendsArray = array();
@@ -340,6 +383,49 @@ $tid = $_SESSION['tid'];
  
         //return $orderArray;
     }
+    
+    function GetFriends() {
+        require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+        $uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        
+        $stmt = $mysqli->prepare("SELECT user2 FROM Relationship WHERE user1 = ? AND relationship = 'friends'");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($uid);
+        $friendsArray = array();
+        while($stmt->fetch()) {       
+        array_push($friendsArray, $uid);
+		}
+		
+		
+
+		
+				
+        /*$friendsArray = array();
+        
+        //Get data from database.
+        while ($stmt->fetch()) {
+            //Create coffee objects and store them in an array.
+            $friends = new OrderEntity($aname, $config, $ordertime, $quantity, $price, $status);
+            array_push($orderArray, $order);
+        }
+        //Close connection and return result*/
+        $stmt->close();
+        $mysqli->close();
+        $_SESSION['friendsArray']=$friendsArray;
+        //return $friendsArray;
+ 
+        //return $orderArray;
+    }
+    
     function GetNeighbors() {
         require 'Credentials.php';
         $uid = $_SESSION['uid'];
@@ -356,13 +442,10 @@ $tid = $_SESSION['tid'];
         $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($uid);
-        echo "Neighbors<br>";
+        $neighborsArray = array();
         while($stmt->fetch()) {       
-        echo  "<input type='checkbox' name='neighbors[]' value=$uid> $uid<br>";
-
+        array_push($neighborsArray, $uid);
 		}
-		echo "<br>";
-		
 
         /*$friendsArray = array();
         
@@ -375,8 +458,10 @@ $tid = $_SESSION['tid'];
         //Close connection and return result*/
         $stmt->close();
         $mysqli->close();
- 
-        //return $orderArray;
+        $_SESSION['neighborsArray']=$neighborsArray;
+        //return $neighborsArray;
+        
     }
 }
+
 ?>
