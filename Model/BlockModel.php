@@ -6,8 +6,10 @@ require ("Entities/UserEntity.php");
 class BlockModel {
 
     //Get coffeeEntity objects from the database and return them in an array.
-    function GetMember($keyword) {
+    function GetMember() {
         require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
@@ -16,30 +18,31 @@ class BlockModel {
            exit();
         }
 
-        $kw = '%'.$keyword.'%';
-        $stmt = $mysqli->prepare("SELECT a.aname, a.description, c.config, c.price, c.status FROM appliance a join catalog c on a.aname = c.aname WHERE (a.description LIKE ? or a.aname Like ? or c.config Like ?) and c.status = 'available' Group By a.aname, c.config");
-        $stmt->bind_param('sss', $kw, $kw, $kw);
+        $stmt = $mysqli->prepare("SELECT u.uid, u.uname, u.address
+                                  FROM User as u, (SELECT bid FROM User WHERE uid = ?) as UserBlock
+                                  WHERE u.bid = UserBlock.bid and u.approved = TRUE");
+        $stmt->bind_param('s', $uid);
 
         $stmt->execute();
-        $stmt->bind_result($aname, $description, $config, $price, $status);
+        $stmt->bind_result($uid, $uname, $address);
 
-        $applianceArray = array();
-        
+        $userArray = array();
+
         //Get data from database.
         while ($stmt->fetch()) {
             //Create coffee objects and store them in an array.
-            $appliance = new ApplianceEntity($aname, $description, $config, $price, $status);
-            array_push($applianceArray, $appliance);
+            $user = new UserEntity($uid, $uname, NULL, NULL, NULL, $address, NULL, NULL, NULL, NULL, NULL);
+            array_push($userArray, $user);
         }
         //Close connection and return result
         $stmt->close();
         $mysqli->close();
-        return $applianceArray;
+        return $userArray;
     }
-    
-    function GetOrder() {
+
+    function GetBlockName() {
         require 'Credentials.php';
-        $phone = $_SESSION["userphone"];
+        $uid = $_SESSION['uid'];
 
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
@@ -48,25 +51,19 @@ class BlockModel {
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        
-        $stmt = $mysqli->prepare("SELECT aname, config, o_time, quantity, price, status FROM orders WHERE phone = ?");
-        $stmt->bind_param('s', $phone);
-        $stmt->execute();
-        $stmt->bind_result($aname, $config, $ordertime, $quantity, $price, $status);
 
-        $orderArray = array();
-        
-        //Get data from database.
-        while ($stmt->fetch()) {
-            //Create coffee objects and store them in an array.
-            $order = new OrderEntity($aname, $config, $ordertime, $quantity, $price, $status);
-            array_push($orderArray, $order);
-        }
+        $stmt = $mysqli->prepare("SELECT b.bname
+                                  FROM Blocks as b, User as u
+                                  WHERE b.bid = u.bid and u.uid = ?");
+        $stmt->bind_param('s', $uid);
+
+        $stmt->execute();
+        $stmt->bind_result($bname);
+        $stmt->fetch();
         //Close connection and return result
         $stmt->close();
         $mysqli->close();
- 
-        return $orderArray;
+        return $bname;
     }
 
 }

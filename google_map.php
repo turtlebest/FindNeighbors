@@ -55,10 +55,15 @@
               $addr = $location['location_address'];
               $map_lat = $location['google_map']['lat'];
               $map_lng = $location['google_map']['lng'];
-              $message_tid = $location['location_tid'];
+              $id = $location['location_id'];
               //printf("abc".$message_tid);
-              $url = "posts_single.php?thread_id=$message_tid";
               $author = $location['location_author'];
+              if ($name != NULL){
+                $url = "posts_single.php?thread_id=$id";
+              } else {
+                $url = "block.php?user_id=$id";
+              }
+
               ?>
               /* Set Bound Marker */
               var latlng = new google.maps.LatLng(<?php echo $map_lat; ?>, <?php echo $map_lng; ?>);
@@ -70,7 +75,7 @@
                 title: '<?php echo $name; ?>',
                 //tid: '<?php echo $message_tid; ?>'
                 infoWindow: {
-                  content: '<i class="fa fa-comments" style="color:#ffac33"></i><a href = <?php echo $url; ?> > <?php echo $name; ?></a><p><i class="fa fa-user" style="color:#3399ff"></i> <?php echo $author; ?></p>'
+                  content: '<?php if($name != NULL) { ?><i class="fa fa-comments" style="color:#ffac33"></i><a href = <?php echo $url; ?>> <?php echo $name; ?></a><p><?php } ?><i class="fa fa-user" style="color:#3399ff"></i><a href = <?php echo $url; ?>> <?php echo $author; ?></a></p>'
                   //'<a href='posts_single.php?thread_id=$message_tid'><?php echo $name; ?></a>'
 
                 }

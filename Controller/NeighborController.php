@@ -1,107 +1,72 @@
 <?php
 
-require ("Model/TrackOrderModel.php");
+require ("Model/NeighborModel.php");
 
 //Contains non-database related function for the Coffee page
-class TrackOrderController {
+class NeighborController {
 
-    function CheckCustomer($bunum, $street, $apt) {
-        $TrackOrderModel = new TrackOrderModel();
-        $applianceArray = $TrackOrderModel->UpdateCustomer($bunum, $street, $apt);
+     function GetLatandlong($user) {
+        $address = str_replace(' ', '+', $user->address);
+        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
+
+        $output= json_decode($geocode);
+
+        $lat = $output->results[0]->geometry->location->lat;
+        $long = $output->results[0]->geometry->location->lng;
+
+        $location = array(
+            'google_map' => array(
+            'lat' => $lat,
+            'lng' => $long,
+            ),
+            'location_address' => $address,
+            'location_name'    => NULL,
+            'location_id'     => $user->uid,
+            'location_author'  => $user->uname,
+        );
+
+        return array($location, $lat, $long);
+
     }
-    
-    function DisplayAppliance($keyword)
+
+    function DisplayMembersOnMap()
     {
-        $TrackOrderModel = new TrackOrderModel();
-        $applianceArray = $TrackOrderModel->GetApplianceConfig($keyword);
+        $NeighborModel = new NeighborModel();
+        $userArray = $NeighborModel->GetMember();
+        $locations = array();
+
+        foreach ($userArray as $key => $user) {
+            $mapresult = $this->GetLatandlong($user);
+            array_push($locations, $mapresult[0]);
+        }
+
+        return array($userArray, $locations);
+    }
+
+    function DisplayMembersOnList()
+    {
+        $NeighborModel = new NeighborModel();
+        $userArray = $NeighborModel->GetMember();
         $result = "";
-        
-        //Generate a coffeeTable for each coffeeEntity in array
-        foreach ($applianceArray as $key => $appliance) 
+
+        foreach ($userArray as $key => $user)
         {
             $result = $result .
-                    "<table class = 'orderTable'>
-                       
-                        <input type='checkbox' name='order[]' value=$appliance->aname;$appliance->config;$appliance->price>
-                           
-                        <tr>
-                          <th width = '75px' >Name: </th>
-                            <td>$appliance->aname</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Type: </th>
-                            <td>$appliance->description</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Config: </th>
-                            <td>$appliance->config</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Price: </th>
-                            <td>$appliance->price</td>
-                        </tr>    
-                        <tr>
-                            <th>Status: </th>
-                            <td>$appliance->status</td>
-                        </tr> 
-                     </table>";
-        }        
+                    "<div class='col-lg-3 col-md-3 col-sm-3'>
+                      <h4><a><i class='fa fa-user'></i>  $user->uname</a></h4>
+                     </div>";
+        }
         return $result;
-        
     }
-    
-    function DisplayOrder()
+
+    function DisplayNeighborName()
     {
-        $TrackOrderModel = new TrackOrderModel();
-        $orderArray = $TrackOrderModel->GetOrder();
-        $result = "";
-        
-        //Generate a coffeeTable for each coffeeEntity in array
-        foreach ($orderArray as $key => $order) 
-        {
-            $result = $result .
-                    "<table class = 'orderTable'>   
-                        <tr>
-                          <th width = '75px' >OrderTime: </th>
-                            <td>$order->ordertime</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Name: </th>
-                            <td>$order->aname</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Config: </th>
-                            <td>$order->config</td>
-                        </tr>
-                        
-                        <tr>
-                            <th>Price: </th>
-                            <td>$order->price</td>
-                        </tr>  
-                        <tr>
-                            <th>Quantity: </th>
-                            <td>$order->quantity</td>
-                        </tr>    
-                        <tr>
-                            <th>Status: </th>
-                            <td>$order->status</td>
-                        </tr> 
-                     </table>";
-        }        
-        return $result;
-        
+        $NeighborModel = new NeighborModel();
+        $hname = $NeighborModel->GetNeighborName();
+
+        return $hname;
     }
-    
-    
-    function UpdateOrder($aname, $config, $price) {
-        $TrackOrderModel = new TrackOrderModel();
-        $TrackOrderModel->SetOrder($aname, $config, $price);
-    }
+
 
 }
 ?>

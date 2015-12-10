@@ -21,7 +21,7 @@ class MessageController {
             ),
             'location_address' => $address,
             'location_name'    => $message->title,
-            'location_tid'     => $message->tid,
+            'location_id'     => $message->tid,
             'location_author'  => $message->author,
         );
 

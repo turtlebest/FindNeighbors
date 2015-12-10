@@ -1,7 +1,10 @@
 <?php
   include "include.php";
   require 'Controller/MessageController.php';
+  require 'Controller/NeighborController.php';
+
   $MessageController = new MessageController();
+  $NeighborController = new NeighborController();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +18,10 @@
     <!--<section id="imgBanner">
       <h2>Neighbor</h2>
     </section>-->
-    <?php $result = $MessageController->DisplayNeighborPost();?>
+    <?php
+      $content = $MessageController->DisplayBlockPost();
+      $result = $NeighborController->DisplayMembersOnMap();
+    ?>
     <br><br><br></br>
     <?php include "google_map.php";?>
 
@@ -25,13 +31,25 @@
     <section id="courseArchive">
       <div class="container">
         <div class="row">
+          <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i> <?php echo $NeighborController->DisplayNeighborName();?></a>
+          <div class='col-lg-12 col-12 col-sm-12'>
+            <div class='single_blog_archive wow fadeInUp'>
+              <h2 class='blog_title'>Members</h2>
+              <div class="row">
+                <?php echo $NeighborController->DisplayMembersOnList()?>
+                <!--<div class="col-lg-3 col-md-3 col-sm-3">
+                    <h3>Best Tutor</h3>
+                </div>-->
+              </div>
+            </div>
+          </div>
           <!-- start course content -->
           <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="courseArchive_content">
               <!-- start blog archive  -->
               <div class="row">
                 <!-- start single blog archive -->
-                <?php echo $result[0]; ?>
+                <?php echo $content[0];?>
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->
