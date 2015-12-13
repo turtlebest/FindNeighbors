@@ -12,6 +12,7 @@ class MessageModel {
         $uid = $_SESSION['uid'];
         //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
+        $mysqli2 = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
         if (mysqli_connect_errno()) {
@@ -20,13 +21,9 @@ class MessageModel {
         }
         printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
-                                  FROM Message as m, User as u, block_hood as bh, Relationship as r
-                                  WHERE (u.uid = ? AND u.bid = bh.bid AND u.login_time < m.timestamp AND (u.bid = m.recipient_bid OR bh.hid = m.recipient_hid)) 
-                                  OR 
-                                  (r.user2 = u.uid AND u.uid = ? AND u.login_time < m.timestamp AND r.relationship = 'neighbor' AND r.user1 = m.author AND m.recipient_neighbors = TRUE)
-                                  OR
-                                  (r.user2 = u.uid AND u.uid = ? AND u.login_time < m.timestamp AND r.relationship = 'friend' AND r.user1 = m.author AND m.recipient_friend = TRUE)");
-        $stmt->bind_param('sss', $uid, $uid, $uid);
+                                  FROM Message as m, read_state as rs
+                                  WHERE m.mid = rs.mid AND rs.uid = ? AND rs.read_date is NULL ");
+        $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
 
@@ -34,14 +31,30 @@ class MessageModel {
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("c");
+            printf("cf");
+            /* $stmt2 = $mysqli2->prepare("UPDATE read_state SET read_date = NOW() WHERE mid = ? AND uid = ?");
+            $stmt2->bind_param('ss', $mid, $uid);
+            $stmt2->execute();
+            $stmt2->close();
+            printf("d");*/
+            //$MessageModel = new MessageModel();
+            $firstmessage = $this->GetSinglePostFirst($tid);
+            printf("d");
+            if ($firstmessage->mid != $mid) {
+                printf("reply");
+              $reply = TRUE;
+            } else {
+                printf("notr");
+              $reply = FALSE;
+            }
             //Create coffee objects and store them in an array.
-            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid);
+            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, $reply);
             array_push($messageArray, $message);
         }
         //Close connection and return result
         $stmt->close();
         $mysqli->close();
+         $mysqli2->close();
 
         return $messageArray;
     }
@@ -72,7 +85,7 @@ class MessageModel {
         while ($stmt->fetch()) {
             printf("c");
             //Create coffee objects and store them in an array.
-            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid);
+            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, NULL);
             array_push($messageArray, $message);
         }
         //Close connection and return result
@@ -109,7 +122,7 @@ class MessageModel {
             //printf("c");
             //Create coffee objects and store them in an array.
             //printf($tid."turtle");
-            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid);
+            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, NULL);
             //printf($message->tid."ttttt");
             array_push($messageArray, $message);
         }
@@ -122,6 +135,7 @@ class MessageModel {
 
     function GetSinglePostFirst($tid) {
         require 'Credentials.php';
+
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
@@ -140,8 +154,8 @@ class MessageModel {
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp);
         $stmt->fetch();
 
-        printf("c");
-        $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL);
+        printf("first");
+        $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         //Close connection and return result
         $stmt->close();
         $mysqli->close();
@@ -178,7 +192,7 @@ class MessageModel {
         while ($stmt->fetch()) {
             printf("c");
             //Create coffee objects and store them in an array.
-            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL);
+            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             array_push($messageArray, $message);
         }
         //Close connection and return result

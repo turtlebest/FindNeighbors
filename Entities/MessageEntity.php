@@ -14,8 +14,9 @@ class MessageEntity
     public $recipient_bid;
     public $recipient_hid;
     public $tid;
+    public $reply_message;
 
-    function __construct($mid, $title, $content, $address, $timestamp, $author, $recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid, $tid) {
+    function __construct($mid, $title, $content, $address, $timestamp, $author, $recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid, $tid, $reply_message) {
         $this->mid = $mid;
         $this->title = $title;
         $this->content = $content;
@@ -28,6 +29,7 @@ class MessageEntity
         $this->recipient_bid = $recipient_bid;
         $this->recipient_hid = $recipient_hid;
         $this->tid = $tid;
+        $this->reply_message = $reply_message;
 
     }
 

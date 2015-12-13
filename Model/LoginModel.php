@@ -32,9 +32,17 @@ printf($psw);
             printf("e");
             $Correct = TRUE;
         }
+
+        $stmt->close();
+
+        if ($Correct) {
+            $stmt = $mysqli->prepare("UPDATE User SET login_time = NOW() WHERE uid = ?");
+            $stmt->bind_param('s', $uid);
+            $stmt->execute();
+            $stmt->close();
+        }
         //Close connection and return result
          printf("g");
-        $stmt->close();
         $mysqli->close();
         printf($Correct);
         return $Correct;

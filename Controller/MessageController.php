@@ -14,13 +14,19 @@ class MessageController {
         $lat = $output->results[0]->geometry->location->lat;
         $long = $output->results[0]->geometry->location->lng;
 
+        if ($message->reply_message) {
+           $title = $message->author."reply on".$message->title;
+        } else {
+           $title = $message->title;
+        }
+
         $location = array(
             'google_map' => array(
             'lat' => $lat,
             'lng' => $long,
             ),
             'location_address' => $address,
-            'location_name'    => $message->title,
+            'location_name'    => $title,
             'location_id'     => $message->tid,
             'location_author'  => $message->author,
         );
@@ -43,7 +49,24 @@ class MessageController {
             $lat = $mapresult[1];
             $long = $mapresult[2];
 
-            $result = $result .
+            if ($message->reply_message) {
+                $result = $result .
+                    "
+                     <div class='col-lg-12 col-12 col-sm-12'>
+                      <div class='single_blog_archive wow fadeInUp'>
+                       <h5 class='blog_title'><a href='posts_single.php?thread_id=$message->tid'><i class='fa fa-comment' style='color:#ffac33'></i> $message->author reply on message $message->title</a></h5>
+                       <div class='blog_commentbox'>
+                         <p><i class='fa fa-clock-o'></i>$message->timestamp</p>
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$message->address</a></p>
+                         <p><i class='fa fa-user'></i>Author: $message->author</p>
+                       </div>
+                         <p class='blog_summary'>$message->content</p>
+                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                       </div>
+                     </div>";
+
+            } else {
+                $result = $result .
                     "
                      <div class='col-lg-12 col-12 col-sm-12'>
                       <div class='single_blog_archive wow fadeInUp'>
@@ -57,6 +80,8 @@ class MessageController {
                          <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
                        </div>
                      </div>";
+            }
+
         }
         return array($result, $locations);
     }
