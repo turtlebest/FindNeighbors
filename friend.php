@@ -1,8 +1,8 @@
 <?php
 include "include.php";
-require 'Controller/NeighborController.php';
+require 'Controller/FriendController.php';
 
-$NeighborController = new NeighborController();
+$FriendController = new FriendController();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@ $NeighborController = new NeighborController();
 
     <?php include "static/header.php";?>
     <?php
-      $result = $NeighborController->DisplayMembersOnMap();
+      $result = $FriendController->DisplayMembersOnMap();
     ?>
     <br><br><br></br>
     <?php include "google_map.php";?>
@@ -25,12 +25,12 @@ $NeighborController = new NeighborController();
       <div class="container">
         <div class="row">
           <!-- start course content -->
-          <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-home"></i> Neighbors</a>
+          <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i> Friends</a>
           <div class='col-lg-12 col-12 col-sm-12'>
             <div class='single_blog_archive wow fadeInUp'>
               <h2 class='blog_title'>Members</h2>
               <div class="row">
-                <?php echo $NeighborController->DisplayMembersOnList()?>
+                <?php echo $FriendController->DisplayMembersOnList()?>
               </div>
             </div>
           </div>

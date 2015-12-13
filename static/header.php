@@ -23,12 +23,12 @@
                 <?php if ($_SESSION['Login']) { ?>
                 <li><a href="home.php">Home</a></li>
                 <li><a href="block.php">Block</a></li>
-                <li><a href="neighbor.php">Hood</a></li>
+                <li><a href="hood.php">Hood</a></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Connect<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="contact.php">Friend</a></li>
-                    <li><a href="#">Neighbor</a></li>
+                    <li><a href="friend.php">Friend</a></li>
+                    <li><a href="neighbor.php">Neighbor</a></li>
                   </ul>
                 </li>
                 <li class="dropdown">

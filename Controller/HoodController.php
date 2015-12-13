@@ -1,11 +1,11 @@
 <?php
 
-require ("Model/FriendModel.php");
+require ("Model/HoodModel.php");
 
 //Contains non-database related function for the Coffee page
-class FriendController {
+class HoodController {
 
-   function GetLatandlong($user) {
+     function GetLatandlong($user) {
         $address = str_replace(' ', '+', $user->address);
         $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
 
@@ -31,8 +31,8 @@ class FriendController {
 
     function DisplayMembersOnMap()
     {
-        $FriendModel = new FriendModel();
-        $userArray = $FriendModel->GetMember();
+        $HoodModel = new HoodModel();
+        $userArray = $HoodModel->GetMember();
         $locations = array();
 
         foreach ($userArray as $key => $user) {
@@ -45,8 +45,8 @@ class FriendController {
 
     function DisplayMembersOnList()
     {
-        $FriendModel = new FriendModel();
-        $userArray = $FriendModel->GetMember();
+        $HoodModel = new HoodModel();
+        $userArray = $HoodModel->GetMember();
         $result = "";
 
         foreach ($userArray as $key => $user)
@@ -58,6 +58,15 @@ class FriendController {
         }
         return $result;
     }
+
+    function DisplayNeighborName()
+    {
+        $HoodModel = new HoodModel();
+        $hname = $HoodModel->GetNeighborName();
+
+        return $hname;
+    }
+
 
 }
 ?>

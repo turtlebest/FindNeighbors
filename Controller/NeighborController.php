@@ -5,7 +5,7 @@ require ("Model/NeighborModel.php");
 //Contains non-database related function for the Coffee page
 class NeighborController {
 
-     function GetLatandlong($user) {
+   function GetLatandlong($user) {
         $address = str_replace(' ', '+', $user->address);
         $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
 
@@ -58,15 +58,6 @@ class NeighborController {
         }
         return $result;
     }
-
-    function DisplayNeighborName()
-    {
-        $NeighborModel = new NeighborModel();
-        $hname = $NeighborModel->GetNeighborName();
-
-        return $hname;
-    }
-
 
 }
 ?>

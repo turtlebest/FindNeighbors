@@ -5,6 +5,7 @@ require ("Entities/UserEntity.php");
 //Contains database related code for the Coffee page.
 class NeighborModel {
 
+    //Get coffeeEntity objects from the database and return them in an array.
     function GetMember() {
         require 'Credentials.php';
         $uid = $_SESSION['uid'];
@@ -17,9 +18,9 @@ class NeighborModel {
            exit();
         }
 
-        $stmt = $mysqli->prepare("SELECT u.uid, u.uname, u.address
-                                  FROM User as u, block_hood as bh, (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid and u.uid = ?) as UserNeighbor
-                                  WHERE u.bid = bh.bid and bh.hid = UserNeighbor.hid and u.approved = TRUE");
+        $stmt = $mysqli->prepare("SELECT u2.uid, u2.uname, u2.address
+                                  FROM User as u1, Relationship as r, User as u2
+                                  WHERE u1.uid = r.user1 and u2.uid = r.user2 and u1.uid = ? and r.relationship = 'neighbors'");
         $stmt->bind_param('s', $uid);
 
         $stmt->execute();
@@ -38,34 +39,6 @@ class NeighborModel {
         $mysqli->close();
         return $userArray;
     }
-
-    function GetNeighborName() {
-        require 'Credentials.php';
-        $uid = $_SESSION['uid'];
-
-        $mysqli = new mysqli($host, $user, $passwd, $database);
-
-        /* check connection */
-        if (mysqli_connect_errno()) {
-           printf("Connect failed: %s\n", mysqli_connect_error());
-           exit();
-        }
-
-        $stmt = $mysqli->prepare("SELECT h.hname
-                                  FROM Blocks as b, User as u, block_hood as bh, Hoods as h
-                                  WHERE b.bid = u.bid and bh.bid = b.bid and h.hid = bh.hid and u.uid = ?");
-        $stmt->bind_param('s', $uid);
-
-        $stmt->execute();
-        $stmt->bind_result($hname);
-        $stmt->fetch();
-        //Close connection and return result
-        $stmt->close();
-        $mysqli->close();
-        return $hname;
-    }
-
-
 
 }
 ?>
