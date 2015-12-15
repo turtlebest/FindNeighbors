@@ -20,7 +20,7 @@ $MessageController = new MessageController();
     </section>-->
     <?php $result = $MessageController->DisplayNewPost();?>
     <br><br><br></br>
-    <?php include "google_map.php";?>
+    <?php include "google_map.php"; ?>
     <!--=========== END COURSE BANNER SECTION ================-->
 
     <!--=========== BEGIN COURSE BANNER SECTION ================-->

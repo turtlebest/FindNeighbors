@@ -6,6 +6,7 @@ require ("Model/MessageModel.php");
 class MessageController {
 
     function GetLatandlong($message) {
+        //printf("map");
         $address = str_replace(' ', '+', $message->address);
         $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
 
@@ -15,7 +16,7 @@ class MessageController {
         $long = $output->results[0]->geometry->location->lng;
 
         if ($message->reply_message) {
-           $title = $message->author."reply on".$message->title;
+           $title = $message->author." reply on ".$message->title;
         } else {
            $title = $message->title;
         }
@@ -46,6 +47,7 @@ class MessageController {
         {
             $mapresult = $this->GetLatandlong($message);
             array_push($locations, $mapresult[0]);
+            //printf($mapresult[0][location_author]);
             $lat = $mapresult[1];
             $long = $mapresult[2];
 
