@@ -47,6 +47,36 @@ printf($psw);
         printf($Correct);
         return $Correct;
     }
+    
+    
+    function GetUserInfo(){
+    
+        require 'Credentials.php';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+printf("b");
+$uid = $_SESSION['uid'];
+$psw = $_SESSION['password'];
+printf($uid);
+printf($psw);
+
+        $stmt = $mysqli->prepare("SELECT uname, password, introduction, address FROM User WHERE uid = ? and password = ?");
+        $stmt->bind_param('ss', $uid, $psw);
+
+        $stmt->execute();
+        $stmt->bind_result($uname, $psw,$introduction, $address);
+        if($stmt -> fetch()){
+        $_SESSION['uname'] = $uname;
+        $_SESSION['introduction'] = $introduction;
+        $_SESSION['address'] = $address;
+        }
+    }
+        
+            
 
 }
 ?>

@@ -14,6 +14,8 @@ printf($Correct);
 if ($Correct) {
     $_SESSION['Login'] = TRUE;
     $_SESSION['uid'] = $uid;
+    $_SESSION['password'] = $psw;
+    
     echo '<script>window.location.href = "home.php";</script>'; 
 } else {
 

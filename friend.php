@@ -1,7 +1,8 @@
 <?php
 include "include.php";
 require 'Controller/FriendController.php';
-
+//require 'Model/FriendModel.php';
+//$FriendModel = new FriendModel();
 $FriendController = new FriendController();
 ?>
 <!DOCTYPE html>
@@ -14,7 +15,9 @@ $FriendController = new FriendController();
 
     <?php include "static/header.php";?>
     <?php
+      $content = $FriendController->DisplayFriendProfile();
       $result = $FriendController->DisplayMembersOnMap();
+      $suggest = $FriendController->DisplaySuggestFriends();
     ?>
     <br><br><br></br>
     <?php include "google_map.php";?>
@@ -40,6 +43,18 @@ $FriendController = new FriendController();
               <div class="row">
                 <!-- start single blog archive -->
                 <?php echo $content[0];?>
+                <!-- start single blog archive -->
+              </div>
+              <!-- end blog archive  -->
+            </div>
+          </div>
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="courseArchive_content">
+              <!-- start blog archive  -->
+              <div class="row">
+                <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i>Suggest Friends</a>
+                <!-- start single blog archive -->
+                <?php echo $suggest[0];?>
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->

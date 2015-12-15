@@ -1,4 +1,5 @@
 <?php
+include "include.php";
 
 require ("Entities/MessageEntity.php");
 
@@ -519,41 +520,34 @@ $tid = '111';
         
     }
     
-    function ProfileEdit() {
+    function GetUserInfo(){
+    
         require 'Credentials.php';
-        printf("A");
-        $uid = $_SESSION['uid'];
-        //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
-
         /* check connection */
         if (mysqli_connect_errno()) {
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
-        
-        
-$uname = $_POST['uname_edit'];    
-//$uid = $_POST['uid_input'];
-$psw = $_POST['password_edit'];
-$introduction = $_POST['intro_edit'];
-$state = 'New York';
-$city = 'New York';
-$bid = $_POST['GetBlockList'];
-$photo = "photo";
-$address = $_POST['address'];
+//printf("b");
+$uid = $_SESSION['uid'];
+//$psw = $_SESSION['password'];
+//printf($uid);
+//printf($psw);
 
-        $stmt = $mysqli->prepare("UPDATE User SET `uname`= ?, `password` = ?, `introduction`=?, `address`=? WHERE `uid`= ?;");
-        $stmt->bind_param('sssss', $uname, $psw, $introduction, $address, $uid);               
+        $stmt = $mysqli->prepare("SELECT uname, password, introduction, address FROM User WHERE uid = ?");
+        $stmt->bind_param('s', $uid);
+
         $stmt->execute();
-        $stmt -> fetch();
-
-
-            $stmt->close();
-            $mysqli->close();
-            printf("b");
+        $stmt->bind_result($uname, $psw,$introduction, $address);
+        if($stmt -> fetch()){
+        $_SESSION['uname'] = $uname;
+        $_SESSION['password'] =$psw;
+        $_SESSION['introduction'] = $introduction;
+        $_SESSION['address'] = $address;
+        }
     }
+
 }
 
 ?>

@@ -1,6 +1,7 @@
 <?php
 include "include.php";
 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,28 +30,51 @@ include "include.php";
               <!-- start blog archive  -->
               <div class="row">
                 <!-- start single blog archive -->
-
-                  <form action= "login_active.php" method="POST">
-                  <input type='text' class='' name='uname_edit' placeholder='user name'></p>
-                  <input type='text' class='' name='password_edit' placeholder='password'></p>
-                  <input type='text' class='' name='intro_edit' placeholder='introduction'></p>
-                  <br>
+                
+                  <form action= 'ProfileSubmit.php' method='POST'>
                   <?php
                   include "include.php";
                   require 'Model/MessageModel.php';
+                  
+                  $MessageModel = new MessageModel();
+                  $MessageModel->GetUserInfo();
+                  
+                  echo $_SESSION['uname'];
+                  
+                  echo "<br>";
+                  echo "<input type='text' class='' name='uname_edit' placeholder='user name'></p>";
+                  echo $_SESSION['password'];
+                  echo "<br>";
+                  echo "<input type='text' class='' name='password_edit' placeholder='password'></p>";
+                  echo $_SESSION['introduction'];
+                  echo "<br>";
+                  echo "<input type='text' class='' name='intro_edit' placeholder='introduction'></p>";
+                  
+                  echo $_SESSION['address'];
+                  echo "<br>";
+                  echo "<input type='text' class='' name='address_edit' placeholder='address'></p>";
+                  
+                  ?>
+                  <?php
+                  include "include.php";
+                  //require 'Model/MessageModel.php';
                   require 'Model/BlockModel.php';
+                  
                  
                   $BlockModel = new BlockModel();
                   $BlockModel->GetBid();
                   echo $_SESSION['bid'];
+                  $_SESSION['bid'] = $bid;
+                  echo $bid;
+                  echo "<br>";
                   echo "<select name='GetBlockList'>";
-                  echo "<option value = $_SESSION['bid'] selected = 'selected'> $_SESSION['bid'] </option>";
+                  //echo "<option value ='12 Street between 1st and 3rd Ave' selected = 'selected'> $bid </option>";
+                  
                   $BlockModel->GetBlockList();
                  
                   //printf($_SESSION['hid']);
                   ?>
-                  
-                  <input type='submit' class='' value = 'Create'>
+                  <input type='submit' class='' value = 'Submit'>
                 </p>
                 </form>
                    </div>

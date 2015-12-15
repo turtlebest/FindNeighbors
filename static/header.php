@@ -34,8 +34,8 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Other<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="contact.php">Profile</a></li>
-                    <li><a href="#">Post Message</a></li>
+                    <li><a href="profiledit.php">Profile</a></li>
+                    <li><a href="newmessage.php">Post Message</a></li>
                     <li><a href="login.php">Logout</a></li>
                     <li><a href="#">Link Three</a></li>
                   </ul>
