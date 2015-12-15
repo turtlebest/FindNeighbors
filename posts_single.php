@@ -28,10 +28,11 @@ $MessageController = new MessageController();
                   <div class="single_blog">
                     <?php echo $MessageController->DisplaySinglePostFirst($_GET['thread_id']);?>
                   </div>
-                    <?php echo $MessageController->DisplaySinglePostReply($_GET['thread_id']);?>
+                    <?php echo $MessageController->DisplaySinglePostReply($_GET['thread_id']);
+                    echo $_GET['thread_id'];?>
                 </div>
               </div>
-              <a class='blog_readmore' href='reply.php'><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
+              <a class='blog_readmore' href='reply.php?re_tread_id=<?=$_GET['thread_id']?>'><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
               <!-- end blog archive  -->
             </div>
           </div>

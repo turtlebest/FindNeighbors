@@ -20,6 +20,7 @@ class MessageModel {
            exit();
         }
         printf("b".$uid."aaa");
+       
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
                                   FROM Message as m, read_state as rs
                                   WHERE m.mid = rs.mid AND rs.uid = ? AND rs.read_date is NULL ");
@@ -155,11 +156,14 @@ class MessageModel {
         $stmt->fetch();
 
         printf("first");
+        printf("new");
+        printf($tid);
+        $_SESSION['tid']=$tid;
         $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         //Close connection and return result
         $stmt->close();
         $mysqli->close();
-
+printf($_SESSION['tid']);
         return $message;
     }
 
@@ -234,6 +238,7 @@ $recipient_neighbors = 0;
 $tid = null;
 //$friends = $_POST["friends"];
 
+
 if (isset($_POST['recipient_bid'])){
         $recipient_bid = $_SESSION['bid'];
         }
@@ -258,7 +263,7 @@ if (isset($_POST['recipient_friend'])){
 if (isset($_POST['recipient_neighbor'])){
         $recipient_neighbors = 1;
         
-        foreach($neighborsArray as $key => $neighbors){
+        foreach($_SESSION['neighborsArray'] as $key => $neighbors){
                 $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
         $stmt->bind_param('ss', $mid, $neighbors);
         $stmt->execute();
@@ -277,7 +282,7 @@ if (isset($_POST['recipient_neighbor'])){
         }
 
 
-        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
+        /*$stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");*/
         
         $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
         $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
@@ -330,8 +335,23 @@ if (isset($_POST['recipient_neighbor'])){
            exit();
         }
         printf("b".$uid."aaa");
-     
+        
 $mid = mt_rand();
+$title = $_POST['title_input'];    
+$content = $_POST['content_input'];
+$address = $_POST['address_input'];
+//$author = $_SESSION['uid'];
+$author = $uid;
+//$recipient_uid = 'u02';
+$recipient_uid = $_POST['friendsORneighbors'];
+$recipient_bid = null;
+$recipient_hid = null;
+$recipient_friend = 0;
+$recipient_neighbors = 0;
+$tid = null;
+//$friends = $_POST["friends"];
+     
+/*$mid = mt_rand();
 $title = $_SESSION['title'];    
 $content = $_POST['content_input'];
 $address = $_POST['address_input'];
@@ -339,14 +359,30 @@ $author = $_SESSION['uid'];
 $recipient_uid = $_SESSION['recipient_uid'];
 $recipient_bid = $_SESSION['recipient_bid'];
 $recipient_hid = $_SESSION['recipient_hid'];
-$recipient_friend = $_SESSION['recipient_friend'];
-$recipient_neighbors = $_SESSION['recipient_neighbors'];
-$tid = $_SESSION['tid'];
-
-        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`,`recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
-            $stmt->bind_param('sssssssss', $mid, $title, $content, $address, $author, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
+$recipient_friend = $_SESSION['friendsArray'];
+$recipient_neighbors = $_SESSION['neighborsArray'];*/
+//$tid ="t123";
+//$tid = $_GET['thread_id'];
+            $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
+            $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
             $stmt->execute();
             $stmt -> fetch();
+//$tid = mt_rand();           
+$tid = '111';
+        $stmt = $mysqli->prepare("INSERT INTO thread(`tid`) VALUES(?);");
+        $stmt->bind_param('s', $tid);
+        $stmt->execute();
+        $stmt -> fetch();
+        
+            $stmt = $mysqli->prepare("UPDATE Message SET `tid`= ? WHERE `mid`= ?;");
+        $stmt->bind_param('ss', $tid, $mid);               
+        $stmt->execute();
+        $stmt -> fetch();
+
+        /*$stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`,`recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
+            $stmt->bind_param('sssssssss', $mid, $title, $content, $address, $author, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
+            $stmt->execute();
+            $stmt -> fetch();*/
             
             $stmt = $mysqli->prepare("INSERT INTO thread_participate(`tid`, `uid`) VALUES(?,?);");
             $stmt->bind_param('ss', $tid, $author);
@@ -449,7 +485,7 @@ $tid = $_SESSION['tid'];
     function GetNeighbors() {
         require 'Credentials.php';
         $uid = $_SESSION['uid'];
-        $uid = 'u01';
+        //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
@@ -481,6 +517,42 @@ $tid = $_SESSION['tid'];
         $_SESSION['neighborsArray']=$neighborsArray;
         //return $neighborsArray;
         
+    }
+    
+    function ProfileEdit() {
+        require 'Credentials.php';
+        printf("A");
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        printf("b".$uid."aaa");
+        
+        
+$uname = $_POST['uname_edit'];    
+//$uid = $_POST['uid_input'];
+$psw = $_POST['password_edit'];
+$introduction = $_POST['intro_edit'];
+$state = 'New York';
+$city = 'New York';
+$bid = $_POST['GetBlockList'];
+$photo = "photo";
+$address = $_POST['address'];
+
+        $stmt = $mysqli->prepare("UPDATE User SET `uname`= ?, `password` = ?, `introduction`=?, `address`=? WHERE `uid`= ?;");
+        $stmt->bind_param('sssss', $uname, $psw, $introduction, $address, $uid);               
+        $stmt->execute();
+        $stmt -> fetch();
+
+
+            $stmt->close();
+            $mysqli->close();
+            printf("b");
     }
 }
 

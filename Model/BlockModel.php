@@ -68,8 +68,8 @@ class BlockModel {
 
     function GetBid() {
         require 'Credentials.php';
-        //$uid = $_SESSION["uid"];
-        $uid='u01';
+        $uid = $_SESSION["uid"];
+        //uid='u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
@@ -113,6 +113,42 @@ class BlockModel {
         $mysqli->close();
 
         $_SESSION['hid'] = $hid;
+        
+        }
+        
+        function GetBlockList() {
+        require 'Credentials.php';
+        //$uid = $_SESSION["uid"];
+        //$uid='u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        
+        $stmt = $mysqli->prepare("SELECT bid, bname FROM Blocks");
+        //$stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($bid, $bname);
+        
+        //echo "<select name='GetBlockList'>";
+        
+              
+        while($stmt->fetch()) { 
+        echo "<option value=$bid> $bname</option>";      
+        //echo  "<input type='checkbox' name='friends[]' value=$uid> $uid<br>";
+
+		}
+		echo "</select></p>";
+		echo "<br>";
+
+    
+        $stmt->close();
+        $mysqli->close();
+        //$_SESSION['blockssArray']=$blockssArray;
+
         
         }
     

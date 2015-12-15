@@ -1,5 +1,8 @@
 <?php
 include "include.php";
+require 'Controller/MessageController.php';
+$MessageController = new MessageController();
+?>
 
 ?>
 <!DOCTYPE html>
@@ -32,8 +35,19 @@ include "include.php";
 
                   <form action= "message.php" method="POST">
                   <input type='text' class='' name='content_input' placeholder='content'></p>
-                  <input type='text' class='' name='address_input' placeholder='address'></p>
+                  <!--<input type='text' class='' name='address_input' placeholder='address'></p>-->
+                  <?php 
+                  
+                  $MessageController->DisplaySinglePostFirst($_GET['re_thread_id']);
+                  echo $_GET['re_thread_id'];?>
+                  </div>
+                    <?php 
+                    $MessageController->DisplaySinglePostReply($_GET['re_thread_id']);
+                    echo $_GET['re_thread_id'];?>
+                </div>
                   <input type='submit' class='' value = 'Reply'>
+                   
+                  
                 </p>
                 </form>
                    </div>

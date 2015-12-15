@@ -36,17 +36,30 @@ include "include.php";
                   <input type='text' class='' name='password_input' placeholder='password'></p>
                   <input type='text' class='' name='intro_input' placeholder='introduction'></p>
                   <input type='text' class='' name='address_input' placeholder='address'></p>
-                  <input type='text' class='' name='city_input' placeholder='city'></p>
+                  <!--<input type='text' class='' name='city_input' placeholder='city'></p>
                   <input type='text' class='' name='state_input' placeholder='state'</p>
-                  </p>
-                  <select name='block_input'>
+                  </p>-->
+                  <br>
+                  <?php
+                  include "include.php";
+                  require 'Model/MessageModel.php';
+                  require 'Model/BlockModel.php';
+                 
+                  $BlockModel = new BlockModel();
+                  echo "<select name='GetBlockList'>";
+                  $BlockModel->GetBlockList();
+                 
+                  //printf($_SESSION['hid']);
+                  ?>
+                  <!--<select name='block_input'>
+                    
                     <option value='b01'> 6 Ave between 32nd and 36th Street</option>
                     <option value='b02'> 12 Street between 1st and 3rd Street</option>
                     <option value='b03'> Columbus Ave between 59th and 65th Street</option>
                     <option value='b04'> 50th Ave between Vernon Blvd and Jackson Ave</option>
                     <option value='b05'> 7th Ave between 3rd and 6th Street</option>
                     <option value='b06'> Jay Street between Fulton and Johnson Street</option>
-                    </select></p>
+                    </select></p>-->
                   <input type='submit' class='' value = 'Create'>
                 </p>
                 </form>

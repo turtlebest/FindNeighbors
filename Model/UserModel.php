@@ -21,11 +21,13 @@ if(isset($_SESSION["uid"])) {
   echo "You are already logged in. ";
 }
 else {
+  echo "p";
   //if the user have entered _all_ entries in the form, insert into database
-  if(isset($_POST["uid"])) {
+  if(isset($_POST['uid_input'])) {
 
     //check if username already exists in database
-    if ($stmt = $mysqli->prepare("SELECT uid from User where uid = ?")) {
+    echo "p";
+      $stmt = $mysqli->prepare("SELECT uid from User where uid = ?");
       $stmt->bind_param('s', $uid);
       $stmt->execute();
       //$stmt->bind_result($phoneno);
@@ -34,14 +36,14 @@ else {
           echo "Click <a href=\"createaccount.php\">here</a> to try again.";
 
         }else{
-       
+ echo "q";      
 $uname = $_POST['uname_input'];    
 $uid = $_POST['uid_input'];
 $psw = $_POST['password_input'];
 $introduction = $_POST['intro_input'];
-$state = $_POST['state_input'];
-$city = $_POST['city_input'];
-$bid = $_POST['block_input'];
+$state = 'New York';
+$city = 'New York';
+$bid = $_POST['GetBlockList'];
 $photo = "photo";
 $address = $_POST['address'];
 
@@ -53,7 +55,7 @@ $address = $_POST['address'];
             $stmt->close();
             $mysqli->close();
             printf("b");
-     //} 
-//    }
+     } 
+    }
 }
 ?>

@@ -100,6 +100,8 @@ class MessageController {
             array_push($locations, $mapresult[0]);
             $lat = $mapresult[1];
             $long = $mapresult[2];
+            echo "test";
+           //$_SESSION['tid'] = 
 
             $result = $result .
                     "
@@ -116,6 +118,8 @@ class MessageController {
                        </div>
                      </div>";
         }
+        //printf($message->tid);
+    
         return array($result, $locations);
     }
 
@@ -133,7 +137,8 @@ class MessageController {
             array_push($locations, $mapresult[0]);
             $lat = $mapresult[1];
             $long = $mapresult[2];
-           // printf($message->tid.'');
+           //printf($message->tid.'');
+           //$_SESSION['tid'] = 
             $result = $result .
                     "
                      <div class='col-lg-12 col-12 col-sm-12'>
@@ -192,7 +197,6 @@ class MessageController {
         }
         return $result;
     }
-
 
 }
 ?>

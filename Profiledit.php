@@ -31,20 +31,25 @@ include "include.php";
                 <!-- start single blog archive -->
 
                   <form action= "login_active.php" method="POST">
-                  <input type='text' class='' name='uname_input' placeholder='user name'></p>
-                  <input type='text' class='' name='password_input' placeholder='password'></p>
-                  <input type='text' class='' name='intro_input' placeholder='introduction'></p>
-                  <input type='text' class='' name='city_input' placeholder='city'></p>
-                  <input type='text' class='' name='state' placeholder='state'</p>
-                  </p>
-                  <select>
-                    <option>b01 6 Ave between 32nd and 36th Street</option>
-                    <option>b02 12 Street between 1st and 3rd Street</option>
-                    <option>b03 Columbus Ave between 59th and 65th Street</option>
-                    <option>b04 50th Ave between Vernon Blvd and Jackson Ave</option>
-                    <option>b05 7th Ave between 3rd and 6th Street</option>
-                    <option>b06 Jay Street between Fulton and Johnson Street</option>
-                    </select></p>
+                  <input type='text' class='' name='uname_edit' placeholder='user name'></p>
+                  <input type='text' class='' name='password_edit' placeholder='password'></p>
+                  <input type='text' class='' name='intro_edit' placeholder='introduction'></p>
+                  <br>
+                  <?php
+                  include "include.php";
+                  require 'Model/MessageModel.php';
+                  require 'Model/BlockModel.php';
+                 
+                  $BlockModel = new BlockModel();
+                  $BlockModel->GetBid();
+                  echo $_SESSION['bid'];
+                  echo "<select name='GetBlockList'>";
+                  echo "<option value = $_SESSION['bid'] selected = 'selected'> $_SESSION['bid'] </option>";
+                  $BlockModel->GetBlockList();
+                 
+                  //printf($_SESSION['hid']);
+                  ?>
+                  
                   <input type='submit' class='' value = 'Create'>
                 </p>
                 </form>
