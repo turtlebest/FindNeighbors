@@ -32,7 +32,7 @@ include "include.php";
 
                   <form action= "message.php" method="POST">
                   <input type='text' class='' name='title_input' placeholder='title'></p>
-                  <input type='text' class='' name='content_input' placeholder='content'></p>
+                  <p><textarea rows="4" cols="50" class='' name='content_input' placeholder='content'></textarea></p>
                   <input type='text' class='' name='address_input' placeholder='address'></p>
                   <br>
                   <?php

@@ -37,11 +37,6 @@ $MessageController = new MessageController();
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->
-              <!-- start previous & next button -->
-              <div class="single_blog_prevnext">
-                <a href="#" class="prev_post wow fadeInLeft animated" style="visibility: visible; animation-name: fadeInLeft;"><i class="fa fa-angle-left"></i>Previous</a>
-                <a href="#" class="next_post wow fadeInRight animated" style="visibility: visible; animation-name: fadeInRight;">Next<i class="fa fa-angle-right"></i></a>
-              </div>
             </div>
           </div>
           <!-- End course content -->
@@ -53,13 +48,9 @@ $MessageController = new MessageController();
 
               <!-- start single sidebar -->
               <div class="single_sidebar">
-                <h2>Category <span class="fa fa-angle-double-right"></span></h2>
+                <h2>Notify <span class="fa fa-angle-double-right"></span></h2>
                 <ul>
-                  <li><a href="#">Food</a></li>
-                  <li><a href="#">Technology</a></li>
-                  <li><a href="#">Fashion</a></li>
-                  <li><a href="#">Business</a></li>
-                  <li><a href="#">Games</a></li>
+                  <!--<li><a href="#">Food</a></li>-->
                 </ul>
               </div>
               <!-- End single sidebar -->

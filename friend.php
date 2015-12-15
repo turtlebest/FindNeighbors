@@ -52,7 +52,7 @@ $FriendController = new FriendController();
             <div class="courseArchive_content">
               <!-- start blog archive  -->
               <div class="row">
-                <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i>Suggest Friends</a>
+                <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"> </i> Suggest Friends</a>
                 <!-- start single blog archive -->
                 <?php echo $suggest[0];?>
                 <!-- start single blog archive -->
