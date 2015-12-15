@@ -54,7 +54,7 @@ class FriendModel {
         
         $stmt = $mysqli->prepare("SELECT distinct uid, uname, introduction, address
                                   FROM User as u, Relationship as r
-                                  WHERE u.uid = r.user2 AND r.user1 = ? ");
+                                  WHERE u.uid = r.user2 AND relationship = 'friends' AND accept = TRUE AND r.user1 = ? ");
         $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($uid, $uname, $introduction, $address);
@@ -89,12 +89,12 @@ class FriendModel {
 
          $stmt = $mysqli->prepare("SELECT distinct u.uid, u.uname, u.address, u.introduction
                                   FROM User as u, (SELECT bid FROM User WHERE uid = ?) as UserBlock
-                                  WHERE u.bid = UserBlock.bid");
+                                  WHERE u.bid = UserBlock.bid AND u.uid not in (SELECT user2 FROM Relationship WHERE relationship = 'friends' AND user1 = ?)" );
                                   
         /*$stmt = $mysqli->prepare("SELECT distinct uid, uname, introduction, address
                                   FROM User as u1, Relationship as r, User as u2
                                   WHERE u1.uid = ? AND r.user1 = ? ");*/
-        $stmt->bind_param('s', $uid);
+        $stmt->bind_param('ss', $uid,$uid);
 
         $stmt->execute();
         $stmt->bind_result($uid, $uname, $address, $introduction);
@@ -116,6 +116,27 @@ class FriendModel {
         return $friendArray;
     }
     
+    function Addfriend($user2){
+        require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+$relationship = "friends";        
+        
+        
+        $stmt = $mysqli->prepare("INSERT INTO Relationship(`user1`,`user2`,`relationship`, `accept`) VALUES (?,?,?,0);");
+            $stmt->bind_param('sss', $uid, $user2, $relationship);
+            $stmt->execute();
+            $stmt -> fetch();
+        
+
+    }
 
 }
 ?>

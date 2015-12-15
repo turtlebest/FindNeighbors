@@ -125,7 +125,7 @@ class FriendController {
                          <p><i class='fa fa-user'></i>Name: $friend->uname</p>
                        </div>
                          <p class='blog_summary'>$friend->introduction</p>
-                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                         <a class='blog_readmore' href='AddFriends.php?friend_id=$friend->uid'>Add Friend</a>
                        </div>
                      </div>";
         }
@@ -133,6 +133,19 @@ class FriendController {
     
         return array($result, $locations);
     }
+    
+    function AddFriend($user2)
+    {
+        $FriendModel = new FriendModel();
+        $friend = $FriendModel->AddFriend($user2);
+        $mapresult = $this->GetLatandlong($friend);
+        $lat = $mapresult[1];
+        $long = $mapresult[2];
+        $result ="";
+        
+        return $result;
+    }
+
     
 
 }
