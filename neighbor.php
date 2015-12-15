@@ -14,7 +14,9 @@ $NeighborController = new NeighborController();
 
     <?php include "static/header.php";?>
     <?php
+      $content = $NeighborController->DisplayNeighborProfile();
       $result = $NeighborController->DisplayMembersOnMap();
+      $suggest = $NeighborController->DisplaySuggestNeighbors();
     ?>
     <br><br><br></br>
     <?php include "google_map.php";?>
@@ -45,6 +47,19 @@ $NeighborController = new NeighborController();
               <!-- end blog archive  -->
             </div>
           </div>
+          <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="courseArchive_content">
+              <!-- start blog archive  -->
+              <div class="row">
+                <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i>Suggest Friends</a>
+                <!-- start single blog archive -->
+                <?php echo $suggest[0];?>
+                <!-- start single blog archive -->
+              </div>
+              <!-- end blog archive  -->
+            </div>
+          </div>
+          
           <!-- End course content -->
 
         </div>
