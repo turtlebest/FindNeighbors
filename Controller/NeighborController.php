@@ -124,14 +124,31 @@ class NeighborController {
                          <p><i class='fa fa-user'></i>Name: $neighbor->uname</p>
                        </div>
                          <p class='blog_summary'>$neighbor->introduction</p>
-                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                         
+                         <a class='blog_readmore' href='addfriends.php?neighbor_id=$neighbor->uid'>Add Neighbor</a>
                        </div>
                      </div>";
         }
         //printf($message->tid);
+        //<form method='post' action='addfriends.php'>
+//<input name='add' type='submit' value='Add neighbor' /></form>
     
         return array($result, $locations);
     }
+    
+    function AddNeighbor($user2)
+    {
+        $NeighborModel = new NeighborModel();
+        $neighbor = $NeighborModel->AddNeighbor($user2);
+        $mapresult = $this->GetLatandlong($neighbor);
+        $lat = $mapresult[1];
+        $long = $mapresult[2];
+        $result ="";
+        
+        return $result;
+    }
+
+    
 
 }
 ?>
