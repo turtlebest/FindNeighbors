@@ -41,7 +41,7 @@
                   </ul>
                 </li>
                 <?php } else { ?>
-                <li><a href="contact.php">About Us</a></li>
+                <li><a href="AboutUs.php">About Us</a></li>
                 <?php } ?>
               </ul>
             </div><!--/.nav-collapse -->
