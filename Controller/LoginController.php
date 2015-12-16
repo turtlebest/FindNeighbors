@@ -8,9 +8,9 @@ class LoginController {
     function CheckUser($uid, $psw) {
         $LoginModel = new LoginModel();
         printf("c");
-        $Correct = $LoginModel->CheckUser($uid, $psw);
+        $result = $LoginModel->CheckUser($uid, $psw);
 
-        return $Correct;
+        return $result;
     }
 
 }

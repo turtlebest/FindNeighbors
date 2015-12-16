@@ -18,11 +18,11 @@ printf("a");
 printf("b");
 printf($uid);
 printf($psw);
-        $stmt = $mysqli->prepare("SELECT uname FROM User WHERE uid = ? and password = ?");
+        $stmt = $mysqli->prepare("SELECT uname, approved FROM User WHERE uid = ? and password = ?");
         $stmt->bind_param('ss', $uid, $psw);
 
         $stmt->execute();
-        $stmt->bind_result($uname);
+        $stmt->bind_result($uname, $approved);
         $stmt -> fetch();
       printf("f");
         if(empty($uname)){
@@ -45,7 +45,7 @@ printf($psw);
          printf("g");
         $mysqli->close();
         printf($Correct);
-        return $Correct;
+        return array($Correct, $approved);
     }
     
     

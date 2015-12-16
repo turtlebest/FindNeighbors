@@ -26,13 +26,16 @@ $MessageController = new MessageController();
                 <!-- start single blog archive -->
                 <div class="col-lg-12 col-12 col-sm-12">
                   <div class="single_blog">
-                    <?php echo $MessageController->DisplaySinglePostFirst($_GET['thread_id']);?>
+                    <?php $result = $MessageController->DisplaySinglePostFirst($_GET['thread_id']);
+echo $result[0];
+                    ?>
                   </div>
                     <?php echo $MessageController->DisplaySinglePostReply($_GET['thread_id']);
-                    echo $_GET['thread_id'];?>
+                    //printf( "turtle".$_GET['thread_id']);
+                    ?>
                 </div>
               </div>
-              <a class='blog_readmore' href='reply.php?re_tread_id=<?=$_GET['thread_id']?>'><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
+              <a class='blog_readmore' href=<?php echo $result[1]; ?>><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
               <!-- end blog archive  -->
             </div>
           </div>

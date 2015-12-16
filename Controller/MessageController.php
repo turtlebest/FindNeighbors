@@ -174,7 +174,9 @@ class MessageController {
                       <p><i class='fa fa-user'></i>Author: $message->author</p>
                     </div><p>$message->content</p>
                  ";
-        return $result;
+        $reply_url = "reply.php?re_tread_id=".$tid;
+
+        return array($result,$reply_url);
     }
 
     function DisplaySinglePostReply($tid)

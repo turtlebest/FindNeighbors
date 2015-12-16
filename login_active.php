@@ -8,13 +8,16 @@ $uid = $_POST['account_input'];
 $psw = $_POST['password_input'];
 printf($uid);
 
-$Correct = $loginController->CheckUser($uid, $psw);
+$result = $loginController->CheckUser($uid, $psw);
+$Correct = $result[0];
+$Approved = $result[1];
 printf($Correct);
 
-if ($Correct) {
+if ($result[0]) {
     $_SESSION['Login'] = TRUE;
     $_SESSION['uid'] = $uid;
     $_SESSION['password'] = $psw;
+    $_SESSION['approved'] = $Approved;
     
     echo '<script>window.location.href = "home.php";</script>'; 
 } else {

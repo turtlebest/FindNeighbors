@@ -33,7 +33,7 @@ include "include.php";
                   <form action= "Model/UserModel.php" method="POST">
                   <input type='text' class='' name='uname_input' placeholder='user name'></p>
                   <input type='text' class='' name='uid_input' placeholder='user id'></p>
-                  <input type='text' class='' name='password_input' placeholder='password'></p>
+                  <input type='password' class='' name='password_input' placeholder='password'></p>
                   <input type='text' class='' name='intro_input' placeholder='introduction'></p>
                   <input type='text' class='' name='address_input' placeholder='address'></p>
                   <!--<input type='text' class='' name='city_input' placeholder='city'></p>
