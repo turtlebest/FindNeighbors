@@ -36,7 +36,7 @@
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Other<span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="profiledit.php">Profile</a></li>
+                    <li><a href="UserProfile.php">Profile</a></li>
                     <?php if ($_SESSION['approved']) { ?>
                     <li><a href="newmessage.php">Post Message</a></li>
                     <?php } ?>

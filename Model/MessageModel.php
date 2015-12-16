@@ -244,7 +244,7 @@ if (isset($_POST['recipient_bid'])){
         $recipient_bid = $_SESSION['bid'];
         }
 if (isset($_POST['recipient_hid'])){
-        $recipient_bid = $_SESSION['hid'];
+        $recipient_hid = $_SESSION['hid'];
         }
 if (isset($_POST['recipient_friend'])){
         $recipient_friend = 1;
@@ -283,7 +283,6 @@ if (isset($_POST['recipient_neighbor'])){
         }
 
 
-        /*$stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");*/
         
         $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
         $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
@@ -338,61 +337,73 @@ if (isset($_POST['recipient_neighbor'])){
         printf("b".$uid."aaa");
         
 $mid = mt_rand();
-$title = $_POST['title_input'];    
+    
 $content = $_POST['content_input'];
-$address = $_POST['address_input'];
-//$author = $_SESSION['uid'];
-$author = $uid;
-//$recipient_uid = 'u02';
-$recipient_uid = $_POST['friendsORneighbors'];
-$recipient_bid = null;
-$recipient_hid = null;
-$recipient_friend = 0;
-$recipient_neighbors = 0;
-$tid = null;
-//$friends = $_POST["friends"];
-     
-/*$mid = mt_rand();
-$title = $_SESSION['title'];    
-$content = $_POST['content_input'];
-$address = $_POST['address_input'];
-$author = $_SESSION['uid'];
-$recipient_uid = $_SESSION['recipient_uid'];
-$recipient_bid = $_SESSION['recipient_bid'];
-$recipient_hid = $_SESSION['recipient_hid'];
-$recipient_friend = $_SESSION['friendsArray'];
-$recipient_neighbors = $_SESSION['neighborsArray'];*/
-//$tid ="t123";
-//$tid = $_GET['thread_id'];
-            $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
-            $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
-            $stmt->execute();
-            $stmt -> fetch();
-//$tid = mt_rand();           
-$tid = '111';
+           
+$tid = $_SESSION['thread_id'];
         $stmt = $mysqli->prepare("INSERT INTO thread(`tid`) VALUES(?);");
         $stmt->bind_param('s', $tid);
         $stmt->execute();
         $stmt -> fetch();
         
-            $stmt = $mysqli->prepare("UPDATE Message SET `tid`= ? WHERE `mid`= ?;");
-        $stmt->bind_param('ss', $tid, $mid);               
+        
+        $stmt = $mysqli->prepare("SELECT distinct m.title, m.address, m.author, m.recipient_friend, m.recipient_neighbors, m.recipient_uid, m.recipient_bid, m.recipient_hid FROM Message as m WHERE tid = ? ORDER by m.timestamp Limit 1;" );
+        $stmt->bind_param('s', $tid);
+        $stmt->execute();
+        $stmt->bind_result($title, $address, $author, $recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid);
+        
+        
+        if($stmt -> fetch()){
+        echo $tid;
+        $message = new MessageEntity($mid, $title, $content, $address, NULL, $author,$recipient_friend, $recipient_neighbors,$recipient_uid, $recipient_bid, $recipient_hid, $tid,NULL);
+        $title = $message->title;
+        $address = $message->address;
+        $author = $message->author;        
+        $recipient_friend = $message->recipient_friend;
+        //$recipient_friend =0;
+        //$recipient_neighbors =0;
+        $recipient_neighbors = $message->recipient_neighbors;
+        $recipient_uid = $message->recipient_uid;
+        $recipient_bid = $message->recipient_bid;
+        $recipient_hid = $message->recipient_hid;
+        //$recipient_hid =null;
+        //echo $recipient_uid;
+        
+        $stmt->close();
+            
+       if($recipient_uid != $author && $recipient_uid == $uid){
+       //$recipient_uid = $author;
+       echo $recipient_uid;
+       echo "<br>";
+       echo $author;
+       
+        echo "author";
+        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
+            $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $uid,$recipient_friend, $recipient_neighbors, $author, $recipient_bid, $recipient_hid, $tid);
+            $stmt->execute();
+            $stmt -> fetch();
+            
+        }else{
+        $author = $uid;
+        echo $mid;
+        
+        $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
+        
+        $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $uid,$recipient_friend, $recipient_neighbors, $uid, $recipient_bid, $recipient_hid,$tid);
         $stmt->execute();
         $stmt -> fetch();
-
-        /*$stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`, `recipient_uid`,`recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?);");
-            $stmt->bind_param('sssssssss', $mid, $title, $content, $address, $author, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
-            $stmt->execute();
-            $stmt -> fetch();*/
-            
+        
+        }
+        
             $stmt = $mysqli->prepare("INSERT INTO thread_participate(`tid`, `uid`) VALUES(?,?);");
-            $stmt->bind_param('ss', $tid, $author);
+            $stmt->bind_param('ss', $tid, $uid);
             $stmt->execute();
             $stmt -> fetch();
  printf("done");
             $stmt->close();
             $mysqli->close();
             printf("done");
+            }
 
     }
     

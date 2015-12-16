@@ -174,9 +174,11 @@ class MessageController {
                       <p><i class='fa fa-user'></i>Author: $message->author</p>
                     </div><p>$message->content</p>
                  ";
-        $reply_url = "reply.php?re_tread_id=".$tid;
+        //$reply_url = "reply.php?re_thread_id=".$tid;
+        $reply_url = "reply.php?re_thread_id=";
+        $reply_tid = $tid;
 
-        return array($result,$reply_url);
+        return array($result,$reply_url, $reply_tid);
     }
 
     function DisplaySinglePostReply($tid)
@@ -198,6 +200,7 @@ class MessageController {
                       </div>
                       <p class='blog_summary'>$message->content</p>
                     </div>";
+
         }
         return $result;
     }

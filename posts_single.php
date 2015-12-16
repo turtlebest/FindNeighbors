@@ -31,11 +31,12 @@ echo $result[0];
                     ?>
                   </div>
                     <?php echo $MessageController->DisplaySinglePostReply($_GET['thread_id']);
+                    //echo $result[0]
                     //printf( "turtle".$_GET['thread_id']);
                     ?>
                 </div>
               </div>
-              <a class='blog_readmore' href=<?php echo $result[1]; ?>><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
+              <a class='blog_readmore' href=<?php echo $result[1]; echo $result[2]; ?>><i class="fa fa-reply" style='color:#ffac33'></i> Reply</a>
               <!-- end blog archive  -->
             </div>
           </div>

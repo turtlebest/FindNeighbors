@@ -32,18 +32,23 @@ $MessageController = new MessageController();
               <!-- start blog archive  -->
               <div class="row">
                 <!-- start single blog archive -->
-
-                  <form action= "message.php" method="POST">
-                  <input type='text' class='' name='content_input' placeholder='content'></p>
-                  <!--<input type='text' class='' name='address_input' placeholder='address'></p>-->
-                  <?php 
-                  
-                  $MessageController->DisplaySinglePostFirst($_GET['re_thread_id']);
-                  echo $_GET['re_thread_id'];?>
+                  <div class="col-lg-12 col-12 col-sm-12">
+                  <div class="single_blog">
+                    <?php $result = $MessageController->DisplaySinglePostFirst($_GET['re_thread_id']);
+echo $result[0];
+            $_SESSION['thread_id']=$result[2];
+                    ?>
                   </div>
-                    <?php 
-                    $MessageController->DisplaySinglePostReply($_GET['re_thread_id']);
-                    echo $_GET['re_thread_id'];?>
+                    <?php echo $MessageController->DisplaySinglePostReply($_GET['re_thread_id']);
+                    //echo $result[0]
+                    //printf( "turtle".$_GET['thread_id']);
+                    ?>
+                </div>
+              </div>
+                  <form action= "message.php" method="POST">
+                  <p><textarea rows="4" cols="50" class='' name='content_input' placeholder='content'></textarea></p>
+                  <!--<input type='text' class='' name='address_input' placeholder='address'></p>-->
+                  
                 </div>
                   <input type='submit' class='' value = 'Reply'>
                    
