@@ -1,11 +1,14 @@
 <?php
+include "include.php";
 
-require ("../Entities/UserEntity.php");
-printf("a");
+include_once ("Entities/UserEntity.php");
+
 //Contains database related code for the Coffee page.
-//class UserModel {
+class UserModel {
 
-       //function CreateAccount($uid, $uname, $psw, $introduction, $photo, $address, $bid, $city, $state) {
+
+       function CreateAccount() {
+       
         require ("Credentials.php");
         
         //Open connection and Select database. 
@@ -17,26 +20,25 @@ printf("a");
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-if(isset($_SESSION["uid"])) {
-  echo "You are already logged in. ";
-}
-else {
-  echo "p";
+        if(isset($_SESSION["uid"])) {
+            echo "You are already logged in. ";
+        }else {
+            echo "p";
   //if the user have entered _all_ entries in the form, insert into database
-  if(isset($_POST['uid_input'])) {
+            if(isset($_POST['uid_input'])) {
 
     //check if username already exists in database
-    echo "p";
-      $stmt = $mysqli->prepare("SELECT uid from User where uid = ?");
-      $stmt->bind_param('s', $uid);
-      $stmt->execute();
+                echo "p";
+                $stmt = $mysqli->prepare("SELECT uid from User where uid = ?");
+                $stmt->bind_param('s', $uid);
+                $stmt->execute();
       //$stmt->bind_result($phoneno);
-        if ($stmt->fetch()) {
-          echo "The userid already exists. ";
-          echo "Click <a href=\"createaccount.php\">here</a> to try again.";
+                if ($stmt->fetch()) {
+                    echo "The userid already exists. ";
+                    echo "Click <a href=\"createaccount.php\">here</a> to try again.";
 
-        }else{
- echo "q";      
+                }else{
+                    echo "new";      
 $uname = $_POST['uname_input'];    
 $uid = $_POST['uid_input'];
 $psw = $_POST['password_input'];
@@ -56,6 +58,9 @@ $address = $_POST['address'];
             $mysqli->close();
             printf("b");
      } 
+     }
     }
 }
+}
+
 ?>

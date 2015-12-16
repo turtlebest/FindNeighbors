@@ -30,7 +30,7 @@ include "include.php";
               <div class="row">
                 <!-- start single blog archive -->
 
-                  <form action= "Model/UserModel.php" method="POST">
+                  <form action= "newaccount.php" method="POST">
                   <input type='text' class='' name='uname_input' placeholder='user name'></p>
                   <input type='text' class='' name='uid_input' placeholder='user id'></p>
                   <input type='password' class='' name='password_input' placeholder='password'></p>
@@ -42,7 +42,7 @@ include "include.php";
                   <br>
                   <?php
                   include "include.php";
-                  require 'Model/MessageModel.php';
+                  //equire 'Model/MessageModel.php';
                   require 'Model/BlockModel.php';
                  
                   $BlockModel = new BlockModel();
