@@ -1,7 +1,7 @@
 <?php
 include "include.php";
 
-require ("Entities/MessageEntity.php");
+include_once ("Entities/MessageEntity.php");
 
 //Contains database related code for the Coffee page.
 class MessageModel {
@@ -547,6 +547,61 @@ $uid = $_SESSION['uid'];
         $_SESSION['address'] = $address;
         }
     }
+    
+    function GetUserPost() {
+        require 'Credentials.php';
+
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+        $mysqli2 = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        printf("b".$uid."aaa");
+       
+        $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
+                                  FROM Message as m, read_state as rs
+                                  WHERE m.mid = rs.mid AND rs.uid = ? ");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
+
+        $messageArray = array();
+
+        //Get data from database.
+        while ($stmt->fetch()) {
+            printf("cf");
+            /* $stmt2 = $mysqli2->prepare("UPDATE read_state SET read_date = NOW() WHERE mid = ? AND uid = ?");
+            $stmt2->bind_param('ss', $mid, $uid);
+            $stmt2->execute();
+            $stmt2->close();
+            printf("d");*/
+            //$MessageModel = new MessageModel();
+            /*$firstmessage = $this->GetSinglePostFirst($tid);
+            printf("d");
+            if ($firstmessage->mid != $mid) {
+                printf("reply");
+              $reply = TRUE;
+            } else {
+                printf("notr");
+              $reply = FALSE;
+            }*/
+            //Create coffee objects and store them in an array.
+            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, $reply);
+            array_push($messageArray, $message);
+        }
+        //Close connection and return result
+        $stmt->close();
+        $mysqli->close();
+         //$mysqli2->close();
+
+        return $messageArray;
+    }
+
 
 }
 

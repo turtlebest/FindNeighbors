@@ -68,6 +68,7 @@ include "include.php";
                   echo $bid;
                   echo "<br>";
                   echo "<select name='GetBlockList'>";
+                  echo "<option value='' selected=''>  </option>";
                   //echo "<option value ='12 Street between 1st and 3rd Ave' selected = 'selected'> $bid </option>";
                   
                   $BlockModel->GetBlockList();
