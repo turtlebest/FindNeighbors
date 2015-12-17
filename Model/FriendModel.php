@@ -137,6 +137,42 @@ $relationship = "friends";
         
 
     }
+    
+    function GetSearchFriend($keyword){
+        require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        $kw = '%'.$keyword.'%';
+        $stmt = $mysqli->prepare("SELECT distinct uid, uname, introduction, address
+                                  FROM User as u, Relationship as r
+                                  WHERE u.uid = r.user2 AND relationship = 'friends' AND accept = TRUE AND r.user1 = ? AND (u.uid like ? OR u.uname like ? OR u.introduction like ? OR u.address like ?)");
+        $stmt->bind_param('sssss', $uid, $kw, $kw, $kw, $kw);
+        $stmt->execute();
+        $stmt->bind_result($uid, $uname, $introduction, $address);
+
+        $friendArray = array();
+
+        //Get data from database.
+        while ($stmt->fetch()) {
+            printf("c");
+            //Create coffee objects and store them in an array.
+            $friend = new UserEntity($uid, $uname, NULL, $introduction, NULL, $address, NULL, NULL, NULL, NULL, NULL);
+            array_push($friendArray, $friend);
+        }
+        //Close connection and return result
+        $stmt->close();
+        $mysqli->close();
+
+        return $friendArray;
+    }
+
 
 }
 ?>

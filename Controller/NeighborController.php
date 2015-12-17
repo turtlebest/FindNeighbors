@@ -80,7 +80,7 @@ class NeighborController {
                     "
                      <div class='col-lg-12 col-12 col-sm-12'>
                       <div class='single_blog_archive wow fadeInUp'>
-                       <h2 class='blog_title'><a href='posts_single.php?thread_id=$message->tid'>$message->title</a></h2></h2>
+                       <h2 class='blog_title'> </h2>
                        <div class='blog_commentbox'>
                          <p><i class='fa fa-user'></i>$neighbor->uid</p>
                          <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$neighbor->address</a></p>
@@ -117,7 +117,7 @@ class NeighborController {
                     "
                      <div class='col-lg-12 col-12 col-sm-12'>
                       <div class='single_blog_archive wow fadeInUp'>
-                       <h2 class='blog_title'><a href='posts_single.php?thread_id=$message->tid'>$message->title</a></h2></h2>
+                       <h2 class='blog_title'> </h2>
                        <div class='blog_commentbox'>
                          <p><i class='fa fa-user'></i>$neighbor->uid</p>
                          <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$neighbor->address</a></p>
@@ -148,7 +148,43 @@ class NeighborController {
         return $result;
     }
 
+    function DisplaySearchNeighbor($keyword)
+    {
+        $NeighborModel = new NeighborModel();
+        $neighborArray = $NeighborModel->GetSearchNeighbor($keyword);
+        $locations = array();
+        $result = "";
+
+        //Generate a coffeeTable for each coffeeEntity in array
+        foreach ($neighborArray as $key => $neighbor)
+        {
+            $mapresult = $this->GetLatandlong($neighbor);
+            array_push($locations, $mapresult[0]);
+            $lat = $mapresult[1];
+            $long = $mapresult[2];
+            //echo "test";
+           //$_SESSION['tid'] = 
+
+            $result = $result .
+                    "
+                     <div class='col-lg-12 col-12 col-sm-12'>
+                      <div class='single_blog_archive wow fadeInUp'>
+                       <h2 class='blog_title'> </h2>
+                       <div class='blog_commentbox'>
+                         <p><i class='fa fa-user'></i>$neighbor->uid</p>
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$neighbor->address</a></p>
+                         <p><i class='fa fa-user'></i>Name: $neighbor->uname</p>
+                       </div>
+                         <p class='blog_summary'>$neighbor->introduction</p>
+                         <a class='blog_readmore' href='UserProfile.php?neighbor_id=$neighbor->uid'>Read More</a>
+                       </div>
+                     </div>";
+        }
+        //printf($message->tid);
     
+        return array($result, $locations);
+    }
+
 
 }
 ?>

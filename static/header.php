@@ -41,7 +41,7 @@
                     <li><a href="newmessage.php">Post Message</a></li>
                     <?php } ?>
                     <li><a href="login.php">Logout</a></li>
-                    <li><a href="#">Link Three</a></li>
+                    <li><a href="search.php">Search</a></li>
                   </ul>
                 </li>
                 <?php } else { ?>

@@ -446,14 +446,6 @@ $tid = $_SESSION['thread_id'];
 		echo "</select></p>";
 		echo "<br>";
 
-        /*$friendsArray = array();
-        
-        //Get data from database.
-        while ($stmt->fetch()) {
-            //Create coffee objects and store them in an array.
-            $friends = new OrderEntity($aname, $config, $ordertime, $quantity, $price, $status);
-            array_push($orderArray, $order);
-        }
         //Close connection and return result*/
         $stmt->close();
         $mysqli->close();
@@ -481,19 +473,7 @@ $tid = $_SESSION['thread_id'];
         while($stmt->fetch()) {       
         array_push($friendsArray, $uid);
 		}
-		
-		
 
-		
-				
-        /*$friendsArray = array();
-        
-        //Get data from database.
-        while ($stmt->fetch()) {
-            //Create coffee objects and store them in an array.
-            $friends = new OrderEntity($aname, $config, $ordertime, $quantity, $price, $status);
-            array_push($orderArray, $order);
-        }
         //Close connection and return result*/
         $stmt->close();
         $mysqli->close();
@@ -554,7 +534,7 @@ $tid = $_SESSION['thread_id'];
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
        
         $stmt = $mysqli->prepare("SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u
@@ -575,22 +555,8 @@ $tid = $_SESSION['thread_id'];
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("cf");
-            /* $stmt2 = $mysqli2->prepare("UPDATE read_state SET read_date = NOW() WHERE mid = ? AND uid = ?");
-            $stmt2->bind_param('ss', $mid, $uid);
-            $stmt2->execute();
-            $stmt2->close();
-            printf("d");*/
-            //$MessageModel = new MessageModel();
-            /*$firstmessage = $this->GetSinglePostFirst($tid);
-            printf("d");
-            if ($firstmessage->mid != $mid) {
-                printf("reply");
-              $reply = TRUE;
-            } else {
-                printf("notr");
-              $reply = FALSE;
-            }*/
+            //printf("cf");
+            
             //Create coffee objects and store them in an array.
             $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, $reply);
             array_push($messageArray, $message);
@@ -602,6 +568,54 @@ $tid = $_SESSION['thread_id'];
 
         return $messageArray;
     }
+    function GetSearchPost($keyword) {
+        require 'Credentials.php';
+
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+        //$mysqli2 = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        printf("b".$uid."aaa");
+        $kw = '%'.$keyword.'%';
+       
+        $stmt = $mysqli->prepare("SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
+                                FROM Message as m, User as u
+                                WHERE u.uid=? AND (m.recipient_uid = ? OR (u.bid = m.recipient_bid AND u.approved = TRUE) OR m.author = ? OR m.recipient_hid in (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid AND u.uid = ? AND u.approved = TRUE))AND (m.title like ? OR m.content like ? OR m.address like ?)
+                                Group by m.tid
+                                Order by m.timestamp");
+       
+        /*$stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
+                                  FROM Message as m, read_state as rs
+                                  WHERE m.mid = rs.mid AND rs.uid = ? ");*/
+        //$stmt->bind_param('s', $userid);
+        $stmt->bind_param('sssssss', $uid, $uid, $uid, $uid, $kw, $kw, $kw);
+        $stmt->execute();
+        $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
+
+        $messageArray = array();
+
+        //Get data from database.
+        while ($stmt->fetch()) {
+            //printf("keywork");
+
+            //Create coffee objects and store them in an array.
+            $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, $reply);
+            array_push($messageArray, $message);
+        }
+        //Close connection and return result
+        $stmt->close();
+        $mysqli->close();
+         //$mysqli2->close();
+
+        return $messageArray;
+    }
+
 
 
 }
