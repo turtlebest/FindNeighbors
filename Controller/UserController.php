@@ -14,6 +14,7 @@ class UserController {
 
     function DisplayFriendNotify()
     {
+        //printf("turtle");
         $UserModel = new UserModel();
         $userArray = $UserModel->GetFriendNotify();
         $result = "";
@@ -30,8 +31,10 @@ class UserController {
 
     function DisplayNeighborNotify()
     {
+        //printf("turtlet");
         $UserModel = new UserModel();
         $userArray = $UserModel->GetNeighborNotify();
+        //printf("turtle66");
         $result = "";
 
         //Generate a coffeeTable for each coffeeEntity in array
@@ -41,24 +44,25 @@ class UserController {
                     "<p><i class='fa fa-bell'></i><a> $user->uname</a> added you as neighbor <p></p>
                     ";
         }
+
         return $result;
     }
 
     function DisplayBlockNotify()
     {
-        printf("n");
+        //printf("turtle3");
         $UserModel = new UserModel();
         $userArray = $UserModel->GetBlockNotify();
-        $result = "aaa";
+        $result = "";
 
         //Generate a coffeeTable for each coffeeEntity in array
         foreach ($userArray as $key => $user)
         {
             //printf("e");
 
-           /* $result = $result .
-                    "<p><i class='fa fa-bell'></i><a> $user->uname</a> need be approved as block member <p><a href='AcceptFriend.php?friendid=$user->uid' style='color:#ff1a1a'><i class='fa fa-check'></i> approve</a></p></p>
-                    ";*/
+           $result = $result .
+                    "<p><i class='fa fa-bell'></i><a> $user->uname</a> need be approved as block member <p><a href='ApproveMember.php?memberid=$user->uid' style='color:#ff1a1a'><i class='fa fa-check'></i> approve</a></p></p>
+                    ";
         }
         return $result;
     }
@@ -67,6 +71,14 @@ class UserController {
     {
         $UserModel = new UserModel();
         $userArray = $UserModel->AcceptFriend($friendid);
+
+        return $result;
+    }
+
+    function ApproveMember($memberid)
+    {
+        $UserModel = new UserModel();
+        $userArray = $UserModel->ApproveMember($memberid);
 
         return $result;
     }

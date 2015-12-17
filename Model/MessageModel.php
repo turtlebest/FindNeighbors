@@ -598,7 +598,7 @@ $tid = $_SESSION['thread_id'];
         //Close connection and return result
         $stmt->close();
         $mysqli->close();
-         //$mysqli2->close();
+        //$mysqli2->close();
 
         return $messageArray;
     }

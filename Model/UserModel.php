@@ -125,14 +125,16 @@ $address = $_POST['address'];
             $stmt2->bind_param('ss', $uid, $neighborid);
             $stmt2->execute();
 
+            $stmt2->close();
+
             $user = new UserEntity($neighborid, $uname, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             array_push($userArray, $user);
         }
-        //Close connection and return result
+        //Close connection and reurn result
         $stmt->close();
-        $stmt2->close();
         $mysqli->close();
         $mysqli2->close();
+
         return $userArray;
     }
 
@@ -217,6 +219,28 @@ $address = $_POST['address'];
         }
     }
 
+
+    function ApproveMember($memberid) {
+        require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+
+        $stmt = $mysqli->prepare("UPDATE Relationship SET accept = '1' WHERE user1 = ? and user2 = ? and relationship ='friends';");
+        $stmt->bind_param('ss', $uid, $friendid);
+        $stmt->execute();
+
+        //Close connection and return result
+        $stmt->close();
+        $mysqli->close();
+        return $userArray;
+    }
 
 }
 

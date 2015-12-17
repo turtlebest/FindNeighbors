@@ -53,9 +53,9 @@ $UserController = new UserController();
               <div class="single_sidebar">
                 <h2>Notify <span class="fa fa-angle-double-right"></span></h2>
                 <ul>
+                  <?php echo $UserController->DisplayBlockNotify(); ?>
                   <?php echo $UserController->DisplayFriendNotify(); ?>
                   <?php echo $UserController->DisplayNeighborNotify(); ?>
-                  <!--<?php echo $UserController->DisplayBlockNotify(); ?>-->
                   <!--<li><a href="#">Food</a></li>-->
                 </ul>
               </div>
