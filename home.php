@@ -1,7 +1,10 @@
 <?php
 include "include.php";
 require 'Controller/MessageController.php';
+require 'Controller/UserController.php';
+
 $MessageController = new MessageController();
+$UserController = new UserController();
 //$result = $MessageController->DisplayNewPost();
 //printf('cda'.$result[1][0]['google_map']['lat']);
 
@@ -50,6 +53,9 @@ $MessageController = new MessageController();
               <div class="single_sidebar">
                 <h2>Notify <span class="fa fa-angle-double-right"></span></h2>
                 <ul>
+                  <?php echo $UserController->DisplayFriendNotify(); ?>
+                  <?php echo $UserController->DisplayNeighborNotify(); ?>
+                  <!--<?php echo $UserController->DisplayBlockNotify(); ?>-->
                   <!--<li><a href="#">Food</a></li>-->
                 </ul>
               </div>
