@@ -88,7 +88,7 @@ class FriendController {
                          <p><i class='fa fa-user'></i>Name: $friend->uname</p>
                        </div>
                          <p class='blog_summary'>$friend->introduction</p>
-                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                         <a class='blog_readmore' href='UserProfile.php?user_id=$friend->uid'>Read More</a>
                        </div>
                      </div>";
         }

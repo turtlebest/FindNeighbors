@@ -204,10 +204,11 @@ class MessageController {
         }
         return $result;
     }
-    function DisplayUserPost()
+    
+    function DisplayUserPost($userid)
     {
         $MessageModel = new MessageModel();
-        $messageArray = $MessageModel->GetUserPost();
+        $messageArray = $MessageModel->GetUserPost($userid);
         $locations = array();
         $result = "";
 

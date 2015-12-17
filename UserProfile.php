@@ -18,7 +18,15 @@ $MessageController = new MessageController();
     <!--<section id="imgBanner">
       <h2>Home</h2>
     </section>-->
-    <?php $result = $MessageController->DisplayUserPost();?>
+    <?php 
+    if(isset($_GET['friend_id'])){
+    
+    $result = $MessageController->DisplayUserPost($_GET['friend_id']);
+    }elseif(isset($_GET['neighbor_id'])){
+    $result = $MessageController->DisplayUserPost($_GET['neighbor_id']);
+    }else{
+    $result = $MessageController->DisplayUserPost($_SESSION['uid']);
+    }?>
     
     <br><br><br></br>
     <?php include "google_map.php";?>
@@ -37,11 +45,19 @@ $MessageController = new MessageController();
             
           <?php
                   include "include.php";
-                  include_once 'Model/MessageModel.php';
+                  include_once 'Model/UserModel.php';
                   
-                  $MessageModel = new MessageModel();
-                  $MessageModel->GetUserInfo();
+                  $UserModel = new UserModel();
+                  if(isset($_GET['friend_id'])){
+                  $UserModel->GetUserInfo($_GET['friend_id']);
+                  }elseif(isset($_GET['neighbor_id'])){
+                  $UserModel->GetUserInfo($_GET['neighbor_id']);
+                  }else{
+                  $UserModel->GetUserInfo($_SESSION['uid']);
+                  }
                   
+                  //echo $_SESSION['uid'];
+                                   
                   echo "&nbsp&nbsp&nbsp&nbsp&nbsp";                  
                   echo "Name: "; 
                   echo $_SESSION['uname'];

@@ -400,6 +400,15 @@ $tid = $_SESSION['thread_id'];
             $stmt->execute();
             $stmt -> fetch();
  printf("done");
+            
+            if($author != $recipient_uid){
+        $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+        $stmt->bind_param('ss', $mid, $recipient_uid);
+        $stmt->execute();
+        $stmt -> fetch();
+        //echo "==";
+        }
+            
             $stmt->close();
             $mysqli->close();
             printf("done");
@@ -531,41 +540,14 @@ $tid = $_SESSION['thread_id'];
         
     }
     
-    function GetUserInfo(){
-    
-        require 'Credentials.php';
-        $mysqli = new mysqli($host, $user, $passwd, $database);
-        /* check connection */
-        if (mysqli_connect_errno()) {
-           printf("Connect failed: %s\n", mysqli_connect_error());
-           exit();
-        }
-//printf("b");
-$uid = $_SESSION['uid'];
-//$psw = $_SESSION['password'];
-//printf($uid);
-//printf($psw);
-
-        $stmt = $mysqli->prepare("SELECT uname, password, introduction, address FROM User WHERE uid = ?");
-        $stmt->bind_param('s', $uid);
-
-        $stmt->execute();
-        $stmt->bind_result($uname, $psw,$introduction, $address);
-        if($stmt -> fetch()){
-        $_SESSION['uname'] = $uname;
-        $_SESSION['password'] =$psw;
-        $_SESSION['introduction'] = $introduction;
-        $_SESSION['address'] = $address;
-        }
-    }
-    
-    function GetUserPost() {
+      
+    function GetUserPost($userid) {
         require 'Credentials.php';
 
-        $uid = $_SESSION['uid'];
+        //$uid = $_SESSION['uid'];
         //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
-        $mysqli2 = new mysqli($host, $user, $passwd, $database);
+        //$mysqli2 = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
         if (mysqli_connect_errno()) {
@@ -574,10 +556,18 @@ $uid = $_SESSION['uid'];
         }
         printf("b".$uid."aaa");
        
-        $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
+        $stmt = $mysqli->prepare("SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
+                                FROM Message as m, User as u
+                                WHERE u.uid=? AND (m.recipient_uid = ? OR (u.bid = m.recipient_bid AND u.approved = TRUE) OR m.author = ? OR m.recipient_hid in (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid AND u.uid = ? AND u.approved = TRUE))
+                                Group by m.tid
+                                Order by m.timestamp
+                                ");
+       
+        /*$stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
                                   FROM Message as m, read_state as rs
-                                  WHERE m.mid = rs.mid AND rs.uid = ? ");
-        $stmt->bind_param('s', $uid);
+                                  WHERE m.mid = rs.mid AND rs.uid = ? ");*/
+        //$stmt->bind_param('s', $userid);
+        $stmt->bind_param('ssss', $userid, $userid, $userid, $userid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
 

@@ -87,7 +87,7 @@ class NeighborController {
                          <p><i class='fa fa-user'></i>Name: $neighbor->uname</p>
                        </div>
                          <p class='blog_summary'>$neighbor->introduction</p>
-                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                         <a class='blog_readmore' href='UserProfile.php?neighbor_id=$neighbor->uid'>Read More</a>
                        </div>
                      </div>";
         }

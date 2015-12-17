@@ -192,6 +192,31 @@ $address = $_POST['address'];
         $mysqli->close();
         return $userArray;
     }
+    
+    function GetUserInfo($userid){
+    
+        require 'Credentials.php';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+
+
+        $stmt = $mysqli->prepare("SELECT uname, password, introduction, address FROM User WHERE uid = ?");
+        $stmt->bind_param('s', $userid);
+
+        $stmt->execute();
+        $stmt->bind_result($uname, $psw,$introduction, $address);
+        if($stmt -> fetch()){
+        $_SESSION['uname'] = $uname;
+        $_SESSION['password'] =$psw;
+        $_SESSION['introduction'] = $introduction;
+        $_SESSION['address'] = $address;
+        }
+    }
+
 
 }
 
