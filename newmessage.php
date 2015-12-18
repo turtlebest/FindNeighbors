@@ -37,10 +37,17 @@ include "include.php";
                   <br>
                   <?php
                   include "include.php";
-                  require 'Model/MessageModel.php';
-                  require 'Model/BlockModel.php';
+                  require_once 'Model/MessageModel.php';
+                  require_once 'Model/BlockModel.php';
+                  require_once 'Model/HoodModel.php';
                  
                   $MessageModel = new MessageModel();
+                  $BlockModel = new BlockModel();
+                  $HoodModel = new HoodModel();
+                  $MessageModel->GetFriends();
+                  $MessageModel->GetNeighbors();
+                  $BlockModel->GetBlockMember();
+                  $HoodModel->GetHoodMember();
                   $MessageModel->GetFriendsOrNeighbors();
                  
                   //printf($_SESSION['hid']);

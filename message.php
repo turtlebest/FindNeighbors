@@ -20,17 +20,6 @@ $MessageModel->ReplyPost();
 printf("re");
 }
 
-/*<?php
-include "include.php";
-require 'Model/MessageModel.php';
-printf("m2");
+echo '<script>window.location.href = "home.php";</script>'; 
 
-$MessageModel = new MessageModel();
-
-if ($_POST['title'] != NULL || $_POST['content'] != NULL){
-    $MessageModel->CreateNewPost();
-    printf("m");
-}
-printf("m2");
-?>*/
 ?>

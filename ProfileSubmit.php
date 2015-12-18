@@ -38,7 +38,7 @@ $address = $_POST['address_edit'];
         $mysqli->close();
         }
         if(!isset($_POST['password_edit'])|| trim($_POST['password_edit']) == ''){
-        echo "fail";
+        //echo "fail";
         }else{
         
         $stmt = $mysqli->prepare("UPDATE User SET `password`= ? WHERE `uid`= ?;");
@@ -49,7 +49,7 @@ $address = $_POST['address_edit'];
         $mysqli->close();
         }
         if(!isset($_POST['intro_edit'])|| trim($_POST['intro_edit'])== ''){
-        echo "fail";
+        //echo "fail";
         }else{
         $stmt = $mysqli->prepare("UPDATE User SET `introduction`= ? WHERE `uid`= ?;");
         $stmt->bind_param('ss', $introduction,$uid);               
@@ -88,6 +88,7 @@ $address = $_POST['address_edit'];
             //$stmt->close();
             //$mysqli->close();
             printf("b");
+        echo '<script>window.location.href = "UserProfile.php";</script>'; 
             
             
 ?>

@@ -40,22 +40,6 @@ $UserController = new UserController();
                   //$UserModel->GetUserProfile();
                   echo $UserController->EditUserProfile();
                   
-                  /*
-                  echo $_SESSION['uname'];
-                  
-                  echo "<br>";
-                  echo "<input type='text' class='' name='uname_edit' placeholder='user name'></p>";
-                  echo $_SESSION['password'];
-                  echo "<br>";
-                  echo "<input type='text' class='' name='password_edit' placeholder='password'></p>";
-                  echo $_SESSION['introduction'];
-                  echo "<br>";
-                  echo "<input type='text' class='' name='intro_edit' placeholder='introduction'></p>";
-                  
-                  echo $_SESSION['address'];
-                  echo "<br>";
-                  echo "<input type='text' class='' name='address_edit' placeholder='address'></p>";*/
-                  
                   ?>
                   <?php
                   include "include.php";
