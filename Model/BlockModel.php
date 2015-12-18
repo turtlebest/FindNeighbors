@@ -1,6 +1,6 @@
 <?php
 
-require ("Entities/UserEntity.php");
+include_once ("Entities/UserEntity.php");
 
 //Contains database related code for the Coffee page.
 class BlockModel {
@@ -137,7 +137,7 @@ class BlockModel {
         
               
         while($stmt->fetch()) { 
-        echo "<option value=$bid> $bname</option>";      
+        echo "<option value=$bid> $bid - $bname</option>";      
         //echo  "<input type='checkbox' name='friends[]' value=$uid> $uid<br>";
 
 		}
@@ -151,7 +151,35 @@ class BlockModel {
 
         
         }
-    
+        function GetBlockMember() {
+        require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        
+        $stmt = $mysqli->prepare("SELECT u.uid
+                                  FROM User as u, (SELECT bid FROM User WHERE uid = ?) as UserBlock
+                                  WHERE u.bid = UserBlock.bid and u.approved = TRUE");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($uid);
+        $blockArray = array();
+        while($stmt->fetch()) {       
+        array_push($blockArray, $uid);
+		}
+		
+        //Close connection and return result*/
+        $stmt->close();
+        $mysqli->close();
+        $_SESSION['blockArray']=$blockArray;
+
+    }
 
 }
 ?>

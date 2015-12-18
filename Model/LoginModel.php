@@ -1,6 +1,6 @@
 <?php
 
-require ("Entities/UserEntity.php");
+require_once ("Entities/UserEntity.php");
 
 //Contains database related code for the Coffee page.
 class LoginModel {

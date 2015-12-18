@@ -241,6 +241,7 @@ $recipient_bid = null;
 $recipient_hid = null;
 $recipient_friend = 0;
 $recipient_neighbors = 0;
+//$read_date = null;
 $tid = null;
 //$friends = $_POST["friends"];
 
@@ -253,29 +254,10 @@ if (isset($_POST['recipient_hid'])){
         }
 if (isset($_POST['recipient_friend'])){
         $recipient_friend = 1;
-        echo "p";
-        
-        
-        foreach ($_SESSION['friendsArray'] as $key => $friends) {
-            echo "f";
-            //printf($mid);
-            //printf($friends);
-               $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
-               $stmt->bind_param('ss', $mid, $friends);
-               $stmt->execute();
-               $stmt -> fetch();
-        }
-        }
+    }
 if (isset($_POST['recipient_neighbor'])){
         $recipient_neighbors = 1;
-        
-        foreach($_SESSION['neighborsArray'] as $key => $neighbors){
-                $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
-        $stmt->bind_param('ss', $mid, $neighbors);
-        $stmt->execute();
-        $stmt -> fetch();
-        }
-        }
+    }
 
 
         $stmt = $mysqli->prepare("SELECT mid from Message where mid = ?");
@@ -286,8 +268,6 @@ if (isset($_POST['recipient_neighbor'])){
         printf("re");
         $mid= mt_rand();
         }
-
-
         
         $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
         $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
@@ -313,6 +293,55 @@ if (isset($_POST['recipient_neighbor'])){
         $stmt->execute();
         $stmt -> fetch();
 
+        if (isset($_POST['recipient_friend'])){
+            //echo "p";
+            //echo $_SESSION['friendsArray'];
+        
+            foreach ($_SESSION['friendsArray'] as $key => $friend) {
+                //echo "f";
+
+                //printf($friend);
+               $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+               $stmt->bind_param('ss', $mid, $friend);
+               $stmt->execute();
+               $stmt -> fetch();
+        }
+    }
+    
+        if (isset($_POST['recipient_neighbor'])){
+
+            foreach($_SESSION['neighborsArray'] as $key => $neighbor){
+                $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+            $stmt->bind_param('ss', $mid, $neighbor);
+            $stmt->execute();
+            $stmt -> fetch();
+        }
+    }
+
+        if (isset($_POST['recipient_bid'])){
+            echo "block";
+            echo $_SESSION['blockArray'];
+        
+            foreach ($_SESSION['blockArray'] as $key => $blockmember) {
+                echo "f";
+
+                //printf($blockmember);
+               $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+               $stmt->bind_param('ss', $mid, $blockmember);
+               $stmt->execute();
+               $stmt -> fetch();
+        }
+    }
+    
+        if (isset($_POST['recipient_hid'])){
+
+            foreach($_SESSION['hoodArray'] as $key => $hoodmember){
+                $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
+            $stmt->bind_param('ss', $mid, $hoodmember);
+            $stmt->execute();
+            $stmt -> fetch();
+        }
+    }
 
         if($author != $recipient_uid){
         $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
@@ -462,7 +491,7 @@ $tid = $_SESSION['thread_id'];
     function GetFriends() {
         require 'Credentials.php';
         $uid = $_SESSION['uid'];
-        $uid = 'u01';
+        //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */

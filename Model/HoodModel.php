@@ -1,6 +1,6 @@
 <?php
 
-require ("Entities/UserEntity.php");
+require_once ("Entities/UserEntity.php");
 
 //Contains database related code for the Coffee page.
 class HoodModel {
@@ -65,7 +65,35 @@ class HoodModel {
         return $hname;
     }
 
+    function GetHoodMember() {
+        require 'Credentials.php';
+        $uid = $_SESSION['uid'];
+        //$uid = 'u01';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
 
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+        
+        $stmt = $mysqli->prepare("SELECT u.uid
+                                  FROM User as u, block_hood as bh, (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid and u.uid = ?) as UserNeighbor
+                                  WHERE u.bid = bh.bid and bh.hid = UserNeighbor.hid and u.approved = TRUE");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($uid);
+        $hoodArray = array();
+        while($stmt->fetch()) {       
+        array_push($hoodArray, $uid);
+		}
+		
+        //Close connection and return result*/
+        $stmt->close();
+        $mysqli->close();
+        $_SESSION['hoodArray']=$hoodArray;
+
+    }
 
 }
 ?>
