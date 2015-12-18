@@ -74,9 +74,12 @@ class MessageModel {
            exit();
         }
         printf("b".$uid."aaa");
-        $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
+        $stmt = $mysqli->prepare("SELECT * FROM (SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
                                   FROM Message as m, User as u
-                                  WHERE u.bid = m.recipient_bid AND u.uid = ? ");
+                                  WHERE u.bid = m.recipient_bid AND u.uid = ? 
+                                  Order by m.timestamp) as t 
+                                  Group by t.tid
+                                  ");
         $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
@@ -97,7 +100,7 @@ class MessageModel {
         return $messageArray;
     }
 
-    function GetNeighborPost() {
+    function GetHoodPost() {
         require 'Credentials.php';
 
         $uid = $_SESSION['uid'];
@@ -110,9 +113,11 @@ class MessageModel {
            exit();
         }
         printf("b".$uid."aaa");
-        $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
+        $stmt = $mysqli->prepare("SELECT * FROM (SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
                                   FROM Message as m, User as u, block_hood as bh
-                                  WHERE bh.bid = u.bid AND bh.hid = m.recipient_hid AND u.uid = ? ");
+                                  WHERE bh.bid = u.bid AND bh.hid = m.recipient_hid AND u.uid = ? 
+                                  Order by m.timestamp) as t
+                                  Group by t.tid");
         $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
@@ -530,11 +535,11 @@ $tid = $_SESSION['thread_id'];
         }
         printf("b".$uid."aaa");
        
-        $stmt = $mysqli->prepare("SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
+        $stmt = $mysqli->prepare("SELECT* FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u
                                 WHERE u.uid=? AND (m.recipient_uid = ? OR (u.bid = m.recipient_bid AND u.approved = TRUE) OR m.author = ? OR m.recipient_hid in (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid AND u.uid = ? AND u.approved = TRUE))
-                                Group by m.tid
-                                Order by m.timestamp
+                                Order by m.timestamp) as t
+                                Group by t.tid                                
                                 ");
        
        
@@ -575,11 +580,12 @@ $tid = $_SESSION['thread_id'];
         printf("b".$uid."aaa");
         $kw = '%'.$keyword.'%';
        
-        $stmt = $mysqli->prepare("SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
+        $stmt = $mysqli->prepare("SELECT * FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u
                                 WHERE u.uid=? AND (m.recipient_uid = ? OR (u.bid = m.recipient_bid AND u.approved = TRUE) OR m.author = ? OR m.recipient_hid in (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid AND u.uid = ? AND u.approved = TRUE))AND (m.title like ? OR m.content like ? OR m.address like ?)
-                                Group by m.tid
-                                Order by m.timestamp");
+                                Order by m.timestamp) as t
+                                Group by t.tid
+                                ");
 
         $stmt->bind_param('sssssss', $uid, $uid, $uid, $uid, $kw, $kw, $kw);
         $stmt->execute();

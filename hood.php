@@ -19,7 +19,7 @@
       <h2>Neighbor</h2>
     </section>-->
     <?php
-      $content = $MessageController->DisplayBlockPost();
+      $content = $MessageController->DisplayHoodPost();
       $result = $HoodController->DisplayMembersOnMap();
     ?>
     <br><br><br></br>

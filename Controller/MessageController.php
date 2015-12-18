@@ -125,10 +125,10 @@ class MessageController {
         return array($result, $locations);
     }
 
-    function DisplayNeighborPost()
+    function DisplayHoodPost()
     {
         $MessageModel = new MessageModel();
-        $messageArray = $MessageModel->GetNeighborPost();
+        $messageArray = $MessageModel->GetHoodPost();
         $locations = array();
         $result = "";
 
