@@ -1,6 +1,8 @@
 <?php
 include "include.php";
-
+include_once ('Model/UserModel.php');
+require_once 'Controller/UserController.php';
+$UserController = new UserController();
 
 ?>
 <!DOCTYPE html>
@@ -33,12 +35,12 @@ include "include.php";
                 
                   <form action= 'ProfileSubmit.php' method='POST'>
                   <?php
-                  include "include.php";
-                  require 'Model/MessageModel.php';
                   
-                  $MessageModel = new MessageModel();
-                  $MessageModel->GetUserInfo();
+                  //$UserModel = new UserModel();
+                  //$UserModel->GetUserProfile();
+                  echo $UserController->EditUserProfile();
                   
+                  /*
                   echo $_SESSION['uname'];
                   
                   echo "<br>";
@@ -52,17 +54,18 @@ include "include.php";
                   
                   echo $_SESSION['address'];
                   echo "<br>";
-                  echo "<input type='text' class='' name='address_edit' placeholder='address'></p>";
+                  echo "<input type='text' class='' name='address_edit' placeholder='address'></p>";*/
                   
                   ?>
                   <?php
                   include "include.php";
                   //require 'Model/MessageModel.php';
-                  require 'Model/BlockModel.php';
+                  include_once 'Model/BlockModel.php';
                   
                  
                   $BlockModel = new BlockModel();
                   $BlockModel->GetBid();
+                  echo "Block: ";
                   echo $_SESSION['bid'];
                   $_SESSION['bid'] = $bid;
                   echo $bid;
@@ -75,35 +78,13 @@ include "include.php";
                  
                   //printf($_SESSION['hid']);
                   ?>
-                  <input type='submit' class='' value = 'Submit'>
+                  <input type='submit' class='' value = 'Save Changes'>
                 </p>
                 </form>
                    </div>
                 </div>
               </div>
-          
-          
-          <!-- start course archive sidebar -->
-         <!-- start course archive sidebar -->
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="courseArchive_sidebar">
-              <!-- start single sidebar -->
-              
-              <!-- start single sidebar -->
-              <div class="single_sidebar">
-                <h2>Category <span class="fa fa-angle-double-right"></span></h2>
-                <ul>
-                  <li><a href="#">Food</a></li>
-                  <li><a href="#">Technology</a></li>
-                  <li><a href="#">Fashion</a></li>
-                  <li><a href="#">Business</a></li>
-                  <li><a href="#">Games</a></li>
-                </ul>
-              </div>
-              <!-- End single sidebar -->
-              
-            </div>
-          </div>
+
           <!-- start course archive sidebar -->
         </div>
       </div>

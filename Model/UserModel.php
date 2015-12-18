@@ -211,12 +211,24 @@ $address = $_POST['address'];
 
         $stmt->execute();
         $stmt->bind_result($uname, $psw,$introduction, $address);
-        if($stmt -> fetch()){
-        $_SESSION['uname'] = $uname;
-        $_SESSION['password'] =$psw;
-        $_SESSION['introduction'] = $introduction;
-        $_SESSION['address'] = $address;
+        
+        $userArray = array();
+        //echo "user";
+        while($stmt -> fetch()){
+        //echo "user";
+        
+        $user = new UserEntity($uid, $uname, $password, $introduction, NULL, $address, NULL, NULL, NULL, NULL, NULL);
+        array_push($userArray, $user);
+            
+        //$_SESSION['uname'] = $uname;
+        //$_SESSION['password'] =$pwd;
+        //$_SESSION['introduction'] = $introduction;
+        //$_SESSION['address'] = $address;
         }
+        $stmt->close();
+        $mysqli->close();
+
+        return $userArray;
     }
 
 
@@ -241,7 +253,87 @@ $address = $_POST['address'];
         $mysqli->close();
         return $userArray;
     }
+    
+    function GetUserProfile(){
+    
+        $uid = $_SESSION['uid'];
+    
+        require 'Credentials.php';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
 
+
+        $stmt = $mysqli->prepare("SELECT uname, password, introduction, address FROM User WHERE uid = ?");
+        $stmt->bind_param('s', $uid);
+
+        $stmt->execute();
+        $stmt->bind_result($uname, $password, $introduction, $address);
+        
+        $userArray = array();
+        //echo "user";
+        while($stmt -> fetch()){
+        //echo "user";
+        
+        $user = new UserEntity($uid, $uname, $password, $introduction, NULL, $address, NULL, NULL, NULL, NULL, NULL);
+        array_push($userArray, $user);
+            
+        //$_SESSION['uname'] = $uname;
+        //$_SESSION['password'] =$pwd;
+        //$_SESSION['introduction'] = $introduction;
+        //$_SESSION['address'] = $address;
+        }
+        $stmt->close();
+        $mysqli->close();
+
+        return $userArray;
+    }
+    
+    function CheckRelationship($userid){
+    
+        $uid = $_SESSION['uid'];
+    require 'Credentials.php';
+        $mysqli = new mysqli($host, $user, $passwd, $database);
+        /* check connection */
+        if (mysqli_connect_errno()) {
+           printf("Connect failed: %s\n", mysqli_connect_error());
+           exit();
+        }
+
+        $stmt = $mysqli->prepare("SELECT user2 FROM Relationship WHERE user1 = ? AND user2 = ? AND relationship = 'friends' AND accept = TRUE ");
+        $stmt->bind_param('ss', $uid, $userid);
+        $stmt->execute();
+        $stmt->bind_result($user2);
+        //$stmt->fetch();
+        //echo "user";
+        if(!$stmt->fetch()){
+
+        echo "<a class='blog_readmore' href='Profiledit.php'>Add Friend</a>";
+
+        }
+        $stmt->close();
+        
+        $stmt = $mysqli->prepare("SELECT user2 FROM Relationship WHERE user1 = ? AND user2 = ? AND relationship = 'neighbors'");
+        $stmt->bind_param('ss', $uid, $userid);
+        $stmt->execute();
+        $stmt->bind_result($user2);
+        //$stmt2->fetch();
+        
+        if(!$stmt->fetch()){
+
+        echo "<a class='blog_readmore' href='Profiledit.php'>Add Neighbor</a>";
+
+        }
+        
+        $stmt->close();
+        //$stmt2->close();
+        $mysqli->close();
+        //$mysqli2->close();
+    }
+    
 }
 
 ?>

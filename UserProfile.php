@@ -1,7 +1,11 @@
 <?php
 include "include.php";
-require 'Controller/MessageController.php';
+require_once 'Controller/MessageController.php';
+require_once 'Controller/UserController.php';
+require_once 'Model/UserModel.php';
 $MessageController = new MessageController();
+$UserController = new UserController();
+$UserModel = new UserModel();
 //$result = $MessageController->DisplayNewPost();
 //printf('cda'.$result[1][0]['google_map']['lat']);
 
@@ -19,11 +23,11 @@ $MessageController = new MessageController();
       <h2>Home</h2>
     </section>-->
     <?php 
-    if(isset($_GET['friend_id'])){
+    if(isset($_GET['user_id'])){
     
-    $result = $MessageController->DisplayUserPost($_GET['friend_id']);
-    }elseif(isset($_GET['neighbor_id'])){
-    $result = $MessageController->DisplayUserPost($_GET['neighbor_id']);
+    $result = $MessageController->DisplayUserPost($_GET['user_id']);
+    }elseif(isset($_GET['user_id'])){
+    $result = $MessageController->DisplayUserPost($_GET['user_id']);
     }else{
     $result = $MessageController->DisplayUserPost($_SESSION['uid']);
     }?>
@@ -48,37 +52,19 @@ $MessageController = new MessageController();
                   include_once 'Model/UserModel.php';
                   
                   $UserModel = new UserModel();
-                  if(isset($_GET['friend_id'])){
-                  $UserModel->GetUserInfo($_GET['friend_id']);
-                  }elseif(isset($_GET['neighbor_id'])){
-                  $UserModel->GetUserInfo($_GET['neighbor_id']);
+                  if(isset($_GET['user_id'])){
+
+                  echo $UserController->DisplayUserInfo($_GET['user_id']);
+                  echo $UserModel->CheckRelationship($_GET['user_id']);
                   }else{
-                  $UserModel->GetUserInfo($_SESSION['uid']);
+                 // echo "user";
+                  echo $UserController->DisplayUserProfile();
+                  echo "<a class='blog_readmore' href='Profiledit.php'>Edit Profile</a>";
+                  //$UserModel->GetUserInfo($_SESSION['uid']);
                   }
-                  
-                  //echo $_SESSION['uid'];
-                                   
-                  echo "&nbsp&nbsp&nbsp&nbsp&nbsp";                  
-                  echo "Name: "; 
-                  echo $_SESSION['uname'];
-                  echo "<br><br>";
-                  //echo "<input type='text' class='' name='uname_edit' placeholder='user name'></p>";
-                  //echo $_SESSION['password'];
-                  //echo "<br>";
-                  //echo "<input type='text' class='' name='password_edit' placeholder='password'></p>";
-                  echo "&nbsp&nbsp&nbsp&nbsp&nbsp"; 
-                  echo "About me: ";
-                  echo $_SESSION['introduction'];
-                  echo "<br><br>";
-                  //echo "<input type='text' class='' name='intro_edit' placeholder='introduction'></p>";
-                  echo "&nbsp&nbsp&nbsp&nbsp&nbsp"; 
-                  echo "Address: ";
-                  echo $_SESSION['address'];
-                  echo "<br><br>";
-                  //echo "<input type='text' class='' name='address_edit' placeholder='address'></p>";
+                                    
                   ?>
-                  </p>
-                  <a class='blog_readmore' href='Profiledit.php'>Edit Profile</a>
+                  
                   </div>
             </div>
           </div>

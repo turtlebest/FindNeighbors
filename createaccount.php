@@ -31,11 +31,11 @@ include "include.php";
                 <!-- start single blog archive -->
 
                   <form action= "newaccount.php" method="POST">
-                  <input type='text' class='' name='uname_input' placeholder='user name'></p>
-                  <input type='text' class='' name='uid_input' placeholder='user id'></p>
-                  <input type='password' class='' name='password_input' placeholder='password'></p>
-                  <input type='text' class='' name='intro_input' placeholder='introduction'></p>
-                  <input type='text' class='' name='address_input' placeholder='address'></p>
+                  <input type='text' class='' name='uname_input' placeholder='User Name'></p>
+                  <input type='text' class='' name='uid_input' placeholder='User ID'></p>
+                  <input type='password' class='' name='password_input' placeholder='Password'></p>
+                  <p><textarea rows="4" cols="50" class='' name='intro_input' placeholder='About Me'></textarea></p>
+                  <input type='text' class='' name='address_input' placeholder='Address' size = '51'></p>
                   <!--<input type='text' class='' name='city_input' placeholder='city'></p>
                   <input type='text' class='' name='state_input' placeholder='state'</p>
                   </p>-->
@@ -46,6 +46,8 @@ include "include.php";
                   require 'Model/BlockModel.php';
                  
                   $BlockModel = new BlockModel();
+                  echo "Block";
+                  echo "<br>";
                   echo "<select name='GetBlockList'>";
                   $BlockModel->GetBlockList();
                  
