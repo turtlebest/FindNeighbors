@@ -309,9 +309,15 @@ $address = $_POST['address'];
         $stmt->bind_result($user2);
         //$stmt->fetch();
         //echo "user";
+        $IsFriend = 1;
+        $IsNeighbor = 1;
+        
         if(!$stmt->fetch()){
+        $IsFriend = 0;
 
-        echo "<a class='blog_readmore' href='Profiledit.php'>Add Friend</a>";
+        //echo "<a class='blog_readmore' href=php echo $addfriend_url; echo $userid; >Add Friend</a>";
+        
+        
 
         }
         $stmt->close();
@@ -323,8 +329,9 @@ $address = $_POST['address'];
         //$stmt2->fetch();
         
         if(!$stmt->fetch()){
+        $IsNeighbor = 0;
 
-        echo "<a class='blog_readmore' href='Profiledit.php'>Add Neighbor</a>";
+        //echo "<a class='blog_readmore' href='Profiledit.php'>Add Neighbor</a>";
 
         }
         
@@ -332,6 +339,7 @@ $address = $_POST['address'];
         //$stmt2->close();
         $mysqli->close();
         //$mysqli2->close();
+        return array($IsFriend, $IsNeighbor);
     }
     
 }

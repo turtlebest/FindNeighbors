@@ -1,4 +1,5 @@
 <?php
+include ("include.php");
 
 require_once ("Model/UserModel.php");
 
@@ -168,6 +169,30 @@ class UserController {
         }
         return $result;
     }
+    
+    function CheckRelationship($userid){
+    
+        $UserModel = new UserModel();
+        $Check = $UserModel->CheckRelationship($userid);
+        
+        $Add_url = "";
+        $Add = "";
+        $url = "class='blog_readmore' href=";
+        
+        if($Check[0] == FALSE){
+        $Add_url =  "AddFriends.php?user_id=";
+        $Add = 'Add Friend';
+        }elseif($Check[1] == FALSE){
+        $Add_url =  "AddNeighbors.php?user_id=";
+        $Add = 'Add Neighbor';
+        }
+        $user= $userid;
+        
+        return array($url, $Add_url, $user, $Add);
+        
+        }
+                    
+     
 
 
 

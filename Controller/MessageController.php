@@ -306,6 +306,75 @@ class MessageController {
         }
         return array($result, $locations);
     }
+    
+    function DisplayFriendPost()
+    {
+        $MessageModel = new MessageModel();
+        $messageArray = $MessageModel->GetFriendPost();
+        $locations = array();
+        $result = "";
+
+        //Generate a coffeeTable for each coffeeEntity in array
+        foreach ($messageArray as $key => $message)
+        {
+            $mapresult = $this->GetLatandlong($message);
+            array_push($locations, $mapresult[0]);
+            $lat = $mapresult[1];
+            $long = $mapresult[2];
+           //printf($message->tid.'');
+           //$_SESSION['tid'] = 
+            $result = $result .
+                    "
+                     <div class='col-lg-12 col-12 col-sm-12'>
+                      <div class='single_blog_archive wow fadeInUp'>
+                       <h2 class='blog_title'><a href='posts_single.php?thread_id=$message->tid'>$message->title</a></h2>
+                       <div class='blog_commentbox'>
+                         <p><i class='fa fa-clock-o'></i>$message->timestamp</p>
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$message->address</a></p>
+                         <p><i class='fa fa-user'></i>Author: $message->author</p>
+                       </div>
+                         <p class='blog_summary'>$message->content</p>
+                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                       </div>
+                     </div>";
+        }
+        return array($result, $locations);
+    }
+    
+    function DisplayNeighborPost()
+    {
+        $MessageModel = new MessageModel();
+        $messageArray = $MessageModel->GetNeighborPost();
+        $locations = array();
+        $result = "";
+
+        //Generate a coffeeTable for each coffeeEntity in array
+        foreach ($messageArray as $key => $message)
+        {
+            $mapresult = $this->GetLatandlong($message);
+            array_push($locations, $mapresult[0]);
+            $lat = $mapresult[1];
+            $long = $mapresult[2];
+           //printf($message->tid.'');
+           //$_SESSION['tid'] = 
+            $result = $result .
+                    "
+                     <div class='col-lg-12 col-12 col-sm-12'>
+                      <div class='single_blog_archive wow fadeInUp'>
+                       <h2 class='blog_title'><a href='posts_single.php?thread_id=$message->tid'>$message->title</a></h2>
+                       <div class='blog_commentbox'>
+                         <p><i class='fa fa-clock-o'></i>$message->timestamp</p>
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$message->address</a></p>
+                         <p><i class='fa fa-user'></i>Author: $message->author</p>
+                       </div>
+                         <p class='blog_summary'>$message->content</p>
+                         <a class='blog_readmore' href='posts_single.php?thread_id=$message->tid'>Read More</a>
+                       </div>
+                     </div>";
+        }
+        return array($result, $locations);
+    }
+
 
 
 }

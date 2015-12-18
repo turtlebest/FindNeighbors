@@ -55,7 +55,7 @@ $NeighborController = new NeighborController();
               <div class="row">
                 <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i>Suggest Neighbors</a>
                 <!-- start single blog archive -->
-                <?php echo $NeighborController->AddNeighbor($_GET['neighbor_id']);?>
+                <?php echo $NeighborController->AddNeighbor($_GET['user_id']);?>
                 <?php echo $suggest[0];?>
                 <!-- start single blog archive -->
               </div>

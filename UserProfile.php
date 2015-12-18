@@ -55,15 +55,17 @@ $UserModel = new UserModel();
                   if(isset($_GET['user_id'])){
 
                   echo $UserController->DisplayUserInfo($_GET['user_id']);
-                  echo $UserModel->CheckRelationship($_GET['user_id']);
+                  $content = $UserController->CheckRelationship($_GET['user_id']);
                   }else{
                  // echo "user";
+                 //$content = $UserController->CheckRelationship($_GET['user_id']);
                   echo $UserController->DisplayUserProfile();
                   echo "<a class='blog_readmore' href='Profiledit.php'>Edit Profile</a>";
                   //$UserModel->GetUserInfo($_SESSION['uid']);
                   }
                                     
                   ?>
+                  <a <?php echo $content[0];?> <?php echo $content[1]; echo $content[2]; ?>><?php echo $content[3];?></a>
                   
                   </div>
             </div>

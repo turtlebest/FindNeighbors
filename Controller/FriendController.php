@@ -83,12 +83,12 @@ class FriendController {
                       <div class='single_blog_archive wow fadeInUp'>
                        <h2 class='blog_title'> </h2>
                        <div class='blog_commentbox'>
+                         <p><i class='fa fa-user'></i>$friend->uname</p>
                          <p><i class='fa fa-user'></i>$friend->uid</p>
-                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i>$friend->address</a></p>
-                         <p><i class='fa fa-user'></i>Name: $friend->uname</p>
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i></a></p>
                        </div>
                          <p class='blog_summary'>$friend->introduction</p>
-                         <a class='blog_readmore' href='UserProfile.php?friend_id=$friend->uid'>Read More</a>
+                         <a class='blog_readmore' href='UserProfile.php?user_id=$friend->uid' style='font-size:85%'>More</a>
                        </div>
                      </div>";
         }
@@ -125,7 +125,7 @@ class FriendController {
                          <p><i class='fa fa-user'></i>Name: $friend->uname</p>
                        </div>
                          <p class='blog_summary'>$friend->introduction</p>
-                         <a class='blog_readmore' href='AddFriends.php?friend_id=$friend->uid'>Add Friend</a>
+                         <a class='blog_readmore' href='AddFriends.php?user_id=$friend->uid'>Add Friend</a>
                        </div>
                      </div>";
         }
@@ -174,7 +174,7 @@ class FriendController {
                          <p><i class='fa fa-user'></i>Name: $friend->uname</p>
                        </div>
                          <p class='blog_summary'>$friend->introduction</p>
-                         <a class='blog_readmore' href='UserProfile.php?friend_id=$friend->uid'>Read More</a>
+                         <a class='blog_readmore' href='UserProfile.php?user_id=$friend->uid'>Read More</a>
                        </div>
                      </div>";
         }

@@ -55,7 +55,7 @@ $FriendController = new FriendController();
               <div class="row">
                 <a class="navbar-brand" style='color:#5c5cd6;font-weight: bold; font-size: 24px;font-family: "Arial Verdana"' ><i class="fa fa-users"></i>Suggest Friends</a>
                 <!-- start single blog archive -->
-                <?php echo $FriendController->AddFriend($_GET['friend_id']);?>
+                <?php echo $FriendController->AddFriend($_GET['user_id']);?>
                 <?php echo $suggest[0];?>
                 <!-- start single blog archive -->
               </div>
