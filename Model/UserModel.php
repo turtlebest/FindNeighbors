@@ -311,15 +311,23 @@ $address = $_POST['address_input'];
         //echo "user";
         $IsFriend = 1;
         $IsNeighbor = 1;
+        $FriendRequest = 0;
         
         if(!$stmt->fetch()){
-        $IsFriend = 0;
-
-        //echo "<a class='blog_readmore' href=php echo $addfriend_url; echo $userid; >Add Friend</a>";
-        
-        
-
+        $IsFriend = 0;    
         }
+        
+        $stmt->close();
+        
+        $stmt = $mysqli->prepare("SELECT user2 FROM Relationship WHERE user1 = ? AND user2 = ? AND relationship = 'friends' AND accept = FALSE ");
+        $stmt->bind_param('ss', $uid, $userid);
+        $stmt->execute();
+        $stmt->bind_result($user2);
+        
+        if($stmt->fetch()){
+        $FriendRequest = 1;    
+        }
+        
         $stmt->close();
         
         $stmt = $mysqli->prepare("SELECT user2 FROM Relationship WHERE user1 = ? AND user2 = ? AND relationship = 'neighbors'");
@@ -339,7 +347,7 @@ $address = $_POST['address_input'];
         //$stmt2->close();
         $mysqli->close();
         //$mysqli2->close();
-        return array($IsFriend, $IsNeighbor);
+        return array($IsFriend, $IsNeighbor, $FriendRequest);
     }
     
 }

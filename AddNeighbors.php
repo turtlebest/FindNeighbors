@@ -6,5 +6,8 @@ include_once 'Model/NeighborModel.php';
 $NeighborController = new NeighborController();
 //$NeighborModel = new NeighborModel();
 echo $NeighborController->AddNeighbor($_GET['user_id']);
-echo '<script>window.location.href = "home.php";</script>'; 
+$userid = $_GET['user_id'];
+$url = 'UserProfile.php?user_id='.$userid;
+echo "<script>window.location.href = 'UserProfile.php?user_id=".$userid."';</script>"; 
+//echo '<script>window.location.href = "home.php";</script>'; 
 ?>

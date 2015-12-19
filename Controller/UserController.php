@@ -185,6 +185,11 @@ class UserController {
         $Add_url2 =  "AddNeighbors.php?user_id=";
         $Add2 = 'Add Neighbor';
         }
+        if($Check[2] == TRUE){
+        $url = "class='blog_readmore'";
+        $Add_url =  "";
+        $Add = 'Friend Request Sent';
+        }
         $user= $userid;
         
         return array($url, $Add_url, $user, $Add, $Add_url2, $Add2 );

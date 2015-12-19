@@ -7,6 +7,7 @@ $FriendController = new FriendController();
 //$NeighborModel = new NeighborModel();
 
 echo $FriendController->AddFriend($_GET['user_id']);
-echo '<script>window.location.href = "home.php";</script>'; 
+$userid = $_GET['user_id'];
+$url = 'UserProfile.php?user_id='.$userid;
+echo "<script>window.location.href = 'UserProfile.php?user_id=".$userid."';</script>"; 
 ?>
-
