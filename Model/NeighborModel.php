@@ -129,7 +129,7 @@ class NeighborModel {
 $relationship = "neighbors";        
         
         
-        $stmt = $mysqli->prepare("INSERT INTO Relationship(`user1`,`user2`,`relationship`, `accept`) VALUES (?,?,?,1);");
+        $stmt = $mysqli->prepare("INSERT INTO Relationship(`user1`,`user2`,`relationship`, `accept`) VALUES (?,?,?,0);");
             $stmt->bind_param('sss', $uid, $user2, $relationship);
             $stmt->execute();
             $stmt -> fetch();

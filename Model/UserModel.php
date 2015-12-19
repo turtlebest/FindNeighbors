@@ -75,7 +75,7 @@ $address = $_POST['address_input'];
 
         $stmt = $mysqli->prepare("SELECT u.uid, u.uname
                                   FROM User as u, Relationship as r
-                                  WHERE r.user2 = u.uid and r.user1 = ? and r.relationship = 'friends' and r.accept = FALSE");
+                                  WHERE r.user2 = ? and r.user1 = u.uid and r.relationship = 'friends' and r.accept = FALSE");
         $stmt->bind_param('s', $uid);
 
         $stmt->execute();
@@ -110,7 +110,7 @@ $address = $_POST['address_input'];
 
         $stmt = $mysqli->prepare("SELECT u.uid, u.uname
                                   FROM User as u, Relationship as r
-                                  WHERE r.user2 = u.uid and r.user1 = ? and r.relationship = 'neighbors' and r.accept = FALSE");
+                                  WHERE r.user2 = ? and r.user1 = u.uid and r.relationship = 'neighbors' and r.accept = FALSE");
         $stmt->bind_param('s', $uid);
 
         $stmt->execute();
