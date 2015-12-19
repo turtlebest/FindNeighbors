@@ -24,10 +24,11 @@ $UserModel = new UserModel();
     </section>-->
     <?php 
     if(isset($_GET['user_id'])){
-    
-    $result = $MessageController->DisplayUserPost($_GET['user_id']);
-    }elseif(isset($_GET['user_id'])){
-    $result = $MessageController->DisplayUserPost($_GET['user_id']);
+        if ($_GET['user_id'] == $_SESSION['uid']){
+            $result = $MessageController->DisplayUserPost($_SESSION['uid']);
+        }else{
+             $result = $MessageController->DisplayUserPost($_GET['user_id']);
+        }
     }else{
     $result = $MessageController->DisplayUserPost($_SESSION['uid']);
     }?>
@@ -53,9 +54,20 @@ $UserModel = new UserModel();
                   
                   $UserModel = new UserModel();
                   if(isset($_GET['user_id'])){
-
-                  echo $UserController->DisplayUserInfo($_GET['user_id']);
-                  $content = $UserController->CheckRelationship($_GET['user_id']);
+                    if($_GET['user_id'] == $_SESSION['uid']){
+                        echo $UserController->DisplayUserProfile();
+                        echo "<a class='blog_readmore' href='Profiledit.php'>Edit Profile</a>";
+                    }else{
+                        $Check = $UserModel->CheckRelationship($_GET['user_id']);
+                        echo $UserController->DisplayUserInfo($_GET['user_id']);
+                        
+                        if($Check[0] == FALSE){
+                        $content = $UserController->CheckRelationship($_GET['user_id']);
+                        }
+                        if($Check[1] == FALSE){
+                        $content2 = $UserController->CheckRelationship($_GET['user_id']);
+                        }
+                    }
                   }else{
                  // echo "user";
                  //$content = $UserController->CheckRelationship($_GET['user_id']);
@@ -64,7 +76,8 @@ $UserModel = new UserModel();
                   //$UserModel->GetUserInfo($_SESSION['uid']);
                   }
                                     
-                  ?>
+        ?>
+                   <a <?php echo $content2[0];?> <?php echo $content2[4]; echo $content2[2]; ?>><?php echo $content2[5];?></a>
                   <a <?php echo $content[0];?> <?php echo $content[1]; echo $content[2]; ?>><?php echo $content[3];?></a>
                   
                   </div>

@@ -53,7 +53,7 @@ class BlockController {
         {
             $result = $result .
                     "<div class='col-lg-3 col-md-3 col-sm-3'>
-                      <h4><a><i class='fa fa-user'></i>  $user->uname</a></h4>
+                      <h4><a><a class='' href='UserProfile.php?user_id=$user->uid'></i>  $user->uname</a></h4>
                      </div>";
         }
         return $result;

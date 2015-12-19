@@ -175,26 +175,21 @@ class UserController {
         $UserModel = new UserModel();
         $Check = $UserModel->CheckRelationship($userid);
         
-        $Add_url = "";
-        $Add = "";
-        $url = "class='blog_readmore' href=";
-        
         if($Check[0] == FALSE){
+        $url = "class='blog_readmore' href=";
         $Add_url =  "AddFriends.php?user_id=";
         $Add = 'Add Friend';
-        }elseif($Check[1] == FALSE){
-        $Add_url =  "AddNeighbors.php?user_id=";
-        $Add = 'Add Neighbor';
+        }
+        if($Check[1] == FALSE){
+        $url = "class='blog_readmore' href=";
+        $Add_url2 =  "AddNeighbors.php?user_id=";
+        $Add2 = 'Add Neighbor';
         }
         $user= $userid;
         
-        return array($url, $Add_url, $user, $Add);
+        return array($url, $Add_url, $user, $Add, $Add_url2, $Add2 );
         
         }
                     
-     
-
-
-
 }
 ?>
