@@ -15,8 +15,8 @@ $MessageController = new MessageController();
 
     <?php include "static/header.php";?>
     <?php
-      $profile = $NeighborController->DisplayNeighborProfile();
-      $content = $MessageController->DisplayNeighborPost();
+      $content = $NeighborController->DisplayNeighborProfile();
+      //$content = $MessageController->DisplayNeighborPost();
       $result = $NeighborController->DisplayMembersOnMap();
       $suggest = $NeighborController->DisplaySuggestNeighbors();
     ?>
@@ -49,25 +49,6 @@ $MessageController = new MessageController();
                 <!-- start single blog archive -->
               </div>
               <!-- end blog archive  -->
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-4 col-sm-4">
-            <div class="courseArchive_sidebar">
-              <!-- start single sidebar -->
-
-              <!-- start single sidebar -->
-              <div class="single_sidebar">
-                <h2>Neighbor List <span class="fa fa-angle-double-right"></span></h2>
-                <ul>
-                  <?php 
-                  echo $profile[0];
-                   ?>
-
-                  <!--<li><a href="#">Food</a></li>-->
-                </ul>
-              </div>
-              <!-- End single sidebar -->
-
             </div>
           </div>
           

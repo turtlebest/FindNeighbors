@@ -84,10 +84,10 @@ class NeighborController {
                        <div class='blog_commentbox'>
                        <p><i class='fa fa-user'></i>$neighbor->uname</p>
                          <p><i class='fa fa-user'></i>$neighbor->uid</p>
-                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i></a></p>                        
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i></a>$neighbor->address</p>                        
                        </div>
                          <p class='blog_summary'>$neighbor->introduction</p>
-                         <a class='blog_readmore' href='UserProfile.php?user_id=$neighbor->uid'style='font-size:85%'>More</a>
+                         <a class='blog_readmore' href='UserProfile.php?user_id=$neighbor->uid'style='font-size:100%'>Read More</a>
                        </div>
                      </div>";
         }

@@ -85,10 +85,10 @@ class FriendController {
                        <div class='blog_commentbox'>
                          <p><i class='fa fa-user'></i>$friend->uname</p>
                          <p><i class='fa fa-user'></i>$friend->uid</p>
-                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i></a></p>
+                         <p><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'><i class='fa fa-map-marker'></i></a>$friend->address</p>
                        </div>
                          <p class='blog_summary'>$friend->introduction</p>
-                         <a class='blog_readmore' href='UserProfile.php?user_id=$friend->uid' style='font-size:85%'>More</a>
+                         <a class='blog_readmore' href='UserProfile.php?user_id=$friend->uid' style='font-size:100%'>Read More</a>
                        </div>
                      </div>";
         }
