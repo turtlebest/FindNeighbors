@@ -62,7 +62,7 @@ class UserController {
             //printf("e");
 
            $result = $result .
-                    "<p><i class='fa fa-bell'></i><a> $user->uname</a> need be approved as block member <p><a href='ApproveMember.php?memberid=$user->uid' style='color:#ff1a1a'><i class='fa fa-check'></i> approve</a></p></p>
+                    "<p><i class='fa fa-bell'></i><a> $user->uname</a> need be approved as block member <p><a href='ApproveMember.php?memberid=$user->uid' style='color:#ff4dc3'><i class='fa fa-check'></i> approve</a></p></p>
                     ";
         }
         return $result;

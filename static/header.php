@@ -21,8 +21,8 @@
             <div id="navbar" class="navbar-collapse collapse">
               <ul id="top-menu" class="nav navbar-nav navbar-right main-nav">
                 <?php if ($_SESSION['Login']) { ?>
-                <li><a href="home.php">Home</a></li>
                 <?php if ($_SESSION['approved']) { ?>
+                <li><a href="home.php">Home</a></li>
                 <li><a href="block.php">Block</a></li>
                 <li><a href="hood.php">Hood</a></li>
                 <li class="dropdown">
@@ -40,8 +40,8 @@
                     <?php if ($_SESSION['approved']) { ?>
                     <li><a href="newmessage.php">Post Message</a></li>
                     <?php } ?>
-                    <li><a href="login.php">Logout</a></li>
                     <li><a href="search.php">Search</a></li>
+                    <li><a href="login.php">Logout</a></li>
                   </ul>
                 </li>
                 <?php } else { ?>

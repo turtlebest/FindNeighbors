@@ -18,8 +18,12 @@ if ($result[0]) {
     $_SESSION['uid'] = $uid;
     $_SESSION['password'] = $psw;
     $_SESSION['approved'] = $Approved;
-    
-    echo '<script>window.location.href = "home.php";</script>'; 
+
+    if ($Approved) {
+       echo '<script>window.location.href = "home.php";</script>';
+    } else {
+       echo '<script>window.location.href = "UserProfile.php";</script>';
+    }
 } else {
 
     echo '<script type="text/javascript">alert("The account or password not exist!");</script>'; 

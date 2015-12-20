@@ -7,7 +7,6 @@ include_once ("Entities/UserEntity.php");
 class UserModel {
 
     function CreateAccount() {
-       
         require ("Credentials.php");
         
         //Open connection and Select database. 
@@ -121,7 +120,7 @@ $address = $_POST['address_input'];
         //Get data from database.
         while ($stmt->fetch()) {
             //Create coffee objects and store them in an array.
-            $stmt2 = $mysqli2->prepare("UPDATE Relationship SET accept = '1' WHERE user1 = ? and user2 = ? and relationship ='neighbors';");
+            $stmt2 = $mysqli2->prepare("UPDATE Relationship SET accept = TRUE WHERE user1 = ? and user2 = ? and relationship ='neighbors';");
             $stmt2->bind_param('ss', $uid, $neighborid);
             $stmt2->execute();
 
@@ -150,15 +149,50 @@ $address = $_POST['address_input'];
            exit();
         }
 
-        $stmt = $mysqli->prepare("SELECT u2.uid, u2.uname
+        $stmt = $mysqli->prepare("SELECT COUNT(u2.uid) as number
                                   FROM User as u1, User as u2
-                                  WHERE u1.uid = ? and u1.bid = u2.bid and u2.approved = FALSE;");
+                                  WHERE u1.uid = ? and u1.bid = u2.bid and u2.approved = TRUE");
         $stmt->bind_param('s', $uid);
+
+        $stmt->execute();
+        $stmt->bind_result($membernumber);
+        $stmt->fetch();
+        $stmt->close();
+
+        if ($membernumber > 3) {
+            $membernumber = 3;
+        }
+
+        $stmt = $mysqli->prepare("SELECT u2.uid, u2.uname
+                                  FROM User as u, Application as a, User as u2
+                                  WHERE u.bid = a.bid and u2.uid = a.applicant and u.uid = ? and u2.approved = 'FALSE' and u.uid not in (Select approver From Application Where applicant = u2.uid)
+                                  Group by a.applicant
+                                  Having Count(*) < ?");
+        $stmt->bind_param('si', $uid, $membernumber);
 
         $stmt->execute();
         $stmt->bind_result($uid, $uname);
 
         $userArray = array();
+        //Get data from database.
+        while ($stmt->fetch()) {
+            //Create coffee objects and store them in an array.
+            $user = new UserEntity($uid, $uname, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+            array_push($userArray, $user);
+        }
+        //Close connection and return result
+        $stmt->close();
+
+        $uid = $_SESSION['uid'];
+
+        $stmt = $mysqli->prepare("SELECT distinct u2.uid, u2.uname
+                                  FROM User as u, Application as a, User as u2
+                                  WHERE u.bid = a.bid and u2.bid = u.bid and u.uid = ? and u2.approved = 'FALSE' and u2.uid not in (Select applicant From Application)
+                                ");
+        $stmt->bind_param('s', $uid);
+
+        $stmt->execute();
+        $stmt->bind_result($uid, $uname);
 
         //Get data from database.
         while ($stmt->fetch()) {
@@ -186,7 +220,7 @@ $address = $_POST['address_input'];
         }
 
         $stmt = $mysqli->prepare("UPDATE Relationship SET accept = '1' WHERE user1 = ? and user2 = ? and relationship ='friends';");
-        $stmt->bind_param('ss', $uid, $friendid);
+        $stmt->bind_param('ss', $friendid, $uid);
         $stmt->execute();
 
         //Close connection and return result
@@ -194,9 +228,8 @@ $address = $_POST['address_input'];
         $mysqli->close();
         return $userArray;
     }
-    
+
     function GetUserInfo($userid){
-    
         require 'Credentials.php';
         $mysqli = new mysqli($host, $user, $passwd, $database);
         /* check connection */
@@ -211,7 +244,7 @@ $address = $_POST['address_input'];
 
         $stmt->execute();
         $stmt->bind_result($uname, $psw,$introduction, $address);
-        
+
         $userArray = array();
         //echo "user";
         while($stmt -> fetch()){
@@ -244,8 +277,17 @@ $address = $_POST['address_input'];
            exit();
         }
 
-        $stmt = $mysqli->prepare("UPDATE Relationship SET accept = '1' WHERE user1 = ? and user2 = ? and relationship ='friends';");
-        $stmt->bind_param('ss', $uid, $friendid);
+        $stmt = $mysqli->prepare("SELECT bid FROM User WHERE uid = ?");
+        $stmt->bind_param('s', $uid);
+        $stmt->execute();
+        $stmt->bind_result($bid);
+        $stmt->fetch();
+        $stmt->close();
+
+        printf($memberid);
+
+        $stmt = $mysqli->prepare("INSERT INTO Application (`applicant`, `approver`, `bid`) VALUES (?, ?, ?);");
+        $stmt->bind_param('sss', $memberid, $uid, $bid);
         $stmt->execute();
 
         //Close connection and return result
@@ -253,11 +295,11 @@ $address = $_POST['address_input'];
         $mysqli->close();
         return $userArray;
     }
-    
+
     function GetUserProfile(){
-    
+
         $uid = $_SESSION['uid'];
-    
+
         require 'Credentials.php';
         $mysqli = new mysqli($host, $user, $passwd, $database);
         /* check connection */

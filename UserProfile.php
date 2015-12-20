@@ -32,7 +32,7 @@ $UserModel = new UserModel();
     }else{
     $result = $MessageController->DisplayUserPost($_SESSION['uid']);
     }?>
-    
+
     <br><br><br></br>
     <?php include "google_map.php";?>
     <!--=========== END COURSE BANNER SECTION ================-->
@@ -41,17 +41,19 @@ $UserModel = new UserModel();
     <section id="courseArchive">
       <div class="container">
         <div class="row">
+         <?php if (!$_SESSION['approved']) { ?>
+               <h4 style='color:#ff0000'>* You have not been approved to join the block yet.</h4>
+            <?php } ?>
           <!-- start course content -->
           <div class='col-lg-12 col-12 col-sm-12'>
             <div class='single_blog_archive wow fadeInUp'>
             <h2 class='blog_title'>Profile</h2>
             <div class="row">
             <p class='blog_summary'>
-            
           <?php
                   include "include.php";
                   include_once 'Model/UserModel.php';
-                  
+
                   $UserModel = new UserModel();
                   if(isset($_GET['user_id'])){
                     if($_GET['user_id'] == $_SESSION['uid']){
