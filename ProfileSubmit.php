@@ -71,7 +71,7 @@ $address = $_POST['address_edit'];
         if(!isset($_POST['GetBlockList'])|| trim($_POST['GetBlockList'])== ''){
         echo "fail";
         }else{
-        $stmt = $mysqli->prepare("UPDATE User SET `bid`= ? WHERE `uid`= ?;");
+        $stmt = $mysqli->prepare("UPDATE User SET `bid`= ? , `approved` = 0 WHERE `uid`= ?;");
         $stmt->bind_param('ss', $bid, $uid);               
         $stmt->execute();
         $stmt -> fetch();

@@ -100,13 +100,16 @@ class UserController {
                     "
                     <div class='col-lg-12 col-12 col-sm-12'>
                       <div class='single_blog'>
-                         <p class=''>Name:</p>
+                         <a class=''>Name:</a>
+                         <br>
                          <input type='text' class='' name='uname_edit' placeholder='$user->uname'></p>
-                         <p class=''>Password:</p>
+                         <a class=''>Password:</a>
+                         <br>
                          <input type='text' class='' name='password_edit' placeholder=$user->password></p>
-                         <p class=''>About Me:</p>
+                         <a class=''>About Me:</a>
                          <p><textarea rows='4' cols='50' class='' name='intro_input' placeholder='$user->introduction'></textarea></p>
-                         <p class=''>Address:</p>
+                         <a class=''>Address:</a>
+                         <br>
                          <input type='text' class='' name='address_edit' placeholder='$user->address' size = '51'></p>
                          <br>
                        </div>                          

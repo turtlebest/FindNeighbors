@@ -78,7 +78,7 @@ class BlockModel {
            exit();
         }
 
-        $stmt = $mysqli->prepare("SELECT bid FROM User WHERE uid = ?");
+        $stmt = $mysqli->prepare("SELECT bid FROM User WHERE uid = ? AND approved = TRUE");
         $stmt->bind_param('s', $uid);
         $stmt->execute();
         $stmt->bind_result($bid);

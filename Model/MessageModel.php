@@ -217,7 +217,7 @@ class MessageModel {
         require 'Credentials.php';
         printf("A");
         $uid = $_SESSION['uid'];
-        $uid = 'u01';
+        //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */
@@ -566,13 +566,13 @@ $tid = $_SESSION['thread_id'];
        
         $stmt = $mysqli->prepare("SELECT* FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u
-                                WHERE u.uid=? AND (m.recipient_uid = ? OR (u.bid = m.recipient_bid AND u.approved = TRUE) OR m.author = ? OR m.recipient_hid in (SELECT hid FROM User as u, block_hood as bh WHERE u.bid = bh.bid AND u.uid = ? AND u.approved = TRUE))
+                                WHERE u.uid=? AND (m.recipient_uid = ? OR m.author = ?)
                                 Order by m.timestamp) as t
                                 Group by t.tid                                
                                 ");
        
        
-        $stmt->bind_param('ssss', $userid, $userid, $userid, $userid);
+        $stmt->bind_param('sss', $userid, $userid, $userid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp, $tid);
 

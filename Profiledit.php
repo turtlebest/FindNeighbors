@@ -41,6 +41,8 @@ $UserController = new UserController();
                   echo $UserController->EditUserProfile();
                   
                   ?>
+                  <div class='col-lg-12 col-12 col-sm-12'>
+                      <div class='single_blog'>
                   <?php
                   include "include.php";
                   //require 'Model/MessageModel.php';
@@ -49,22 +51,29 @@ $UserController = new UserController();
                  
                   $BlockModel = new BlockModel();
                   $BlockModel->GetBid();
+
                   echo "Block: ";
                   echo $_SESSION['bid'];
-                  $_SESSION['bid'] = $bid;
-                  echo $bid;
                   echo "<br>";
-                  echo "<select name='GetBlockList'>";
+
+                  echo "<select name='GetBlockList'>";                  
                   echo "<option value='' selected=''>  </option>";
-                  //echo "<option value ='12 Street between 1st and 3rd Ave' selected = 'selected'> $bid </option>";
-                  
+
                   $BlockModel->GetBlockList();
-                 
-                  //printf($_SESSION['hid']);
                   ?>
+                 </div>
+                </div>
+                <p class='blog_summary'>If changing your current block, you will need to be reapproved by the block members.</p>
+                <br><br>
+                <div class='col-lg-12 col-12 col-sm-12'>
+                 <div class='single_blog'>
+                
                   <input type='submit' class='' value = 'Save Changes'>
+
                 </p>
                 </form>
+                 </div>
+                </div>
                    </div>
                 </div>
               </div>
