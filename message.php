@@ -14,14 +14,14 @@ $BlockModel->GetBid();
 $BlockModel->GetHid();
 $MessageModel->CreateNewPost();
 //printf("m");
+echo '<script>window.location.href = "home.php";</script>';
 }else{
 $MessageModel = new MessageModel();
 $MessageModel->ReplyPost();
 //printf("re");
 $tid = $_SESSION['thread_id'];
-}
-
-//echo '<script>window.location.href = "home.php";</script>'; 
 echo "<script>window.location.href = 'posts_single.php?thread_id=".$tid."';</script>"; 
+
+}
 
 ?>
