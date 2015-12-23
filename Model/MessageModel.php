@@ -37,12 +37,12 @@ class MessageModel {
             $stmt2->close();
             printf("d");
             $firstmessage = $this->GetSinglePostFirst($tid);
-            printf("d");
+            //printf("d");
             if ($firstmessage->mid != $mid) {
-                printf("reply");
+                //printf("reply");
               $reply = TRUE;
             } else {
-                printf("notr");
+                //printf("notr");
               $reply = FALSE;
             }
             //Create coffee objects and store them in an array.
@@ -69,7 +69,7 @@ class MessageModel {
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT * FROM (SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
                                   FROM Message as m, User as u
                                   WHERE u.bid = m.recipient_bid AND u.uid = ? 
@@ -84,7 +84,7 @@ class MessageModel {
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("c");
+            //printf("c");
             //Create coffee objects and store them in an array.
             $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, $tid, NULL);
             array_push($messageArray, $message);
@@ -108,7 +108,7 @@ class MessageModel {
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT * FROM (SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid
                                   FROM Message as m, User as u, block_hood as bh
                                   WHERE bh.bid = u.bid AND bh.hid = m.recipient_hid AND u.uid = ? 
@@ -146,7 +146,7 @@ class MessageModel {
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp
                                   FROM Message as m
                                   WHERE m.tid = ?
@@ -157,9 +157,9 @@ class MessageModel {
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp);
         $stmt->fetch();
 
-        printf("first");
-        printf("new");
-        printf($tid);
+        //printf("first");
+        //printf("new");
+        //printf($tid);
         $_SESSION['tid']=$tid;
         $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
         //Close connection and return result
@@ -179,7 +179,7 @@ class MessageModel {
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
         $stmt = $mysqli->prepare("SELECT distinct m.mid, m.title, m.content, m.address, m.author, m.timestamp
                                    FROM Message as m, Thread t,
                                        (SELECT m.mid
@@ -196,7 +196,7 @@ class MessageModel {
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("c");
+            //printf("c");
             //Create coffee objects and store them in an array.
             $message = new MessageEntity($mid, $title, $content, $address, $timestamp, $author, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
             array_push($messageArray, $message);
@@ -254,7 +254,7 @@ if (isset($_POST['recipient_neighbor'])){
         $stmt->execute();
         
         while($stmt->fetch()){
-        printf("re");
+        //printf("re");
         $mid= mt_rand();
         }
         
@@ -664,7 +664,7 @@ $tid = $_SESSION['thread_id'];
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
        
         $stmt = $mysqli->prepare("SELECT* FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u, Relationship as r
@@ -709,7 +709,7 @@ $tid = $_SESSION['thread_id'];
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+       // printf("b".$uid."aaa");
        
         $stmt = $mysqli->prepare("SELECT* FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u, Relationship as r
