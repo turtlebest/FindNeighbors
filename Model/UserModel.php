@@ -55,12 +55,13 @@ $address = $_POST['address_input'];
 
            if(!$stmt->fetch()){
            //echo "numbid";
+           $stmt->close();
            $stmt = $mysqli->prepare("INSERT INTO User (`uid`,`uname`, `password`, `introduction`, `photo`, `address`, `approved`, `bid`, `city`, `state`, `login_time`) VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, NOW());");
             $stmt->bind_param('sssssssss', $uid, $uname, $psw, $introduction, $photo, $address, $bid, $city, $state);
             $stmt->execute();
             $stmt -> fetch();
             }else{
-            
+            $stmt->close();
             $stmt = $mysqli->prepare("INSERT INTO User (`uid`,`uname`, `password`, `introduction`, `photo`, `address`, `approved`, `bid`, `city`, `state`, `login_time`) VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?, ?, NOW());");
             $stmt->bind_param('sssssssss', $uid, $uname, $psw, $introduction, $photo, $address, $bid, $city, $state);
             $stmt->execute();
