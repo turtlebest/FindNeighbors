@@ -204,7 +204,7 @@ $address = $_POST['address_input'];
 
         $stmt = $mysqli->prepare("SELECT distinct u2.uid, u2.uname
                                   FROM User as u, Application as a, User as u2
-                                  WHERE u.bid = a.bid and u2.bid = u.bid and u.uid = ? and u2.approved = 'FALSE' and u2.uid not in (Select applicant From Application)
+                                  WHERE u2.bid = u.bid and u.uid = ? and u2.approved = 'FALSE' and u2.uid not in (Select applicant From Application)
                                 ");
         $stmt->bind_param('s', $uid);
 
