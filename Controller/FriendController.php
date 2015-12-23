@@ -1,6 +1,7 @@
 <?php
 
 require ("Model/FriendModel.php");
+require_once ("Controller/BlockController.php");
 
 
 

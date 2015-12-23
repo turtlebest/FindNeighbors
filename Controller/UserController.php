@@ -2,6 +2,7 @@
 include ("include.php");
 
 require_once ("Model/UserModel.php");
+require_once ("Controller/BlockController.php");
 
 //Contains non-database related function for the Coffee page
 class UserController {
@@ -123,6 +124,7 @@ class UserController {
     {
         //printf("turtle3");
         $UserModel = new UserModel();
+        $BlockController = new BlockController();
         $userArray = $UserModel->GetUserProfile();
         $result = "";
         
@@ -130,6 +132,11 @@ class UserController {
         foreach ($userArray as $key => $user)
         {
         //printf("e");
+          $mapresult = $BlockController->GetLatandlong($user);
+           // array_push($locations, $mapresult[0]);
+            //printf($mapresult[0][location_author]);
+            $lat = $mapresult[1];
+            $long = $mapresult[2];
 
            $result = $result .
                     "
@@ -137,7 +144,7 @@ class UserController {
                       <div class='single_blog'>
                          <p class='blog_summary'><a>$user->uname</a></p>
                          <p class='blog_summary'><a>$user->introduction<a></p>
-                         <p class='blog_summary'><a>$user->address</a></p>
+                         <p class='blog_summary'><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'> <i class='fa fa-map-marker'> </i> $user->address</a></p>
                          <br>
                        </div>                          
                      </div>";
@@ -150,6 +157,7 @@ class UserController {
     {
         //printf("turtle3");
         $UserModel = new UserModel();
+        $BlockController = new BlockController();
         $userArray = $UserModel->GetUserInfo($userid);
         $result = "";
         
@@ -157,6 +165,12 @@ class UserController {
         foreach ($userArray as $key => $user)
         {
         //printf("e");
+          $mapresult = $BlockController->GetLatandlong($user);
+           // array_push($locations, $mapresult[0]);
+            //printf($mapresult[0][location_author]);
+            $lat = $mapresult[1];
+            $long = $mapresult[2];
+
 
            $result = $result .
                     "
@@ -164,7 +178,7 @@ class UserController {
                       <div class='single_blog'>
                          <p class='blog_summary'><a>$user->uname</a></p>
                          <p class='blog_summary'><a>$user->introduction<a></p>
-                         <p class='blog_summary'><a>$user->address</a></p>
+                          <p class='blog_summary'><a style='color:#66b2ff' href='http://www.google.com/maps/place/$lat,$long'> <i class='fa fa-map-marker'> </i> $user->address</a></p>
                          <br>
                        </div>                          
                      </div>";
