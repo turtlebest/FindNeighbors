@@ -263,6 +263,7 @@ if (isset($_POST['recipient_neighbor'])){
         $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $author,$recipient_friend, $recipient_neighbors, $recipient_uid, $recipient_bid, $recipient_hid,$tid);
         $stmt->execute();
         $stmt -> fetch();
+        $stmt->close();
         $_SESSION['mid'] = $mid;
  //printf("done");
  
@@ -272,16 +273,19 @@ if (isset($_POST['recipient_neighbor'])){
         $stmt->bind_param('s', $tid);
         $stmt->execute();
         $stmt -> fetch();
+        $stmt->close();
         
         $stmt = $mysqli->prepare("UPDATE Message SET `tid`= ? WHERE `mid`= ?;");
         $stmt->bind_param('ss', $tid, $mid);               
         $stmt->execute();
         $stmt -> fetch();
+        $stmt->close();
         
         $stmt = $mysqli->prepare("INSERT INTO thread_participate(`tid`, `uid`) VALUES(?,?);");
         $stmt->bind_param('ss', $tid, $author);
         $stmt->execute();
         $stmt -> fetch();
+        $stmt->close();
 
         if (isset($_POST['recipient_friend'])){
         
@@ -291,6 +295,7 @@ if (isset($_POST['recipient_neighbor'])){
                $stmt->bind_param('ss', $mid, $friend);
                $stmt->execute();
                $stmt -> fetch();
+               $stmt->close();
         }
     }
     
@@ -301,6 +306,7 @@ if (isset($_POST['recipient_neighbor'])){
             $stmt->bind_param('ss', $mid, $neighbor);
             $stmt->execute();
             $stmt -> fetch();
+            $stmt->close();
         }
     }
 
@@ -316,6 +322,7 @@ if (isset($_POST['recipient_neighbor'])){
                $stmt->bind_param('ss', $mid, $blockmember);
                $stmt->execute();
                $stmt -> fetch();
+               $stmt->close();
         }
     }
     
@@ -326,6 +333,7 @@ if (isset($_POST['recipient_neighbor'])){
             $stmt->bind_param('ss', $mid, $hoodmember);
             $stmt->execute();
             $stmt -> fetch();
+            $stmt->close();
         }
     }
 
@@ -334,9 +342,10 @@ if (isset($_POST['recipient_neighbor'])){
         $stmt->bind_param('ss', $mid, $recipient_uid);
         $stmt->execute();
         $stmt -> fetch();
+        $stmt->close();
         //echo "==";
         }
-            $stmt->close();
+            //$stmt->close();
             $mysqli->close();
             //printf($mid);
 
