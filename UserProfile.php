@@ -79,7 +79,7 @@ $UserModel = new UserModel();
                   }
                                     
         ?>
-                   <a <?php echo $content2[0];?> <?php echo $content2[4]; echo $content2[2]; ?>><?php echo $content2[5];?></a>
+                   <a <?php echo $content2[4];?> <?php echo $content2[5]; echo $content2[2]; ?>><?php echo $content2[6];?></a>
                   <a <?php echo $content[0];?> <?php echo $content[1]; echo $content[2]; ?>><?php echo $content[3];?></a>
                   
                   </div>

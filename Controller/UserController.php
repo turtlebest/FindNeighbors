@@ -184,7 +184,7 @@ class UserController {
         $Add = 'Add Friend';
         }
         if($Check[1] == FALSE){
-        $url = "class='blog_readmore' href=";
+        $url2 = "class='blog_readmore' href=";
         $Add_url2 =  "AddNeighbors.php?user_id=";
         $Add2 = 'Add Neighbor';
         }
@@ -195,7 +195,7 @@ class UserController {
         }
         $user= $userid;
         
-        return array($url, $Add_url, $user, $Add, $Add_url2, $Add2 );
+        return array($url, $Add_url, $user, $Add, $url2, $Add_url2, $Add2 );
         
         }
                     
