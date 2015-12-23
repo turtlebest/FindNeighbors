@@ -107,7 +107,7 @@ class UserController {
                          <br>
                          <input type='text' class='' name='password_edit' placeholder=$user->password></p>
                          <a class=''>About Me:</a>
-                         <p><textarea rows='4' cols='50' class='' name='intro_input' placeholder='$user->introduction'></textarea></p>
+                         <p><textarea rows='4' cols='50' class='' name='intro_edit' placeholder='$user->introduction'></textarea></p>
                          <a class=''>Address:</a>
                          <br>
                          <input type='text' class='' name='address_edit' placeholder='$user->address' size = '51'></p>
