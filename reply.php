@@ -28,7 +28,6 @@ $MessageController = new MessageController();
           <!-- start course content -->
            <div class="col-lg-8 col-md-8 col-sm-8">
             <div class="courseArchive_content">
-              
               <div class="row">
               <div class="col-lg-12 col-12 col-sm-12">
                   <div class="single_blog">

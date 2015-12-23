@@ -39,8 +39,8 @@
                     <li><a href="UserProfile.php">Profile</a></li>
                     <?php if ($_SESSION['approved']) { ?>
                     <li><a href="newmessage.php">Post Message</a></li>
-                    <?php } ?>
                     <li><a href="search.php">Search</a></li>
+                    <?php } ?>
                     <li><a href="login.php">Logout</a></li>
                   </ul>
                 </li>

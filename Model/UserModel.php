@@ -138,7 +138,7 @@ $address = $_POST['address_input'];
         while ($stmt->fetch()) {
             //Create coffee objects and store them in an array.
             $stmt2 = $mysqli2->prepare("UPDATE Relationship SET accept = TRUE WHERE user1 = ? and user2 = ? and relationship ='neighbors';");
-            $stmt2->bind_param('ss', $uid, $neighborid);
+            $stmt2->bind_param('ss', $neighborid, $uid);
             $stmt2->execute();
 
             $stmt2->close();

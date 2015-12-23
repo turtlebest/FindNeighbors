@@ -18,9 +18,9 @@ class FriendModel {
            exit();
         }
         
-       $stmt = $mysqli->prepare("SELECT u2.uid, u2.uname, u2.address
+       $stmt = $mysqli->prepare("SELECT u1.uid, u1.uname, u1.address
                                   FROM User as u1, Relationship as r, User as u2
-                                  WHERE u1.uid = r.user1 and u2.uid = r.user2 and r.accept = TRUE and u1.uid = ? and r.relationship = 'friends'");
+                                  WHERE u1.uid = r.user1 and u2.uid = r.user2 and r.accept = TRUE and u2.uid = ? and r.relationship = 'friends'");
         $stmt->bind_param('s', $uid);
 
         $stmt->execute();
