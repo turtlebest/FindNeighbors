@@ -390,19 +390,24 @@ $tid = $_SESSION['thread_id'];
         $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
             $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $uid,$recipient_friend, $recipient_neighbors, $author, $recipient_bid, $recipient_hid, $tid);
             $stmt->execute();
-            $stmt -> fetch();            
+            $stmt -> fetch(); 
+            $stmt->close();
+                       
         }else{
         $author = $uid;        
         $stmt = $mysqli->prepare("INSERT INTO Message(`mid`,`title`,`content`, `address`, `timestamp`,`author`,`recipient_friend`, `recipient_neighbors`, `recipient_uid`, `recipient_bid`, `recipient_hid`, `tid`) VALUES (?,?,?,?, NOW(),?,?,?,?,?,?,?);");
         
         $stmt->bind_param('sssssiissss', $mid, $title, $content, $address, $uid,$recipient_friend, $recipient_neighbors, $uid, $recipient_bid, $recipient_hid,$tid);
         $stmt->execute();
-        $stmt -> fetch();       
+        $stmt -> fetch();  
+        $stmt->close();
+                 
         }        
             $stmt = $mysqli->prepare("INSERT INTO thread_participate(`tid`, `uid`) VALUES(?,?);");
             $stmt->bind_param('ss', $tid, $uid);
             $stmt->execute();
             $stmt -> fetch();
+            $stmt->close();
         if($recipient_friend==1){
         
             foreach ($_SESSION['friendsArray'] as $key => $friend) {
@@ -411,6 +416,8 @@ $tid = $_SESSION['thread_id'];
                $stmt->bind_param('ss', $mid, $friend);
                $stmt->execute();
                $stmt -> fetch();
+               $stmt->close();
+            
         }
     }
     
@@ -421,6 +428,8 @@ $tid = $_SESSION['thread_id'];
             $stmt->bind_param('ss', $mid, $neighbor);
             $stmt->execute();
             $stmt -> fetch();
+            $stmt->close();
+            
         }
     }
 
@@ -436,6 +445,8 @@ $tid = $_SESSION['thread_id'];
                $stmt->bind_param('ss', $mid, $blockmember);
                $stmt->execute();
                $stmt -> fetch();
+               $stmt->close();
+            
         }
     }
     
@@ -446,6 +457,8 @@ $tid = $_SESSION['thread_id'];
             $stmt->bind_param('ss', $mid, $hoodmember);
             $stmt->execute();
             $stmt -> fetch();
+            $stmt->close();
+            
         }
     }
 
@@ -456,6 +469,8 @@ $tid = $_SESSION['thread_id'];
         $stmt->bind_param('ss', $mid, $recipient_uid);
         $stmt->execute();
         $stmt -> fetch();
+        $stmt->close();
+            
         }
             $stmt->close();
             $mysqli->close();
