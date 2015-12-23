@@ -31,6 +31,11 @@ class MessageModel {
         $messageArray = array();
         //Get data from database.
         while ($stmt->fetch()) {
+            $stmt2 = $mysqli2->prepare("UPDATE read_state SET read_date = NOW() WHERE mid = ? AND uid = ?");
+            $stmt2->bind_param('ss', $mid, $uid);
+            $stmt2->execute();
+            $stmt2->close();
+            printf("d");
             $firstmessage = $this->GetSinglePostFirst($tid);
             printf("d");
             if ($firstmessage->mid != $mid) {
