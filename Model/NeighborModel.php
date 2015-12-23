@@ -62,7 +62,7 @@ class NeighborModel {
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("c");
+            //printf("c");
             //Create coffee objects and store them in an array.
             $neighbor = new UserEntity($uid, $uname, NULL, $introduction, NULL, $address, NULL, NULL, NULL, NULL, NULL);
             array_push($neighborArray, $neighbor);

@@ -63,7 +63,7 @@ class FriendModel {
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("c");
+            //printf("c");
             //Create coffee objects and store them in an array.
             $friend = new UserEntity($uid, $uname, NULL, $introduction, NULL, $address, NULL, NULL, NULL, NULL, NULL);
             array_push($friendArray, $friend);
@@ -161,7 +161,7 @@ $relationship = "friends";
 
         //Get data from database.
         while ($stmt->fetch()) {
-            printf("c");
+            //printf("c");
             //Create coffee objects and store them in an array.
             $friend = new UserEntity($uid, $uname, NULL, $introduction, NULL, $address, NULL, NULL, NULL, NULL, NULL);
             array_push($friendArray, $friend);

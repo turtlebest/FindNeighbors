@@ -9,12 +9,12 @@ $UserModel->CreateAccount();
 
 $uid = $_POST['uid_input'];
 $psw = $_POST['password_input'];
-printf($uid);
+//printf($uid);
 
 $result = $loginController->CheckUser($uid, $psw);
 $Correct = $result[0];
 $Approved = $result[1];
-printf($Correct);
+//printf($Correct);
 
 if ($result[0]) {
     $_SESSION['Login'] = TRUE;

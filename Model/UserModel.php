@@ -10,7 +10,7 @@ class UserModel {
         require ("Credentials.php");
         
         //Open connection and Select database. 
-        printf("a");
+        //printf("a");
         $mysqli = new mysqli($host, $user, $passwd, $database);
         
         /* check connection */
@@ -21,12 +21,12 @@ class UserModel {
         if(isset($_SESSION["uid"])) {
             echo "You are already logged in. ";
         }else {
-            echo "p";
+            //echo "p";
   //if the user have entered _all_ entries in the form, insert into database
             if(isset($_POST['uid_input'])) {
 
     //check if username already exists in database
-                echo "p";
+                //echo "p";
                 $stmt = $mysqli->prepare("SELECT uid from User where uid = ?");
                 $stmt->bind_param('s', $uid);
                 $stmt->execute();
@@ -36,7 +36,7 @@ class UserModel {
                     echo "Click <a href=\"createaccount.php\">here</a> to try again.";
 
                 }else{
-                    echo "new";      
+                    //echo "new";      
 $uname = $_POST['uname_input'];    
 $uid = $_POST['uid_input'];
 $psw = $_POST['password_input'];
@@ -54,7 +54,7 @@ $address = $_POST['address_input'];
            $stmt->execute();
 
            if(!$stmt->fetch()){
-           echo "numbid";
+           //echo "numbid";
            $stmt = $mysqli->prepare("INSERT INTO User (`uid`,`uname`, `password`, `introduction`, `photo`, `address`, `approved`, `bid`, `city`, `state`, `login_time`) VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, NOW());");
             $stmt->bind_param('sssssssss', $uid, $uname, $psw, $introduction, $photo, $address, $bid, $city, $state);
             $stmt->execute();

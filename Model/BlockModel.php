@@ -93,8 +93,8 @@ class BlockModel {
 
     function GetHid() {
         require 'Credentials.php';
-        //$uid = $_SESSION["uid"];
-        $uid='u01';
+        $uid = $_SESSION["uid"];
+        //$uid='u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
         /* check connection */

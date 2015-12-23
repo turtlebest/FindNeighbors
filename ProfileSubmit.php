@@ -12,7 +12,7 @@ $uid = $_SESSION['uid'];
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
         echo "Edit";
         
         
@@ -27,7 +27,7 @@ $photo = "photo";
 $address = $_POST['address_edit'];
         
         if(!isset($_POST['uname_edit']) || trim($_POST['uname_edit']) == ''){
-        echo "fail";
+        echo "";
         }else{
         
         $stmt = $mysqli->prepare("UPDATE User SET `uname`= ? WHERE `uid`= ?;");
@@ -38,7 +38,7 @@ $address = $_POST['address_edit'];
         $mysqli->close();
         }
         if(!isset($_POST['password_edit'])|| trim($_POST['password_edit']) == ''){
-        //echo "fail";
+        echo "";
         }else{
         
         $stmt = $mysqli->prepare("UPDATE User SET `password`= ? WHERE `uid`= ?;");
@@ -59,7 +59,7 @@ $address = $_POST['address_edit'];
         $mysqli->close();
         }
         if(!isset($_POST['address_edit'])|| trim($_POST['address_edit'])== ''){
-        echo "fail";
+        echo "";
         }else{
         $stmt = $mysqli->prepare("UPDATE User SET `address`= ? WHERE `uid`= ?;");
         $stmt->bind_param('ss', $address, $uid);               
@@ -69,7 +69,7 @@ $address = $_POST['address_edit'];
         $mysqli->close();
         }
         if(!isset($_POST['GetBlockList'])|| trim($_POST['GetBlockList'])== ''){
-        echo "fail";
+        echo "";
         }else{
         $stmt = $mysqli->prepare("UPDATE User SET `bid`= ? , `approved` = 0 WHERE `uid`= ?;");
         $stmt->bind_param('ss', $bid, $uid);               
@@ -87,7 +87,7 @@ $address = $_POST['address_edit'];
 
             //$stmt->close();
             //$mysqli->close();
-            printf("b");
+            //printf("b");
         echo '<script>window.location.href = "UserProfile.php";</script>'; 
             
             

@@ -299,11 +299,11 @@ if (isset($_POST['recipient_neighbor'])){
     }
 
         if (isset($_POST['recipient_bid'])){
-            echo "block";
-            echo $_SESSION['blockArray'];
+            //echo "block";
+            //echo $_SESSION['blockArray'];
         
             foreach ($_SESSION['blockArray'] as $key => $blockmember) {
-                echo "f";
+                //echo "f";
 
                 //printf($blockmember);
                $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
@@ -338,7 +338,7 @@ if (isset($_POST['recipient_neighbor'])){
     
     function ReplyPost() {
         require 'Credentials.php';
-        printf("A");
+        //printf("A");
         $uid = $_SESSION['uid'];
         //$uid = 'u01';
         $mysqli = new mysqli($host, $user, $passwd, $database);
@@ -348,7 +348,7 @@ if (isset($_POST['recipient_neighbor'])){
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
         
 $mid = mt_rand();
     
@@ -368,7 +368,7 @@ $tid = $_SESSION['thread_id'];
         
         
         if($stmt -> fetch()){
-        echo $tid;
+        //echo $tid;
         $message = new MessageEntity($mid, $title, $content, $address, NULL, $author,$recipient_friend, $recipient_neighbors,$recipient_uid, $recipient_bid, $recipient_hid, $tid,NULL);
         $title = $message->title;
         $address = $message->address;
@@ -420,11 +420,11 @@ $tid = $_SESSION['thread_id'];
     }
 
         if ($recipient_bid != null){
-            echo "block";
-            echo $_SESSION['blockArray'];
+            //echo "block";
+            //echo $_SESSION['blockArray'];
         
             foreach ($_SESSION['blockArray'] as $key => $blockmember) {
-                echo "f";
+                //echo "f";
 
                 //printf($blockmember);
                $stmt = $mysqli->prepare("INSERT INTO read_state(`mid`, `uid`) VALUES(?,?);");
@@ -461,7 +461,7 @@ $tid = $_SESSION['thread_id'];
     function GetFriendsOrNeighbors() {
         require 'Credentials.php';
         $author = $_SESSION['uid'];
-        echo "$author";
+        //echo "$author";
         $uid = $_SESSION['uid'];
         $mysqli = new mysqli($host, $user, $passwd, $database);
 
@@ -570,7 +570,7 @@ $tid = $_SESSION['thread_id'];
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+        //printf("b".$uid."aaa");
        
         $stmt = $mysqli->prepare("SELECT* FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
                                 FROM Message as m, User as u

@@ -49,7 +49,7 @@ $NeighborController = new NeighborController();
                     <?php
                     if(isset($_POST['keyword_input'])){ 
                     echo "<h2 class='blog_title'>Post</h2>";
-                    echo "keyword";
+                    //echo "keyword";
                     echo $_POST['keyword_input'];
                    $result = $MessageController->DisplaySearchPost($_POST['keyword_input']);
                    echo $result[0];
