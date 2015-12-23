@@ -187,7 +187,8 @@ class MessageModel {
                                         WHERE m.tid = ?
                                         Order by m.timestamp
                                         Limit 1) as f
-                                  WHERE m.tid = t.tid and t.tid = ? and m.mid != f.mid");
+                                  WHERE m.tid = t.tid and t.tid = ? and m.mid != f.mid
+                                  Order by m.timestamp");
         $stmt->bind_param('ss', $tid,$tid);
         $stmt->execute();
         $stmt->bind_result($mid, $title, $content, $address, $author, $timestamp);
