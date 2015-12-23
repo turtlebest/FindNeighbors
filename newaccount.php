@@ -22,7 +22,7 @@ if ($result[0]) {
     $_SESSION['password'] = $psw;
     $_SESSION['approved'] = $Approved;
     
-    echo '<script>window.location.href = "home.php";</script>'; 
+    echo '<script>window.location.href = "login.php";</script>'; 
 } else {
 
     echo '<script type="text/javascript">alert("The account or password not exist!");</script>'; 

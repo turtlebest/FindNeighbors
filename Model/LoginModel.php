@@ -122,7 +122,7 @@ printf($psw);
         $stmt->fetch();
         $stmt->close();
 printf("me1");
-        if ($approvenumber = $membernumber) {
+        if ($approvenumber == $membernumber) {
           printf("me2");
           $stmt = $mysqli->prepare("UPDATE User SET approved = TRUE WHERE uid = ?");
           $stmt->bind_param('s', $uid);

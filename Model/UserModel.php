@@ -245,6 +245,12 @@ $address = $_POST['address_input'];
 
         //Close connection and return result
         $stmt->close();
+
+        $stmt = $mysqli->prepare("INSERT INTO `neighbor`.`Relationship` (`user1`, `user2`, `relationship`, `accept`) VALUES (?, ?, 'friends', '1');");
+        $stmt->bind_param('ss', $uid, $friendid);
+        $stmt->execute();
+        //Close connection and return result
+        $stmt->close();
         $mysqli->close();
         return $userArray;
     }
