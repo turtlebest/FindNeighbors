@@ -2,6 +2,7 @@
 include "include.php";
 
 require 'Controller/LoginController.php';
+$_SESSION = array();
 $loginController = new LoginController();
 
 $uid = $_POST['account_input'];

@@ -32,8 +32,8 @@ $_SESSION['Login'] = FALSE;
                 <li>
                   <img src="img/slider/2.jpg" alt="img">
                    <div class="slider_caption">
-                    <h2>Largest & Beautiful University</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+                    <h2>Largest & Beautiful Neighbor</h2>
+                    <p>Brooklyn has history and we help you to connect this neighbor.</p>
                     <a class="slider_btn" href="login.php">Login</a>
                     <a class="slider_btn" href="createaccount.php">Create Account</a>
                   </div>
@@ -42,10 +42,10 @@ $_SESSION['Login'] = FALSE;
                 <li>
                   <img src="img/slider/3.jpg" alt="img">
                    <div class="slider_caption slider_right_caption">
-                    <h2>Better Education Environment</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search</p>
-                    <a class="slider_btn" href="#">Login</a>
-                    <a class="slider_btn" href="#">Create Account</a>
+                    <h2>Better Environment</h2>
+                    <p>Artists gathering here.</p>
+                    <a class="slider_btn" href="login.php">Login</a>
+                    <a class="slider_btn" href="createaccount.php">Create Account</a>
                   </div>
                 </li>
                 <!-- Start single slider-->
@@ -54,9 +54,9 @@ $_SESSION['Login'] = FALSE;
                    <!--<form action= <?php echo $action; ?> method="POST">-->
                    <div class="slider_caption">
                     <h2>Find out you in better way</h2>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters.Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search</p>
-                    <a class="slider_btn" href=<?php echo $action; ?>>Login</a>
-                    <a class="slider_btn" href="#">Create Account</a>
+                    <p>Find your way to interact with other people</p>
+                    <a class="slider_btn" href="login.php">Login</a>
+                    <a class="slider_btn" href="createaccount.php">Create Account</a>
                   </div>
                       <!--</form>-->
                 </li>

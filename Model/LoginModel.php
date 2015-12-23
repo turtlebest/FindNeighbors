@@ -45,7 +45,7 @@ printf($psw);
 
         if (!$approved) {
             printf("notap".$approved);
-            $approved = $this->CheckBlockApprove();
+            $approved = $this->CheckBlockApprove($uid);
             printf($approved);
         }
         //Close connection and return result
@@ -83,7 +83,7 @@ printf($psw);
         }
     }
 
-     function CheckBlockApprove(){
+     function CheckBlockApprove($uid){
     
        require 'Credentials.php';
 
@@ -94,7 +94,7 @@ printf($psw);
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        $uid = $_SESSION['uid'];
+        //$uid = $_SESSION['uid'];
 
 
         $stmt = $mysqli->prepare("SELECT COUNT(u2.uid) as number
@@ -110,6 +110,7 @@ printf($psw);
         if ($membernumber > 3) {
             $membernumber = 3;
         }
+        printf("member".$membernumber."u".$uid);
 
         $stmt = $mysqli->prepare("SELECT COUNT(approver) as number
                                   FROM Application
@@ -120,17 +121,18 @@ printf($psw);
         $stmt->bind_result($approvenumber);
         $stmt->fetch();
         $stmt->close();
-
+printf("me1");
         if ($approvenumber = $membernumber) {
-          $uid = $_SESSION['uid'];
-          $stmt = $mysqli->prepare("UPDATE User SET approved = TRUE WHER uid = ?");
+          printf("me2");
+          $stmt = $mysqli->prepare("UPDATE User SET approved = TRUE WHERE uid = ?");
           $stmt->bind_param('s', $uid);
           $stmt->execute();
           $stmt->close();
           $mysqli->close();
-
+printf("me4");
           return TRUE;
         } else {
+          printf("me3");
           $mysqli->close();
 
           return FALSE;

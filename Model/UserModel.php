@@ -53,7 +53,9 @@ $address = $_POST['address_input'];
            $stmt->bind_param('s', $bid);
            $stmt->execute();
 
+
            if(!$stmt->fetch()){
+            $stmt->close();
            //echo "numbid";
            $stmt->close();
            $stmt = $mysqli->prepare("INSERT INTO User (`uid`,`uname`, `password`, `introduction`, `photo`, `address`, `approved`, `bid`, `city`, `state`, `login_time`) VALUES (?, ?, ?, ?, ?, ?, 1, ?, ?, ?, NOW());");
