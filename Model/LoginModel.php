@@ -112,10 +112,10 @@ printf($psw);
         }
         printf("member".$membernumber."u".$uid);
 
-        $stmt = $mysqli->prepare("SELECT COUNT(approver) as number
-                                  FROM Application
-                                  WHERE applicant = ?");
-        $stmt->bind_param('s', $uid);
+        $stmt = $mysqli->prepare("SELECT COUNT(a.approver) as number
+                                  FROM Application as a, User as u
+                                  WHERE a.applicant = ? and a.bid = u.bid and u.uid = ?");
+        $stmt->bind_param('ss', $uid, $uid);
 
         $stmt->execute();
         $stmt->bind_result($approvenumber);
