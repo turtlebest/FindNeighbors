@@ -74,7 +74,7 @@ class FriendController {
             array_push($locations, $mapresult[0]);
             $lat = $mapresult[1];
             $long = $mapresult[2];
-            echo "test";
+            //echo "test";
            //$_SESSION['tid'] = 
 
             $result = $result .
@@ -111,7 +111,7 @@ class FriendController {
             array_push($locations, $mapresult[0]);
             $lat = $mapresult[1];
             $long = $mapresult[2];
-            echo "test";
+            //echo "test";
            //$_SESSION['tid'] = 
 
             $result = $result .
@@ -160,7 +160,7 @@ class FriendController {
             array_push($locations, $mapresult[0]);
             $lat = $mapresult[1];
             $long = $mapresult[2];
-            echo "test";
+            //echo "test";
            //$_SESSION['tid'] = 
 
             $result = $result .

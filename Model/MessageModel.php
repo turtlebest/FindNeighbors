@@ -620,7 +620,7 @@ $tid = $_SESSION['thread_id'];
            printf("Connect failed: %s\n", mysqli_connect_error());
            exit();
         }
-        printf("b".$uid."aaa");
+       // printf("b".$uid."aaa");
         $kw = '%'.$keyword.'%';
        
         $stmt = $mysqli->prepare("SELECT * FROM (SELECT m.mid, m.title, m.content, m.address, m.author, m.timestamp, m.tid 
